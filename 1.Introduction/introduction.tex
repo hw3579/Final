@@ -1,14 +1,133 @@
 \pagenumbering{arabic}
 \section{Introduction and background}
 \label{sec:introduction}
-\subsection{Example first subheading}
 
 
+\subsection{Introduction}
 
+\subsubsection{Project Overview}
 
+This project addresses the critical task of optimizing the cutting parameters of a biological tissue slicer, an essential instrument in biomedical research and clinical diagnostics. The aim is to enhance the precision and efficiency of tissue sample preparation by identifying the optimal slicing conditions. Through the collection of tissue samples under various cutting parameters and subsequent artificial image classification, this study employs deep learning techniques to analyze and predict the most effective slicing parameters. This endeavor not only promises to improve the quality of tissue samples for microscopic examination but also to streamline the workflow in laboratories, thereby contributing to the advancement of biological and medical sciences.
+% 这个项目解决了生物组织切片仪的关键任务，这是生物医学研究和临床诊断中的一个重要仪器。其目标是通过确定最佳切片条件来提高组织样本制备的精确性和效率。通过收集在不同切割参数下的组织样本，并进行人工图像分类，本研究采用深度学习技术来分析和预测最有效的切片参数。这个努力不仅有望改善显微镜检查的组织样本质量，还有望简化实验室的工作流程，从而促进生物和医学科学的进步。
+\subsubsection{Objectives}
+
+\begin{enumerate}
+    \item Collect a comprehensive dataset of tissue samples sliced under different parameters.
+    \item Employ artificial image classification to categorize the quality and characteristics of these samples.
+    \item Develop and train a deep learning model capable of assessing tissue sample quality.
+    \item Use the model's insights to determine the optimal cutting parameters for the tissue slicer.
+    \item Validate the model's predictions through empirical testing and refinement.
+\end{enumerate}
+
+% \item 收集在不同参数下切割的组织样本的全面数据集。
+% \item 使用人工图像分类来对这些样本的质量和特征进行分类。
+% \item 开发和训练一个能够评估组织样本质量的深度学习模型。
+% \item 利用模型的见解来确定组织切片仪的最佳切割参数。
+% \item 通过实证测试和改进来验证模型的预测结果。
+% \end{enumerate}
+
+\subsubsection{Structure of the Report}
+
+This project is organized into the following chapters, each designed to systematically explore the research background, methodologies, experimental work, results presentation, discussions and conclusions, as well as considerations for project management, sustainability, and health and safety:
+
+\textbf{Introduction and Background} - This chapter outlines the project's objectives, goals, and structural arrangement. It provides a brief introduction to the motivation and necessity for the research, along with the technical protocols and specifications adopted.
+
+\textbf{Literature Review} - An in-depth discussion on the use of biological tissue slicers, image classification, and deep learning in the preparation of biological samples. This section positions the current study within the context of existing research.
+
+\textbf{Methodology and Theory} - Detailed descriptions of the experimental methods, theoretical frameworks, and the specific plans for data collection and processing are presented here.
+
+\textbf{Experimental Work/Analytical Investigation/Design} - Describes the detailed steps of experimental design, implementation, and analytical investigation. It elaborates on the strategies and methods adopted to achieve the project's objectives.
+
+\textbf{Presentation of Experimental or Analytical Results/Descriptions of Final Constructed Product} - This chapter showcases the experimental data, analysis results, or the final design product, providing detailed accounts of the experimental or design outcomes.
+
+\textbf{Discussion and Conclusions} - The results are analyzed, and their scientific significance and practical value are discussed. This chapter also offers the research conclusions and suggests potential directions for future studies.
+
+\textbf{Project Management, Consideration of Sustainability and Health and Safety} - Discusses strategies for project management, sustainability issues, and health and safety measures to ensure the research work is conducted efficiently and safely.
+
+\textbf{References} - Lists all the bibliographic materials cited, supporting the research and providing the basis for the study.
+% 本项目分为以下几个章节，每个章节都旨在系统地探索研究背景、方法论、实验工作、结果展示、讨论和结论，以及项目管理、可持续性和健康安全方面的考虑：
+
+% \textbf{引言和背景} - 本章概述了项目的目标、目标和结构安排。它简要介绍了研究的动机和必要性，以及采用的技术协议和规范。
+
+% \textbf{文献综述} - 对生物组织切片、图像分类和深度学习在生物样本制备中的应用进行深入讨论。本节将当前研究定位于现有研究的背景下。
+
+% \textbf{方法和理论} - 详细描述了实验方法、理论框架以及数据收集和处理的具体计划。
+
+% \textbf{实验工作/分析调查/设计} - 描述了实验设计、实施和分析调查的详细步骤。详细阐述了实现项目目标所采用的策略和方法。
+
+% \textbf{实验或分析结果展示/最终构建产品描述} - 本章展示了实验数据、分析结果或最终设计产品，详细描述了实验或设计结果。
+
+% \textbf{讨论和结论} - 对结果进行分析，讨论其科学意义和实际价值。本章还提供研究结论，并提出未来研究的潜在方向。
+
+% \textbf{项目管理、可持续性和健康安全考虑} - 讨论项目管理策略、可持续性问题和健康安全措施，以确保研究工作的高效和安全进行。
+
+% \textbf{参考文献} - 列出所有引用的文献资料，支持研究并为研究提供基础。
+
+\subsubsection{Assumptions and Technical Specifications}
+
+The project is based on several key assumptions and technical protocols, which are:
+
+\begin{enumerate}
+    \item The consistency in tissue sample properties across different batches.
+    \item The reliability and precision of the biological tissue slicer and imaging equipment.
+    \item The adequacy of the deep learning model in interpreting complex biological image data.
+\end{enumerate}
+Technical specifications regarding the tissue slicer settings, image classification criteria, and deep learning architecture are detailed in \textbf{Methodology and Theory}.
+% 该项目基于几个关键假设和技术协议，包括：
+
+% \begin{enumerate}
+%     \item 不同批次之间组织样本性质的一致性。
+%     \item 生物组织切片仪和成像设备的可靠性和精确性。
+%     \item 深度学习模型在解释复杂生物图像数据方面的充分性。
+% \end{enumerate}
+% 有关组织切片仪设置、图像分类标准和深度学习架构的技术规格详见方法和理论。
+
+\subsection{Background}
+
+\subsubsection{Importance of Tissue Sample Quality}
+
+High-quality tissue samples are pivotal for accurate diagnosis and research. The quality of a tissue sample can significantly affect the results of histological analysis, making the optimization of slicing parameters a crucial endeavor.
+
+\subsubsection{Advancements in Image Classification and Deep Learning}
+
+Recent advancements in image classification and deep learning have opened new avenues for automating and enhancing the analysis of biological samples. By leveraging these technologies, it is possible to achieve greater accuracy and efficiency in identifying optimal tissue slicing parameters.
+
+\subsubsection{Gap in Current Research}
+
+While there have been significant strides in both biological sample preparation and computational analysis, a gap remains in integrating these approaches to optimize tissue slicing parameters. This project aims to bridge this gap by developing a predictive model that can guide the adjustment of slicing conditions for optimal outcomes.
+
+% \subsection{背景}
+
+% \subsubsection{组织样本质量的重要性}
+
+% 高质量的组织样本对于准确的诊断和研究至关重要。组织样本的质量可以显著影响组织学分析的结果，因此优化切片参数是一项关键的工作。
+
+% \subsubsection{图像分类和深度学习的进展}
+
+% 图像分类和深度学习的最新进展为自动化和增强生物样本分析开辟了新的途径。通过利用这些技术，可以在识别最佳组织切片参数方面实现更高的准确性和效率。
+
+% \subsubsection{当前研究中的差距}
+
+% 尽管在生物样本制备和计算分析方面取得了重大进展，但在整合这些方法以优化组织切片参数方面仍存在差距。本项目旨在通过开发一个预测模型来填补这一差距，该模型可以指导调整切片条件以获得最佳结果。
 
 \section{Literature review}
 
+\subsection{Technical background to tissue slicing and image acquisition}
+
+%组织切片和图像获取的技术背景   这里写切片机和显微镜的技术参数和采集手册及方法
+
+\subsection{Image Classification for Tissue Analysis}
+
+%用于组织分析的图像分类   这里写图像分类的技术背景和方法
+
+
+\subsection{Deep Learning in Biomedical Applications}
+
+%深度学习在生物医学应用中的应用   这里写深度学习的技术背景和方法
+
+\subsection{Integration of Deep Learning for Optimizing Tissue Slicing Parameters}
+
+%整合深度学习以优化组织切片参数   这里写深度学习在优化切片参数中的应用
 
 
 \FloatBarrier % Now figures cannot float above section title
