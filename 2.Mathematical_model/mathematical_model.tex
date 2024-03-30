@@ -1,12 +1,6 @@
 \section{Methodology and theory}
 \label{sec:problem_description}
-\subsection{实验操作和数据采集？？？是否需要保留还是放到下节}
 
-在实验中，使用预先从生物实验室制备好的石蜡包埋好的组织切片（预先处理好的鱼的卵巢，肺泡等），将其放在HM355s自动切片机上依据切片机的使用手册，不同参数执行切片操作（详细步骤见下一节）。
-
-之后，将切好的不同类型的组织切片放在载玻片上，待其晾干后转移至VHX7000显微镜下，通过显微镜对没份样品进行拍照，获取到每份样品的电子图像数据。
-
-%通过切片机的切片功能，将组织切片切割成厚度为5$\mu$m的切片。切片完成后，将切片放在37℃的热板上，使其融化，然后将切片放在载玻片上，通过
 \subsection{计算机视觉-图像分割}
 
 对于采集的到的图像数据，可以适当进行图像前处理。在保证图像的完整性和质量的前提下，可以对图像进行一定的处理，用以突出图像中我们希望让计算机识别的特征，并且在一定程度上去除图像的无关特征和噪声，以提高后续的深度学习模型的准确性。
@@ -108,11 +102,30 @@ where Conv is convolutional layer，是cnn的核心层，用于提取图像的�
 
 显然，对于复杂的图像来说，搭建简单的cnn网络明显不够。这时候就需要迁移学习。迁移学习是一种机器学习方法，通过将一个模型训练的知识迁移到另一个模型上，从而加速训练过程。迁移学习的核心思想是利用源领域的知识来帮助目标领域的学习。
 
-2024.3.28
+对于cnn模型来说，迁移学习的方法有很多，比如微调、特征提取等。微调是指在一个预训练的模型上，通过调整网络的参数，使其适应新的任务。特征提取是指在一个预训练的模型上，固定网络的参数，只训练全连接层，以适应新的任务。
 
+常用的已经训练好的模型有VGG、Inception等。这些模型在ImageNet等数据集上已经训练好，即模型内部各层的权重已经确定，可以用来进行迁移学习。
 
-\section{Experimental work/analytical investigation/ design}
+表2展示了VGG16，VGG19（https://arxiv.org/abs/1409.1556），InceptionV3，（https://arxiv.org/abs/1512.00567）Xception（https://arxiv.org/abs/1610.02357），等模型的参数数量。可以看到，这些模型的参数数量都很大，可以较为准确地提取复杂图像的特征。
 
+\begin{table}[htbp]
+    \centering
+    \caption{Comparison of CNN Models}
+    \label{tab:model_comparison}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3} & \textbf{Xception} \\
+        \midrule
+        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 & 22,910,480 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 
 \FloatBarrier
+
+
+
+
+
+
