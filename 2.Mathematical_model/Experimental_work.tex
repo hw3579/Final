@@ -64,8 +64,57 @@
     \label{fig:sample9.5}
 \end{figure}
 
+对于这9组数据，需要找到的是在何种切角下，生物组织的完整度最高（质量最好）。因此现在需要将这9组数据根据生物组织的完整度进行重新标注。
 
-这将作为我们的数据集，用于训练模型。
+根据刀片切割对生物组织的影响，我们将生物组织的完整度分为五个类别，分别为：horizental line, vertical line, slope, other, normal。其中horizental line代表显著的以水平白线为瑕疵的样本，vertical line代表显著的以竖直白线为瑕疵的样本，slope代表图像采集中存在明显的角度（不利于观察），other代表其他瑕疵（如采集中存在明暗显著差别的色块），normal代表正常的生物组织样本。这五类标签的示例图片如下所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/sample_1/horizental_line.jpg}
+        \caption{horizental line}
+        \label{fig:horizental_line}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/sample_1/vertical_line.jpg}
+        \caption{vertical line}
+        \label{fig:vertical_line}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/sample_1/slope.jpg}
+        \caption{slope}
+        \label{fig:slope}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/sample_1/other.jpg}
+        \caption{other}
+        \label{fig:other}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/sample_1/normal.jpg}
+        \caption{normal}
+        \label{fig:normal}
+    \end{minipage}
+\end{figure}
+
+
+对于每一张图片，我们需要将其标注为以上五个类别中的一个。这将作为我们的数据集，用于训练模型。
+
+
+\FloatBarrier
 
 \subsection{模型1：原始图像+简单的cnn网络}
 
@@ -77,7 +126,7 @@
 \caption{Configuration of the simple CNN model}
 \begin{tabular}{ccccc}
     \toprule
-    \textbf{Layer Type} & \textbf{Configuration 1} & \textbf{Configuration 2} & \textbf{Configuration 3} \\
+    \textbf{Layer Type} & \textbf{Configuration a} & \textbf{Configuration b} & \textbf{Configuration c} \\
     \midrule
     Input Layer & - & - & - \\
     Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
@@ -91,9 +140,70 @@
     Output Layer & - & - & - \\
     \bottomrule
 \end{tabular}
-
 \label{tab:cnn_configuration}
 \end{table}
+
+\autoref{tab:cnn_configuration}显示的三个初始模型，分别为a，b，c。这三个模型的区别在于卷积层的数量和大小，全连接层的大小。a和b相比修改了卷积层的神经元数量，c相比a修改了全连接层的神经元数量。
+
+数据的预处理部分，先将数据集分为训练集和测试集，其中训练集占80\%，测试集占20\%。之后将图像的长宽缩小一倍（即从2880*2160->1440*1080）并归一化数据。在训练过程中，我们使用了Adam优化器，交叉熵损失函数，使用早停。
+
+下面图组展示了模型1a，1b，1c的准确度和损失随着训练次数的变化。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/accuracy1a.eps}
+        \caption{Model-1a accuracy}
+        \label{fig:model1_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/loss1a.eps}
+        \caption{Model-1a loss}
+        \label{fig:model1_loss}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/accuracy1b.eps}
+        \caption{Model-1b accuracy}
+        \label{fig:model1_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/loss1b.eps}
+        \caption{Model-1b loss}
+        \label{fig:model1_loss}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/accuracy1c.eps}
+        \caption{Model-1c accuracy}
+        \label{fig:model1_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/loss1c.eps}
+        \caption{Model-1c loss}
+        \label{fig:model1_loss}
+    \end{minipage}
+\end{figure}
+
+观察到模型1a，1b，1c的准确度和损失随着训练次数的变化，发现三个模型的训练准确度和损失都在不断趋于1和0，反应了模型的训练效果良好。但是在测试集上的准确度则是收敛于0.8-0.85左右，损失则收敛于大于1的值（模型1a甚至趋于2.5）。这说明模型在训练集上表现良好，但是在测试集上表现欠佳。这可能和数据量过小，模型过于简单（图像过于复杂）有关。可见模型不能很好的泛化到验证集上。
+
+
+%具体的测试集测试在第五章
+
+
+
 
 \subsection{改进：图片预处理}
 
