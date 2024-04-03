@@ -126,7 +126,7 @@
 \caption{Configuration of the simple CNN model}
 \begin{tabular}{ccccc}
     \toprule
-    \textbf{Layer Type} & \textbf{Configuration a} & \textbf{Configuration b} & \textbf{Configuration c} \\
+    \textbf{Layer Type} & \textbf{Configuration 1a} & \textbf{Configuration 1b} & \textbf{Configuration 1c} \\
     \midrule
     Input Layer & - & - & - \\
     Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
@@ -140,10 +140,10 @@
     Output Layer & - & - & - \\
     \bottomrule
 \end{tabular}
-\label{tab:cnn_configuration}
+\label{tab:cnn_simple_configuration}
 \end{table}
 
-\autoref{tab:cnn_configuration}显示的三个初始模型，分别为a，b，c。这三个模型的区别在于卷积层的数量和大小，全连接层的大小。a和b相比修改了卷积层的神经元数量，c相比a修改了全连接层的神经元数量。
+\autoref{tab:cnn_simple_configuration}显示的三个初始模型，分别为a，b，c。这三个模型的区别在于卷积层的数量和大小，全连接层的大小。a和b相比修改了卷积层的神经元数量，c相比a修改了全连接层的神经元数量。
 
 数据的预处理部分，先将数据集分为训练集和测试集，其中训练集占80\%，测试集占20\%。之后将图像的长宽缩小一倍（即从2880*2160->1440*1080）并归一化数据。在训练过程中，我们使用了Adam优化器，交叉熵损失函数，使用早停。
 
@@ -155,13 +155,13 @@
         \centering
         \includegraphics[width=\textwidth]{./fig/accuracy1a.eps}
         \caption{Model-1a accuracy}
-        \label{fig:model1_acc}
+        \label{fig:model1a_acc}
     \end{minipage}
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/loss1a.eps}
         \caption{Model-1a loss}
-        \label{fig:model1_loss}
+        \label{fig:model1a_loss}
     \end{minipage}
 \end{figure}
 
@@ -171,13 +171,13 @@
         \centering
         \includegraphics[width=\textwidth]{./fig/accuracy1b.eps}
         \caption{Model-1b accuracy}
-        \label{fig:model1_acc}
+        \label{fig:model1b_acc}
     \end{minipage}
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/loss1b.eps}
         \caption{Model-1b loss}
-        \label{fig:model1_loss}
+        \label{fig:model1b_loss}
     \end{minipage}
 \end{figure}
 
@@ -187,26 +187,219 @@
         \centering
         \includegraphics[width=\textwidth]{./fig/accuracy1c.eps}
         \caption{Model-1c accuracy}
-        \label{fig:model1_acc}
+        \label{fig:model1c_acc}
     \end{minipage}
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/loss1c.eps}
         \caption{Model-1c loss}
-        \label{fig:model1_loss}
+        \label{fig:model1c_loss}
     \end{minipage}
 \end{figure}
 
-观察到模型1a，1b，1c的准确度和损失随着训练次数的变化，发现三个模型的训练准确度和损失都在不断趋于1和0，反应了模型的训练效果良好。但是在测试集上的准确度则是收敛于0.8-0.85左右，损失则收敛于大于1的值（模型1a甚至趋于2.5）。这说明模型在训练集上表现良好，但是在测试集上表现欠佳。这可能和数据量过小，模型过于简单（图像过于复杂）有关。可见模型不能很好的泛化到验证集上。
+观察到模型1a，1b，1c的准确度和损失随着训练次数的变化，发现三个模型的训练准确度和损失都在不断趋于1和0，反应了模型的训练效果良好。但是在测试集上的准确度则是收敛于0.8-0.85左右，损失则收敛于大于1的值（模型1a甚至趋于2.5）。这说明模型在训练集上表现良好，但是在测试集上表现欠佳。其中模型1c是这三个模型里面验证损失最低的模型。这可能和数据量过小，模型过于简单（图像过于复杂）有关。可见模型不能很好的泛化到验证集上。
 
 
 %具体的测试集测试在第五章
 
-
+\FloatBarrier
 
 
 \subsection{改进：图片预处理}
 
+在模型表现能力欠佳的情况下，我们考虑是否是图像过于复杂导致模型难以提取出显著特征。因此我们考虑对图像进行预处理，以突出图像中我们希望让计算机识别的特征，并且在一定程度上去除图像的无关特征和噪声，以提高后续的深度学习模型的准确性。
+
+
+在这里采用边缘检测，阈值分割两种方法对图像进行预处理。
+
+
+\subsubsection{边缘检测}
+
+正如在3.1.1中所提到的，边缘检测的原理是通过检测像素点的灰度值的变化（梯度）来确定图像中的边缘。假定原始图像是\autoref{fig:sample9.5}.
+
+在进行边缘检测之前，还需要进行一步前处理-高斯模糊。这么做的原因是，高斯模糊可以减少图像中的噪声，平滑图像的梯度，减小识别假边缘的几率，使得边缘检测更加准确。（https://ieeexplore.ieee.org/abstract/document/6044249）在高斯模糊核的选择上，选择高斯核分别为21，41,61,81（图像宽度的1\%,2\%,3\%,4\%）。
+高斯模糊后的图像如下所示。为了方便更直观的展示高斯模糊核对边缘检测的影响，这里采用sobel算子计算经过高斯模糊后的边缘并手动提亮50。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/blurred21.jpg}
+        \caption{blurred k=21}
+        \label{fig:blurred21}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel21.jpg}
+        \caption{sobel k=21}
+        \label{fig:sobel21}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/blurred41.jpg}
+        \caption{blurred k=41}
+        \label{fig:blurred41}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel41.jpg}
+        \caption{sobel k=41}
+        \label{fig:sobel41}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/blurred61.jpg}
+        \caption{blurred k=61}
+        \label{fig:blurred61}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel61.jpg}
+        \caption{sobel k=61}
+        \label{fig:sobel61}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/blurred81.jpg}
+        \caption{blurred k=81}
+        \label{fig:blurred81}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel81.jpg}
+        \caption{sobel k=81}
+        \label{fig:sobel81}
+    \end{minipage}
+\end{figure}
+
+从\autoref{fig:blurred21}到\autoref{fig:blurred81}可以看到，随着高斯模糊核的增大，图像的细节逐渐模糊，边缘也逐渐变得模糊。从\autoref{fig:sobel21}到\autoref{fig:sobel81}可以看到，随着高斯模糊核的增大，边缘检测的效果逐渐减弱，边缘变得不明显。考虑到图像边缘的清晰度和底噪的对比，我们选择高斯模糊核为61。
+
+
+以下是在高斯模糊（k=61）后使用python的opencv库执行laplacian算子的结果。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/laplacian61.jpg}
+        \caption{laplacian}
+        \label{fig:laplacian}
+    \end{minipage}
+\end{figure}
+
+canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值抑制等步骤。canny算法引入了两个阈值，分别为低阈值和高阈值。其中，当图像的梯度值大于高阈值时，被认为是边缘；当图像的梯度值小于低阈值时，被认为不是边缘；当图像的梯度值在两者之间时，如果与高阈值的边缘相连，则被认为是边缘，否则被认为不是边缘。这样的处理可以有效的去除图像中的噪声，得到更加准确的边缘检测结果。
+
+%canny引用
+通常情况下，高阈值和低阈值的比值在2:1到3:1之间。在这里我们选择阈值比为2.5 : 1，探究不同阈值对边缘检测的影响。
+
+取低阈值为2 4 6 ，此时对应的高阈值为5 10 15 。canny算法的结果如下所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/canny61+2.jpg}
+        \caption{canny 2 5}
+        \label{fig:canny2_5}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/canny61+4.jpg}
+        \caption{canny 4 10}
+        \label{fig:canny4_10}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/canny61+6.jpg}
+        \caption{canny 6 15}
+        \label{fig:canny6_15}
+    \end{minipage}
+\end{figure}
+
+在三张canny算法的结果中，可见\autoref{fig:canny4_10}的效果最好，其能在保证边缘细节得到大部分保留的情况下，去除了大部分的噪声。因此我们选择canny算法的阈值为4 10。
+
+\textbf{总结}
+
+对比sobel， laplacian和canny算法的结果，sobel算法的效果一般，对于底噪不是能很好的去除，边缘检测效果还算显著。laplacian算法最差，边缘甚至已经不可见，这可能是因为该算法对噪声最敏感。canny算法的效果最好，能够在保证边缘细节的情况下，去除大部分的噪声。因此我们选择canny算法作为图像预处理的方法。
+
+\FloatBarrier
+
+
+\subsubsection{阈值分割}
+
+考虑到生物组织样本的主体是黄色，石蜡是白色，我们可以通过设置一个阈值，将图像中的白色部分分割出来，那么剩下的就是生物组织部分。在这里使用python的opencv库中进行操作。首先将图像进行对比度增强，增加饱和度，更好的凸显出生物组织的颜色(\autoref{fig:enhanced_image})。之后读取图像的每个像素点，将黄色周围半径15左右的像素点进行保留（约为图像宽的百分之一），其他的色块进行去除。(如\autoref{fig:yellowpic})。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/threshold/enhanced_image.jpg}
+        \caption{enhanced image}
+        \label{fig:enhanced_image}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/threshold/yellowpic.jpg}
+        \caption{yellow picture}
+        \label{fig:yellowpic}
+    \end{minipage}
+\end{figure}
+
+但是观察发现，这种方法对于生物组织和石蜡的分割效果并不好，因为生物组织在切片过程中会掉落碎片组织，出现在标本各处，进而影响黄色像素点的识别。此时还需要进一步的处理，去除黑色色块。此时只需要将黑色色块进行掩码反转，使其变为白色即可。结果如图\autoref{fig:mask}所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/threshold/final.jpg}
+        \caption{final}
+        \label{fig:mask}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/threshold/fingerprint.jpg}
+        \caption{fingerprint}
+        \label{fig:fingerprint}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{另一种阈值分割方法-指纹算法}
+在进行文献综述的时候，发现有一篇论文是基于otsu算法改进的分割方法用于进行指纹分割。考虑到切片样本和指纹都属于生物组织，因此我们尝试使用论文中提到的算法进行分割。结果如图\autoref{fig:fingerprint}所示。
+
+\subsubsection{小结}
+根据上文提到的图像预处理方法，我们可以看到，边缘检测和阈值分割的效果都不错，都能够很好的突出生物组织的特征，去除石蜡的干扰。对此我们可以设置三组数据集，分别是经过边缘检测后的图像，经过阈值分割后的图像和经过指纹算法分割后的图像。这三组数据集将作为我们的训练集，用于下一节的模型训练。
+
+\FloatBarrier
 \subsection{模型2：预处理图像+简单的cnn网络}
 
+在这里基础模型选用在上一节模型1中表现相对比较好的模型1c。在这里我们将模型1c的输入改为经过预处理后的图像，即边缘检测后的图像，阈值分割后的图像和指纹算法分割后的图像。模型的架构不变，只是输入的数据发生了变化。
+
+\subsubsection{model 2a}
+
+模型2a采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型的输入为经过边缘检测后的图像。
+
+模型训练的准确度和损失如下图所示。
+
+
+\subsubsection{model 2b}
+
+
+
+\FloatBarrier
 \subsection{模型3：原始图像+迁移学习}
