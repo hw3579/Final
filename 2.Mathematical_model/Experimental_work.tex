@@ -394,7 +394,7 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 模型2a采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型的输入为经过\textbf{canny边缘检测}后的图像。
 
-模型训练的准确度和损失如下图所示。
+模型训练的准确度和损失如\autoref{fig:model2a_acc}和\autoref{fig:model2a_loss}所示。
 
 \begin{figure}
     \centering
@@ -418,7 +418,7 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 模型2b采用和模型1c同样的架构构成但是模型的输入为经过\textbf{阈值分割}后的图像。
 
-模型训练的准确度和损失如下图所示。
+模型训练的准确度和损失如\autoref{fig:model2b_acc}和\autoref{fig:model2b_loss}所示。
 
 \begin{figure}
     \centering
@@ -441,7 +441,7 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 模型2c采用和模型1c同样的架构构成但是模型的输入为经过\textbf{指纹算法分割}后的图像。
 
-模型训练的准确度和损失如下图所示。
+模型训练的准确度和损失如\autoref{fig:model2c_acc}和\autoref{fig:model2c_loss}所示。
 
 \begin{figure}
     \centering
@@ -486,7 +486,7 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
     \end{minipage}
 \end{figure}
 
-这张图是模型2b训练集（经过黄色阈值分割后的图像）中的一张图片，对比原图可以观察发现，原本切片中能够被接受的平行白线被阈值分割算法显著增强了，这有极有可能会影响模型的训练效果，即模型会在一定程度上与horizental line混淆。
+\autoref{fig:yellow}是模型2b训练集（经过黄色阈值分割后的图像）中的一张图片，对比原图(\autoref{fig:origin})可以观察发现，原本切片中能够被接受的平行白线被阈值分割算法显著增强了，这有极有可能会影响模型的训练效果，即模型会在一定程度上与horizental line混淆。
 
 此外，经过图像前处理过的图像，还会在一定程度上丢失部分细节，这也会影响模型的训练效果。因此，图像前处理的方法虽然能够在一定程度上提高模型的训练效果，但是也会在一定程度上影响模型的训练效果。因此，我们需要进一步的改进模型，以提高模型的训练效果。
 
@@ -504,7 +504,7 @@ model3a是使用VGG16模型进行迁移学习的模型，model3b是使用VGG19�
 \subsubsection{model 3a}
 根据VGG16的训练架构，输入层应该为224*224的图像，因此我们需要将图像的分辨率调整为224*224。
 
-模型训练的准确度和损失如下图所示
+模型训练的准确度和损失如\autoref{fig:model3a_acc}和\autoref{fig:model3a_loss}所示
 
 \begin{figure}
     \centering
@@ -523,7 +523,7 @@ model3a是使用VGG16模型进行迁移学习的模型，model3b是使用VGG19�
 \end{figure}
 
 \subsubsection{model 3b}
-VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他与VGG16相同。模型训练的准确度和损失如下图所示
+VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他与VGG16相同。模型训练的准确度和损失如\autoref{fig:model3b_acc}和\autoref{fig:model3b_loss}所示
 
 \begin{figure}
     \centering
@@ -543,7 +543,7 @@ VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他与VGG
 
 \subsubsection{model 3c}
 InceptionV3是一个相对于VGG16和VGG19更加复杂的模型，其在训练过程中引入了Inception模块，能够更好的提取图像的特征。其顶层的输入面积为299*299.
-模型训练的准确度和损失如下图所示
+模型训练的准确度和损失如下\autoref{fig:model3c_acc}和\autoref{fig:model3c_loss}所示
 
 \begin{figure}
     \centering
@@ -563,7 +563,7 @@ InceptionV3是一个相对于VGG16和VGG19更加复杂的模型，其在训练�
 
 注意到模型3c的验证准确度上依旧保持上升趋势，验证损失也在不断下降，这说明模型3c的训练可能还没到达最佳状态，模型欠拟合，需要进一步增加步长。
 
-模型3d是对模型3c的改进，增加步长为1000（原来为100），模型训练的准确度和损失如下图所示
+模型3d是对模型3c的改进，增加步长为1000（原来为100），模型训练的准确度和损失如\autoref{fig:model3d_acc}和\autoref{fig:model3d_loss}所示
 
 \begin{figure}
         \centering
