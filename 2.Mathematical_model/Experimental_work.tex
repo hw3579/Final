@@ -392,14 +392,202 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 \subsubsection{model 2a}
 
-模型2a采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型的输入为经过边缘检测后的图像。
+模型2a采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型的输入为经过\textbf{canny边缘检测}后的图像。
 
 模型训练的准确度和损失如下图所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/accuracy2a.eps}
+        \caption{Model-2a accuracy}
+        \label{fig:model2a_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/loss2a.eps}
+        \caption{Model-2a loss}
+        \label{fig:model2a_loss}
+    \end{minipage}
+\end{figure}
+
 
 
 \subsubsection{model 2b}
 
+模型2b采用和模型1c同样的架构构成但是模型的输入为经过\textbf{阈值分割}后的图像。
 
+模型训练的准确度和损失如下图所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/accuracy2b.eps}
+        \caption{Model-2b accuracy}
+        \label{fig:model2b_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/loss2b.eps}
+        \caption{Model-2b loss}
+        \label{fig:model2b_loss}
+    \end{minipage}
+\end{figure}
+
+
+\subsubsection{model 2c}
+
+模型2c采用和模型1c同样的架构构成但是模型的输入为经过\textbf{指纹算法分割}后的图像。
+
+模型训练的准确度和损失如下图所示。
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/accuracy2c.eps}
+        \caption{Model-2c accuracy}
+        \label{fig:model2c_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/loss2c.eps}
+        \caption{Model-2c loss}
+        \label{fig:model2c_loss}
+    \end{minipage}
+\end{figure}
+
+
+
+\subsubsection{小结}
+对比模型2a 2b 2c,可以发现模型2a和模型2c在训练步长为5之后就开始收敛，其训练准确度和验证准确度收敛于1和0.8左右。但是损失确仍然较高，这说明模型在训练集上表现良好，但是在验证集上表现欠佳。
+
+模型2b在训练步长为10之后也开始收敛，但是其训练准确度和验证准确度收敛于1和0.8左右，损失收敛于1左右。这说明模型2b表现显著优于模型2a和模型2c。
+
+这可能的原因是模型2a和2c的输入是灰度图，即图像复杂度显著小于彩色图，而模型2b的输入是彩色图，因此在模型提取特征时还能够参考根据色块的rgb值进行提取，故模型2b的表现最好。
+
+但是，在训练过程中，我们发现对于部分图像，经过模型2(特别是2b)的前处理（阈值分割）后，图像的部分重要细节会丢失，进而影响图像标签的准确性。例子如下所示：
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/origin20240205_161427.jpg}
+        \caption{origin}
+        \label{fig:origin}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model2/yellow20240205_161427.jpg}
+        \caption{yellow}
+        \label{fig:yellow}
+    \end{minipage}
+\end{figure}
+
+这张图是模型2b训练集（经过黄色阈值分割后的图像）中的一张图片，对比原图可以观察发现，原本切片中能够被接受的平行白线被阈值分割算法显著增强了，这有极有可能会影响模型的训练效果，即模型会在一定程度上与horizental line混淆。
+
+此外，经过图像前处理过的图像，还会在一定程度上丢失部分细节，这也会影响模型的训练效果。因此，图像前处理的方法虽然能够在一定程度上提高模型的训练效果，但是也会在一定程度上影响模型的训练效果。因此，我们需要进一步的改进模型，以提高模型的训练效果。
 
 \FloatBarrier
 \subsection{模型3：原始图像+迁移学习}
+
+现在我们已经尝试过了简单的cnn网络，以及对图像进行预处理后的cnn网络。既然训练结果不是很理想，那我们为什么不去尝试更大更深的模型? 在这一节，我们尝试使用迁移学习的方法，使用预训练好的大规模深度学习模型，将其迁移到我们的数据集上，以提高模型的训练效果。
+
+正如在第三节methodology里提到的，在这里将使用VGG16，VGG19和InceptionV3三个模型进行迁移学习。这三个模型都是在ImageNet数据集上训练好的模型，具有已经训练好的权重。
+
+在这里为了避免过拟合，不仅使用了原有的早停法，还限制了模型的学习率（1e-5）
+
+model3a是使用VGG16模型进行迁移学习的模型，model3b是使用VGG19模型进行迁移学习的模型，model3c是使用InceptionV3模型进行迁移学习的模型。
+
+\subsubsection{model 3a}
+根据VGG16的训练架构，输入层应该为224*224的图像，因此我们需要将图像的分辨率调整为224*224。
+
+模型训练的准确度和损失如下图所示
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/accuracy3a.eps}
+        \caption{Model-3a accuracy}
+        \label{fig:model3a_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/loss3a.eps}
+        \caption{Model-3a loss}
+        \label{fig:model3a_loss}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{model 3b}
+VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他与VGG16相同。模型训练的准确度和损失如下图所示
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/accuracy3b.eps}
+        \caption{Model-3b accuracy}
+        \label{fig:model3b_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/loss3b.eps}
+        \caption{Model-3b loss}
+        \label{fig:model3b_loss}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{model 3c}
+InceptionV3是一个相对于VGG16和VGG19更加复杂的模型，其在训练过程中引入了Inception模块，能够更好的提取图像的特征。其顶层的输入面积为299*299.
+模型训练的准确度和损失如下图所示
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/accuracy3c.eps}
+        \caption{Model-3c accuracy}
+        \label{fig:model3c_acc}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/model3/loss3c.eps}
+        \caption{Model-3c loss}
+        \label{fig:model3c_loss}
+    \end{minipage}
+\end{figure}
+
+注意到模型3c的验证准确度上依旧保持上升趋势，验证损失也在不断下降，这说明模型3c的训练可能还没到达最佳状态，模型欠拟合，需要进一步增加步长。
+
+模型3d是对模型3c的改进，增加步长为1000（原来为100），模型训练的准确度和损失如下图所示
+
+\begin{figure}
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{./fig/model3/accuracy3d.eps}
+            \caption{Model-3d accuracy}
+            \label{fig:model3d_acc}
+        \end{minipage}
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{./fig/model3/loss3d.eps}
+            \caption{Model-3d loss}
+            \label{fig:model3d_loss}
+        \end{minipage}
+\end{figure}
+
+\subsubsection{小结}
+
+对比VGG16，VGG19和InceptionV3三个模型，可以发现InceptionV3的训练效果最好，其训练准确度和验证准确度收敛于1和0.9左右，损失收敛于0.5左右。这说明InceptionV3模型的训练效果最好，其泛化能力最强。
+
+\subsection{模型选择总结}
+横向对比模型1，模型2和模型3，可以发现模型3的训练效果最好。特别是模型3d。究其原因，可能是因为模型3是基于大规模图像识别的超深卷积网络，其在训练过程中能够更好的提取图像的特征，构建自己的特征空间。值得注意的是，模型3d，属于InceptionV3，在架构上具有模块化的设计，包括了多个“inception模块”。其包含了多尺度的卷积层，同时在同一层内并行运行。
+在特征提取上，Inception模块可以在同一层内捕捉不同尺度的特征，使得网络能够自适应地选择更合适的特征表示。在处理深度上，InceptionV3利用批量标准化和残差连接来帮助训练深层网络，可以显著解决梯度消失的问题。
+
+因此，我们选择模型3d作为我们的最终模型，用于后续的进一步应用和测试。
+
