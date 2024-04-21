@@ -151,53 +151,23 @@
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/accuracy1a.eps}
-        \caption{Model-1a accuracy}
-        \label{fig:model1a_acc}
+        \includegraphics[width=\textwidth]{./fig/model1/accuracy11.eps}
+        \caption{Model 1 accuracy}
+        \label{fig:model11_acc}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/loss1a.eps}
-        \caption{Model-1a loss}
-        \label{fig:model1a_loss}
-    \end{minipage}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/accuracy1b.eps}
-        \caption{Model-1b accuracy}
-        \label{fig:model1b_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/loss1b.eps}
-        \caption{Model-1b loss}
-        \label{fig:model1b_loss}
+        \includegraphics[width=\textwidth]{./fig/model1/loss11.eps}
+        \caption{Model 1 loss}
+        \label{fig:model11_loss}
     \end{minipage}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/accuracy1c.eps}
-        \caption{Model-1c accuracy}
-        \label{fig:model1c_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/loss1c.eps}
-        \caption{Model-1c loss}
-        \label{fig:model1c_loss}
-    \end{minipage}
-\end{figure}
 
-观察到模型1a，1b，1c的准确度和损失随着训练次数的变化，发现三个模型的训练准确度和损失都在不断趋于1和0，反应了模型的训练效果良好。但是在测试集上的准确度则是收敛于0.8-0.85左右，损失则收敛于大于1的值（模型1a甚至趋于2.5）。这说明模型在训练集上表现良好，但是在测试集上表现欠佳。其中模型1c是这三个模型里面验证损失最低的模型。这可能和数据量过小，模型过于简单（图像过于复杂）有关。可见模型不能很好的泛化到验证集上。
+在图中，观察到模型1a、1b和1c在不同训练周期（Epochs）的准确度与损失的变化情况。模型1a、1b和1c的训练准确度随着时间逐步提高，趋向于稳定，而训练损失则呈下降趋势，接近于零，这表明模型在学习训练数据方面表现得相对良好。然而，对于验证集，三个模型的准确度似乎在约80\%到85\%的区间内稳定，而验证损失在某些情况下较高，特别是模型1a的验证损失在后期趋近于2.5，表现出较大波动。这表明存在一定程度的过拟合，即模型在未见过的数据上的表现不如在训练集上。特别值得注意的是，模型1c相对于其他模型而言，在验证损失方面表现最佳，这可能意味着其结构或参数调整对于泛化能力的提升更为有效。
+在这里过拟合的原因推测可能是模型的复杂度不够，数据集的复杂度过高，模型无法很好的提取特征。这些结果指出虽然模型在训练集上能够实现高准确度和低损失，但在验证集上的泛化能力还有待提高。
 
 
 %具体的测试集测试在第五章
@@ -388,87 +358,38 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 \FloatBarrier
 \subsection{模型2：预处理图像+简单的cnn网络}
 
-在这里基础模型选用在上一节模型1中表现相对比较好的模型1c。在这里我们将模型1c的输入改为经过预处理后的图像，即边缘检测后的图像，阈值分割后的图像和指纹算法分割后的图像。模型的架构不变，只是输入的数据发生了变化。
+在这里基础模型选用在上一节模型1中表现最好的模型1c。在这里我们将模型1c的输入改为经过预处理后的图像，即经过\textbf{边缘检测后，阈值分割和指纹算法分割后的图像}。在这里模型的架构不变，只是输入的数据发生了变化。
 
-\subsubsection{model 2a}
+所有的模型2采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型2a的输入为经过\textbf{canny边缘检测}后的图像。
+模型2b采输入为经过\textbf{阈值分割}后的图像。
+模型2c输入为经过\textbf{指纹算法分割}后的图像。
 
-模型2a采用和模型1c同样的架构构成，分别由三个包含32个特征图，卷积核为3*3的卷积层和最大池化层，一个包含256个神经元的全连接层组成。模型的输入为经过\textbf{canny边缘检测}后的图像。
-
-模型训练的准确度和损失如\autoref{fig:model2a_acc}和\autoref{fig:model2a_loss}所示。
-
+结果如下：
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/model2/accuracy2a.eps}
-        \caption{Model-2a accuracy}
-        \label{fig:model2a_acc}
+        \includegraphics[width=\textwidth]{./fig/model2/accuracy22.eps}
+        \caption{Model 2 accuracy}
+        \label{fig:model22_acc}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/model2/loss2a.eps}
-        \caption{Model-2a loss}
-        \label{fig:model2a_loss}
-    \end{minipage}
-\end{figure}
-
-
-
-\subsubsection{model 2b}
-
-模型2b采用和模型1c同样的架构构成但是模型的输入为经过\textbf{阈值分割}后的图像。
-
-模型训练的准确度和损失如\autoref{fig:model2b_acc}和\autoref{fig:model2b_loss}所示。
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model2/accuracy2b.eps}
-        \caption{Model-2b accuracy}
-        \label{fig:model2b_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model2/loss2b.eps}
-        \caption{Model-2b loss}
-        \label{fig:model2b_loss}
+        \includegraphics[width=\textwidth]{./fig/model2/loss22.eps}
+        \caption{Model 2 loss}
+        \label{fig:model22_loss}
     \end{minipage}
 \end{figure}
-
-
-\subsubsection{model 2c}
-
-模型2c采用和模型1c同样的架构构成但是模型的输入为经过\textbf{指纹算法分割}后的图像。
-
-模型训练的准确度和损失如\autoref{fig:model2c_acc}和\autoref{fig:model2c_loss}所示。
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model2/accuracy2c.eps}
-        \caption{Model-2c accuracy}
-        \label{fig:model2c_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model2/loss2c.eps}
-        \caption{Model-2c loss}
-        \label{fig:model2c_loss}
-    \end{minipage}
-\end{figure}
-
 
 
 \subsubsection{小结}
-对比模型2a 2b 2c,可以发现模型2a和模型2c在训练步长为5之后就开始收敛，其训练准确度和验证准确度收敛于1和0.8左右。但是损失确仍然较高，这说明模型在训练集上表现良好，但是在验证集上表现欠佳。
+在图中，对比了模型2a、2b和2c的训练和验证准确度以及损失的变化情况。模型2a和模型2c的训练和验证准确度在经过约8个训练周期后开始趋于稳定，其中训练准确度接近于100\%，而验证准确度稳定在65\%和75\%左右。尽管准确度较高，两者的验证损失仍旧较高，都在1以上。这可能指示了模型对训练数据过拟合，而对未见数据的泛化能力有限。
 
-模型2b在训练步长为10之后也开始收敛，但是其训练准确度和验证准确度收敛于1和0.8左右，损失收敛于1左右。这说明模型2b表现显著优于模型2a和模型2c。
+对于模型2b，其在约10个训练周期后开始收敛，与模型2a和2c相比，模型2b拥有最高的的验证准确度，约为82\%左右，但是其损失显著低于模型2a和2c，在1-1.2波动。这表明模型2b在泛化到验证集上时的性能更优，损失更低，反映了模型更好的适应性和鲁棒性。
 
-这可能的原因是模型2a和2c的输入是灰度图，即图像复杂度显著小于彩色图，而模型2b的输入是彩色图，因此在模型提取特征时还能够参考根据色块的rgb值进行提取，故模型2b的表现最好。
+可能原因是模型2a和2c可能处理的是灰度图像，而模型2b处理的是彩色图像。彩色图像包含的RGB通道信息可以提供更丰富的特征，从而可能增强了模型的特征提取和泛化能力。然而，即使彩色图像提供了额外信息，前处理步骤，尤其是模型2b的阈值分割，可能会导致重要细节的丢失，这反过来可能会影响到模型在特定图像上的表现。这种情况下，模型的预处理步骤需要仔细检查，以确保不会因过于激进的图像简化而丢失关键信息。
 
-但是，在训练过程中，我们发现对于部分图像，经过模型2(特别是2b)的前处理（阈值分割）后，图像的部分重要细节会丢失，进而影响图像标签的准确性。例子如下所示：
+一个丢失关键信息的例子如下所示：
 
 \begin{figure}
     \centering
@@ -488,7 +409,7 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 \autoref{fig:yellow}是模型2b训练集（经过黄色阈值分割后的图像）中的一张图片，对比原图(\autoref{fig:origin})可以观察发现，原本切片中能够被接受的平行白线被阈值分割算法显著增强了，这有极有可能会影响模型的训练效果，即模型会在一定程度上与horizental line混淆。
 
-此外，经过图像前处理过的图像，还会在一定程度上丢失部分细节，这也会影响模型的训练效果。因此，图像前处理的方法虽然能够在一定程度上提高模型的训练效果，但是也会在一定程度上影响模型的训练效果。因此，我们需要进一步的改进模型，以提高模型的训练效果。
+由此可以看出，对于图像预处理，其实并不能显著的提高模型的训练效果，反而可能会因为过于激进的预处理而丢失关键信息，导致模型的训练效果下降。在后面将会尝试使用迁移学习的方法，使用预训练好的大规模深度学习模型，将其迁移到我们的数据集上，以提高模型的训练效果。
 
 \FloatBarrier
 \subsection{模型3：原始图像+迁移学习}
@@ -497,97 +418,37 @@ canny算法相对于sobel算法稍显复杂-引入了阈值检测，非极大值
 
 正如在第三节methodology里提到的，在这里将使用VGG16，VGG19和InceptionV3三个模型进行迁移学习。这三个模型都是在ImageNet数据集上训练好的模型，具有已经训练好的权重。
 
-在这里为了避免过拟合，不仅使用了原有的早停法，还限制了模型的学习率（1e-5）
+在这里为了避免迁移学习过拟合，不仅使用了原有的早停法，还限制了模型的学习率为1e-5（对于inceptionV3模型，学习率为1e-4）。
 
-model3a是使用VGG16模型进行迁移学习的模型，model3b是使用VGG19模型进行迁移学习的模型，model3c是使用InceptionV3模型进行迁移学习的模型。
+model3a是使用VGG16模型进行迁移学习的模型。model3b是使用VGG19模型进行迁移学习的模型，VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他则与VGG16相同。model3c是使用InceptionV3模型进行迁移学习的模型，其中InceptionV3是一个相对于VGG16和VGG19更加复杂的模型，其在训练过程中引入了Inception模块，能够更好的提取图像的特征。
 
-\subsubsection{model 3a}
-根据VGG16的训练架构，输入层应该为224*224的图像，因此我们需要将图像的分辨率调整为224*224。
+在这里统一将模型的输入调整为224*224，因为VGG16和VGG19模型在预训练时的输入层是224*224的图像，而InceptionV3的默认值为299*299的图像。
 
-模型训练的准确度和损失如\autoref{fig:model3a_acc}和\autoref{fig:model3a_loss}所示
-
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/model3/accuracy3a.eps}
-        \caption{Model-3a accuracy}
-        \label{fig:model3a_acc}
+        \includegraphics[width=\textwidth]{./fig/model3/accuracy33.eps}
+        \caption{Model 3 accuracy}
+        \label{fig:model33_acc}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/model3/loss3a.eps}
-        \caption{Model-3a loss}
-        \label{fig:model3a_loss}
-    \end{minipage}
-\end{figure}
-
-\subsubsection{model 3b}
-VGG19和VGG16相比只是在中间增加了3个额外的卷积层，其他与VGG16相同。模型训练的准确度和损失如\autoref{fig:model3b_acc}和\autoref{fig:model3b_loss}所示
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model3/accuracy3b.eps}
-        \caption{Model-3b accuracy}
-        \label{fig:model3b_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model3/loss3b.eps}
-        \caption{Model-3b loss}
-        \label{fig:model3b_loss}
+        \includegraphics[width=\textwidth]{./fig/model3/loss33.eps}
+        \caption{Model 3 loss}
+        \label{fig:model33_loss}
     \end{minipage}
 \end{figure}
 
-\subsubsection{model 3c}
-InceptionV3是一个相对于VGG16和VGG19更加复杂的模型，其在训练过程中引入了Inception模块，能够更好的提取图像的特征。其顶层的输入面积为299*299.
-模型训练的准确度和损失如下\autoref{fig:model3c_acc}和\autoref{fig:model3c_loss}所示
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model3/accuracy3c.eps}
-        \caption{Model-3c accuracy}
-        \label{fig:model3c_acc}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/model3/loss3c.eps}
-        \caption{Model-3c loss}
-        \label{fig:model3c_loss}
-    \end{minipage}
-\end{figure}
-
-注意到模型3c的验证准确度上依旧保持上升趋势，验证损失也在不断下降，这说明模型3c的训练可能还没到达最佳状态，模型欠拟合，需要进一步增加步长。
-
-模型3d是对模型3c的改进，增加步长为1000（原来为100），模型训练的准确度和损失如\autoref{fig:model3d_acc}和\autoref{fig:model3d_loss}所示
-
-\begin{figure}
-        \centering
-        \begin{minipage}{0.45\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{./fig/model3/accuracy3d.eps}
-            \caption{Model-3d accuracy}
-            \label{fig:model3d_acc}
-        \end{minipage}
-        \begin{minipage}{0.45\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{./fig/model3/loss3d.eps}
-            \caption{Model-3d loss}
-            \label{fig:model3d_loss}
-        \end{minipage}
-\end{figure}
+对比三个模型，可以观察得到model3b和model3c的验证集的准确度显著高于model3a，约为90\%左右。观察损失图，可以得出model3c在这三个模型中验证集的损失是最低的，model3b次之，model3a表现最差。这可能是因为InceptionV3模型的复杂度更高，能够更好的提取图像的特征。而VGG16和VGG19模型相对于InceptionV3模型而言，更加简单，可能在提取图像特征上存在一定的局限性。此外，model3b性能显著高于model3a可以说明，VGG19模型相对于VGG16模型而言，多出的三个卷积层能够更好的提取图像的特征。符合模型的复杂度越高，其训练效果越好的规律。
 
 \subsubsection{小结}
 
-对比VGG16，VGG19和InceptionV3三个模型，可以发现InceptionV3的训练效果最好，其训练准确度和验证准确度收敛于1和0.9左右，损失收敛于0.5左右。这说明InceptionV3模型的训练效果最好，其泛化能力最强。
+对比VGG16，VGG19和InceptionV3三个模型，可以发现InceptionV3的训练效果最好，其训练准确度和验证准确度收敛于1和0.9左右，损失收敛于0.6左右。这说明InceptionV3模型的训练效果最好，其泛化能力最强。
 
 \subsection{模型选择总结}
-横向对比模型1，模型2和模型3，可以发现模型3的训练效果最好。特别是模型3d。究其原因，可能是因为模型3是基于大规模图像识别的超深卷积网络，其在训练过程中能够更好的提取图像的特征，构建自己的特征空间。值得注意的是，模型3d，属于InceptionV3，在架构上具有模块化的设计，包括了多个“inception模块”。其包含了多尺度的卷积层，同时在同一层内并行运行。
+横向对比模型系列，模型1，模型2和模型3，可以发现模型3的训练效果最好。特别是模型3c。究其原因，可能是因为模型系列3是基于大规模图像识别的超深卷积网络，其在训练过程中能够更好的提取图像的特征，构建自己的特征空间。值得注意的是，模型3c，属于InceptionV3，在架构上具有模块化的设计，包括了多个“inception模块”。其包含了多尺度的卷积层，同时在同一层内并行运行。
 在特征提取上，Inception模块可以在同一层内捕捉不同尺度的特征，使得网络能够自适应地选择更合适的特征表示。在处理深度上，InceptionV3利用批量标准化和残差连接来帮助训练深层网络，可以显著解决梯度消失的问题。
 
-因此，我们选择模型3d作为我们的最终模型，用于后续的进一步应用和测试。
+因此，我们选择模型3c作为我们的最终模型，用于后续的进一步应用和测试。
 
