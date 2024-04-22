@@ -8,7 +8,7 @@
 
 \autoref{tab:model_accuracy}是模型在测试集上的准确度：（准确度定义为标签与模型预测一致的样本数占总样本数的比例）
 
-\begin{table}
+\begin{table}[H]
 \centering
 \caption{model accuracy on test set}
 \begin{tabular}{cccccc}
@@ -21,14 +21,32 @@
 \label{tab:model_accuracy}
 \end{table}
 
+
+
 可见，模型预测结果在normal上表现较好，而在vertical\_line上表现较差。这可能是由于用于测试的样本量较少，导致模型学习不足，难以判断。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
+        \caption{Model Accuracy on Test Set}
+        \label{fig:accuracy_histogram}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy.eps}
+        \caption{Model Accuracy on Different Angle}
+        \label{fig:angle_accuracy_histogram}
+    \end{minipage}
+\end{figure}
 
 
 \subsection{判断最佳切削角度}
 
 在这里采用模型3d（inceptionv3）来判断最佳切削角度。我们将模型应用到测试集上，计算在每个切削角度下可用样本的占比。找到可用样本占比最多的区间，即为最佳切削角度。
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{normal accuracy on different angle}
     \begin{tabular}{cccccccccc}
@@ -41,9 +59,11 @@
     \label{tab:model_accuracy_angle}
     \end{table}
 
-    由\autoref{tab:model_accuracy_angle}可知，最佳切削角度为10度。
 
-    若要在保证切削质量为百分之80的情况下，切削角度应在9度到10.5度之间。
+
+由\autoref{tab:model_accuracy_angle}可知，最佳切削角度为10度。
+
+若要在保证切削质量为百分之80的情况下，切削角度应在9度到10.5度之间。
 
 
 \subsection{模型的进一步提高（改变输入分辨率）（数据增强在这里）}

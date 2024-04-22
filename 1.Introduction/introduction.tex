@@ -90,7 +90,7 @@ The project is based on several key assumptions and technical protocols, which a
 
 传统的手工切片方法耗时且容易产生变异，因此自动切片机的出现为解决这些问题提供了可能性。对不同的生物组织而言，不同的切削参数会带来不同的效果，有好有坏。因此，为了提高生物切片的利用率和增加高质量标本的产量，针对特定组织确定最佳切割参数将是目标。
 
-机器学习和深度学习在计算机视觉和图像处理领域取得了巨大的成功，机器学习被定义为一系列方法，这些方法可以自动检测数据中的模式，然后采用它们来预测未来的目标或做出决策。（KP Murphy，《机器学习：概率视角》，剑桥：麻省理工学院出版社，第 32 页，2012 年。）在本文中，将通过整合先进的图像分析和机器学习技术来识别切片质量然后对评估在不同切片参数下的组织样本的质量。
+机器学习和深度学习在计算机视觉和图像处理领域取得了巨大的成功，机器学习被定义为一系列方法，这些方法可以自动检测数据中的模式，然后采用它们来预测未来的目标或做出决策\cite{1.1}。在本文中，将通过整合先进的图像分析和机器学习技术来识别切片质量然后对评估在不同切片参数下的组织样本的质量。
 
 \subsection{项目流程}
 
@@ -138,66 +138,46 @@ The project is based on several key assumptions and technical protocols, which a
 
 近年来，随着科技的发展，自动切片机的出现能够显著简化切片操作和提高切片质量。
 
-M在《Improved reproducibility in preparing precision-cut liver tissue slices》一文中提出，使用新型徕卡振动刀片切片机可以提高大鼠、小鼠和人体组织切片的准确性和重现性。-----------
-
+Zimmermann在《Improved reproducibility in preparing precision-cut liver tissue slices》一文中提出，使用新型徕卡振动刀片切片机可以提高大鼠、小鼠和人体组织切片的准确性和重现性。\cite{LR.1}
 
 
 在本次实验中，使用epredia提供的HM355S机器进行切片处理。该机器是一款热门的用于生物组织切片研究的设备，有不少实验和论文都使用了这款设备进行切片处理。
 
-Elzbieta Klimuszko 使用过HM355S机器，以牙齿作为标本进行切片操作，探究牙釉质中的钙镁含量。-------------
-https://link.springer.com/article/10.1007/s10266-018-0353-6
+Elzbieta Klimuszko 使用过HM355S机器，以牙齿作为标本进行切片操作，探究牙釉质中的钙镁含量。\cite{LR.2}
 
 
-Andelko Hrzenjak使用HM355S机器，对病变的子宫内膜组织进行切片操作，研究子宫内膜癌的发生机制。-------------
-https://www.sciencedirect.com/science/article/pii/S1525157810605685
+Andelko Hrzenjak使用HM355S机器，对病变的子宫内膜组织进行切片操作，研究子宫内膜癌的发生机制。\cite{LR.3}
 
 同样，对于显微镜的选择也是至关重要的。在本次实验中，使用了来自Keyence公司的VHX7000显微镜进行图像采集。他不仅能采集生物组织切片的图像（小鼠前列腺细胞
-https://www.frontiersin.org/journals/oncology/articles/10.3389/fonc.2022.943846/full
+\cite{LR.4}
 ），
+还能采集无机物（如陶瓷\cite{LR.5}，玻璃\cite{LR.6}）的表面图像。
 
-
-还能采集无机物（如陶瓷，玻璃）的表面图像。
-https://www.sciencedirect.com/science/article/abs/pii/S010956412300204X
-https://www.taylorfrancis.com/chapters/edit/10.1201/9781003023555-130/looking-foundations-structural-glass-digital-microscope-veer
 
 实验中将使用HM355s切片机和VHX7000显微镜进行切片和图像采集。
-
-% 希望通过自动化操作过程可可靠地控制切片的质量，增加高质量标本的产量，减少次品标本的数量。然而，不同组织样本的最佳切割参数各不相同。确定特定组织的最佳切割参数仍然是一个挑战。
-
-% \subsection{Image Classification for Tissue Analysis}
-
-% %用于组织分析的图像分类   这里写图像分类的技术背景和方法
 
 
 \subsection{关于切片组织的深度学习}
 
-%深度学习在生物医学应用中的应用   这里写深度学习的技术背景和方法
-
 深度学习技术在生物医学领域的应用已经取得了显著进展。深度学习模型在图像分类、目标检测和分割等任务中表现出色，为生物医学实验室的研究和诊断提供了强大的工具。
 
-Lorena Guachi-Guachi 提出了一种使用cnn网络对组织切片进行识别并进行修整。
+Lorena Guachi-Guachi 提出了一种使用cnn网络对组织切片进行识别并进行修整。\cite{LR.7}
 
-应用于切片术的卷积神经网络：识别石蜡包埋组织块的修剪末端切割程序
-https://www.sciencedirect.com/science/article/abs/pii/S0952197623011478
-
-
-在Biomedical Texture Analysis一书中，Vincent Andrearczyk提出了一种专门用于纹理分析的cnn架构，相比其它传统架构能够显著提高生物组织的分类准确性。
-
-第 4 章-纹理分析中的深度学习及其在组织图像分类中的应用
-https://www.sciencedirect.com/science/article/abs/pii/B9780128121337000041
+% 应用于切片术的卷积神经网络：识别石蜡包埋组织块的修剪末端切割程序
+% https://www.sciencedirect.com/science/article/abs/pii/S0952197623011478
 
 
-Yan Xu提出，从大型自然图像数据库 ImageNet 训练的 CNN 中提取的特征能够转移到组织病理学图像中，这为我们实现迁移学习提供了一种可行的思路。
+在Biomedical Texture Analysis一书中，Vincent Andrearczyk提出了一种专门用于纹理分析的cnn架构，相比其它传统架构能够显著提高生物组织的分类准确性.\cite{LR.8}
 
-通过深度卷积激活特征进行大规模组织病理学图像分类、分割和可视化
-https://link.springer.com/article/10.1186/s12859-017-1685-x
+% 第 4 章-纹理分析中的深度学习及其在组织图像分类中的应用
+% https://www.sciencedirect.com/science/article/abs/pii/B9780128121337000041
+
+
+Yan Xu提出，从大型自然图像数据库 ImageNet 训练的 CNN 中提取的特征能够转移到组织病理学图像中，这为我们实现迁移学习提供了一种可行的思路。\cite{LR.9}
+
+% 通过深度卷积激活特征进行大规模组织病理学图像分类、分割和可视化
+% https://link.springer.com/article/10.1186/s12859-017-1685-x
 
 根据以上文献，深度学习技术在组织切片的图像分类和分析中具有广泛的应用前景。通过利用深度学习模型，可以实现对组织样本的高效识别和分类，为优化切片参数提供有力支持。
-
-
-% \subsection{Integration of Deep Learning for Optimizing Tissue Slicing Parameters}
-
-% %整合深度学习以优化组织切片参数   这里写深度学习在优化切片参数中的应用
-
 
 \FloatBarrier % Now figures cannot float above section title

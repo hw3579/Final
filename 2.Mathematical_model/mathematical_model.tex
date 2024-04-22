@@ -12,7 +12,7 @@
 \subsubsection{边缘检测}
 对于生物切片组织，一个判断其质量的重要指标是切片的边缘是否清晰。切片边缘的完整性和连续性能够很好的反应该样品是否存在质量问题。
 
-关于边缘检测，有许多的算法，如sobel算子，laplacian算子、Canny算子等。https://ieeexplore.ieee.org/abstract/document/6240859
+关于边缘检测，有许多的算法，如sobel算子，laplacian算子、Canny算子等。\cite{3.1}
 
 \textbf{sobel算子}是一种一阶微分算子，可用来检测图像边缘。（Learning OpenCV by Bradski and Kaehler.）假设有一个一维图像$f(x)$，其强度与像素坐标$x$之间的关系可以如图1表示。可以观察到在\autoref{fig:original_function}中，在x=2.2左右斜率最大，可见在此处附近图像强度存在突变（存在边缘）。对其求导得到一阶导数$f'(x)$，如\autoref{fig:first_derivative}所示，此时导数的绝对值最大。sobel算子就是利用这一特性来检测边缘的。
 
@@ -44,7 +44,7 @@
 \end{equation}
 如上图所示，对一阶导数再次求导得到二阶导数$f''(x)$，如\autoref{fig:second_derivative}所示，可以看到在x=2.2左右，二阶导数为0，即说明当laplacian算子$\nabla^2 f$的值为0时，说明图像强度存在突变，即存在边缘。
 
-\textbf{Canny算子}是一种多阶微分算子，他在sobel算子计算后的基础上加入了对噪声的抑制。他由John F. Canny于1986年提出。（https://ieeexplore.ieee.org/document/4767851/authors\#authors）简而言之，其在sobel算子计算后，通过非极大值抑制，滞后阈值等步骤，设置了阈值，排除图像中的假边缘，得到了更加准确的边缘检测结果。
+\textbf{Canny算子}是一种多阶微分算子，他在sobel算子计算后的基础上加入了对噪声的抑制。他由John F. Canny于1986年提出\cite{3.2}.简而言之，其在sobel算子计算后，通过非极大值抑制，滞后阈值等步骤，设置了阈值，排除图像中的假边缘，得到了更加准确的边缘检测结果。
 
 在Experimental work/analytical investigation/ design这一章节中 将会对采集到的图像数据进行三种边缘检测算法的实验，对比其效果。
 
@@ -55,8 +55,7 @@
 对于样品来说，一个很简单的方法就是将石蜡区域和生物组织区域（样品在制备是已染色）的颜色进行对比，然后通过阈值分割的方法将其分割开来。假定生物组织为黄色，石蜡为白色，那么可以通过设置一个阈值，将图像中的白色部分分割出来，那么剩下的就是生物组织部分。
 
 此外，关于阈值分割还有更多的方法，比如下面就是一个基于Otsu方法的指纹提取算法。将其用在此处能够显著提高生物组织的分割效果。
-Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementation based on OpenCV》一文中提出了一种基于OpenCV的指纹提取算法。该算法对Otsu方法进行了改进，特别是在光照不均匀、图像模糊的情况下能够实现准确、简单、运行时间短的指纹提取。
-https://ieeexplore.ieee.org/document/7984539
+Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementation based on OpenCV》一文中提出了一种基于OpenCV的指纹提取算法。该算法对Otsu方法进行了改进，特别是在光照不均匀、图像模糊的情况下能够实现准确、简单、运行时间短的指纹提取。\cite{3.3}
 
 相关的对比和实验将在 Experimental work/analytical investigation/ design这一章节中进行。
 
@@ -64,7 +63,7 @@ https://ieeexplore.ieee.org/document/7984539
 
 \subsubsection{卷积神经网络}
 
-卷积神经网络（CNN）是一种深度学习模型，尤其擅长处理图像数据。它通过一系列卷积层自动学习空间层次的特征，无需手动特征提取。一个典型的CNN模型包括卷积层、池化层、全连接层等。（https://iopscience.iop.org/article/10.1088/1755-1315/440/4/042055/meta）其架构如下所示。
+卷积神经网络（CNN）是一种深度学习模型，尤其擅长处理图像数据。它通过一系列卷积层自动学习空间层次的特征，无需手动特征提取。一个典型的CNN模型包括卷积层、池化层、全连接层等。\cite{3.4}其架构如下所示。
 
 
 \begin{tikzpicture}[
@@ -106,7 +105,7 @@ where Conv is convolutional layer，是cnn的核心层，用于提取图像的�
 
 常用的已经训练好的模型有VGG、Inception等。这些模型在ImageNet等数据集上已经训练好，即模型内部各层的权重已经确定，可以用来进行迁移学习。
 
-表2展示了VGG16，VGG19（https://arxiv.org/abs/1409.1556），InceptionV3，（https://arxiv.org/abs/1512.00567）Xception（https://arxiv.org/abs/1610.02357），等模型的参数数量。可以看到，这些模型的参数数量都很大，可以较为准确地提取复杂图像的特征。
+表2展示了VGG16，VGG19\cite{3.5}，InceptionV3\cite{3.6}，Xception\cite{3.7}，等模型的参数数量。可以看到，这些模型的参数数量都很大，可以较为准确地提取复杂图像的特征。
 
 \begin{table}[htbp]
     \centering
