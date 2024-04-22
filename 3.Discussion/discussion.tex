@@ -72,7 +72,7 @@
 
 将高分辨率图片缩放为InceptionV3模型默认的299x299大小的确可能导致信息和细节的丢失，特别是对于原始分辨率远高于此标准的图像。例如，从VHX7000设备采集的2880x2160分辨率图像就含有大量的细节，直接缩放可能不利于模型捕捉到所有的细微差别，尤其是在医学影像或其他细节丰富的领域。
 
-改变模型的输入层接受更大的图片尺寸是一个潜在的解决方案。这样做的优势是它允许模型处理更高分辨率的图像，保留更多的原始信息和细节，可能导致更好的性能和更高的准确度。InceptionV3的架构设计有助于处理更大图片，因为其含有多个大小不一的卷积核，这使得它能够捕捉不同尺度的特征。
+改变模型的输入层接受更大的图片尺寸是一个潜在的解决方案。这样做的优势是它允许模型处理更高分辨率的图像，保留更多的原始信息和细节，可能导致更好的性能和更高的准确度。此外InceptionV3的架构设计有助于处理更大图片，因为其含有多个大小不一的卷积核，这使得它能够捕捉不同尺度的特征。
 
 受制于实验室机器性能（显存为16G），在这里将图像缩放到分别为原图像的0.4倍，即1152*864，进行再一次训练。
 
@@ -118,9 +118,9 @@
 
 在上文的实验中我们采用的是鱼的卵巢为组织切片，而在实际应用中，我们可能会遇到其他组织切片，如其他器官或其他动物标本等。因此，我们需要考虑模型的通用性。
 
-在这里有另一组已经采集好的数据集，是鱼的肺切片，一共分成4类，分别是good, normal, bad,other 四类（样本如\autoref{fig:good_fish_lung}到\autoref{fig:other_fish_lung}）。现在更改输入数据集，保持原有模型4架构不变，采用1152*864（0.4倍长宽）分辨率图片作为输入数据进行训练。
+在这里有另一组已经采集好的数据集，是鱼的肺切片，在这一共将其分成4类，分别是good, normal, bad,other 四类（样本如\autoref{fig:good_fish_lung}到\autoref{fig:other_fish_lung}）。现在更改输入数据集，保持原有model4架构不变，采用1152*864分辨率图片作为输入数据进行训练。
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -136,7 +136,7 @@
     \end{minipage}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -154,7 +154,7 @@
 
 
 训练的准确度和损失如\autoref{fig:model5_acc}和\autoref{fig:model5_loss}所示。
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -173,7 +173,35 @@
 通过观察图片可以得出：
 模型5的训练和验证准确度迅速上升并保持在高位，表明模型在这两个数据集上均有良好表现，损失图显示训练损失快速降低并趋于零，而验证损失在初始阶段出现尖峰后迅速降低并稳定，整体来看，这些迹象表明模型具有较好的拟合能力和泛化性能。
 
-（补充额外的表格-关于遇到肺泡验证准确度的表格）
+将其带入测试集进行测试，结果如\autoref{fig:accuracy_histogram2}所示：
+
+\begin{figure}[H]
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \captionof{table}{Model accuracy on test set}
+        \begin{tabular}{ccccc}
+            \toprule
+            label & accuracy(\%) \\
+            \midrule
+            bad & 94.1 \\
+            good & 98.2 \\
+            normal & 94.7 \\
+            other & 95.0 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:model_accuracy3}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy2.eps}
+        \caption{Model Accuracy on Test Set}
+        \label{fig:accuracy_histogram2}
+    \end{minipage}
+\end{figure}
+
+可见，模型预测结果在全部的标签中均有90\%以上的准确度，表现非常理想。这说明模型具有较好的通用性，可以应用到其他组织切片的分类中。
+
+% （补充额外的表格-关于遇到肺泡验证准确度的表格）
 
 
 

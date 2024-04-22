@@ -17,9 +17,6 @@ plt.title('Model Accuracy on Test Set')
 plt.savefig('./fig/assistplot/accuracy.eps')
 plt.show()
 
-
-import matplotlib.pyplot as plt
-
 # 创建一个包含精度数据的字典
 accuracy = {
     '8': 80,
@@ -39,4 +36,20 @@ plt.xlabel('Angle')
 plt.ylabel('Accuracy (%)')
 plt.title('Normal Accuracy on Different Angles')
 plt.savefig('./fig/assistplot/angle_accuracy.eps')
+plt.show()
+
+# 创建一个包含精度数据的字典
+accuracy = {
+    'bad': 94.1,
+    'good': 98.2,
+    'normal': 94.7,
+    'other': 95.0
+}
+
+# 创建直方图
+plt.bar(accuracy.keys(), accuracy.values())
+plt.xlabel('Angle')
+plt.ylabel('Accuracy (%)')
+plt.title('Normal Accuracy on Different Angles')
+plt.savefig('./fig/assistplot/angle_accuracy2.eps')
 plt.show()
