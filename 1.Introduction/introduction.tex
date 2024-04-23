@@ -2,6 +2,14 @@
 \section{Introduction and background}
 \label{sec:introduction}
 
+\subsection{Background}
+
+作为组成生物的最基本单位，人类对于细胞和组织的研究从未停止。作为直观观测细胞形态和结构的重要手段，生物组织切片对于生物医学的研究和临床诊断至关重要。一个完整可用的组织切片对于研究人员和医生来说是非常重要的，因为它可以提供有关细胞结构、组织形态和病理变化的重要信息。而在这之中，切片的质量是至关重要的。
+
+传统的手工切片方法耗时且容易产生变异，因此自动切片机的出现为解决这些问题提供了可能性。对不同的生物组织而言，不同的切削参数会带来不同的效果，有好有坏。因此，为了提高生物切片的利用率和增加高质量标本的产量，针对特定组织确定最佳切割参数将是目标。
+
+机器学习和深度学习在计算机视觉和图像处理领域取得了巨大的成功，机器学习被定义为一系列方法，这些方法可以自动检测数据中的模式，然后采用它们来预测未来的目标或做出决策\cite{1.1}。在本文中，将通过整合先进的图像分析和机器学习技术来识别切片质量然后对评估在不同切片参数下的组织样本的质量。
+
 
 \subsection{Introduction}
 
@@ -84,14 +92,6 @@ The project is based on several key assumptions and technical protocols, which a
 \end{enumerate}
 有关组织切片仪设置、图像分类标准和深度学习架构的技术规格详见方法和理论。
 
-\subsection{背景}
-
-作为组成生物的最基本单位，人类对于细胞和组织的研究从未停止。作为直观观测细胞形态和结构的重要手段，生物组织切片对于生物医学的研究和临床诊断至关重要。一个完整可用的组织切片对于研究人员和医生来说是非常重要的，因为它可以提供有关细胞结构、组织形态和病理变化的重要信息。而在这之中，切片的质量是至关重要的。
-
-传统的手工切片方法耗时且容易产生变异，因此自动切片机的出现为解决这些问题提供了可能性。对不同的生物组织而言，不同的切削参数会带来不同的效果，有好有坏。因此，为了提高生物切片的利用率和增加高质量标本的产量，针对特定组织确定最佳切割参数将是目标。
-
-机器学习和深度学习在计算机视觉和图像处理领域取得了巨大的成功，机器学习被定义为一系列方法，这些方法可以自动检测数据中的模式，然后采用它们来预测未来的目标或做出决策\cite{1.1}。在本文中，将通过整合先进的图像分析和机器学习技术来识别切片质量然后对评估在不同切片参数下的组织样本的质量。
-
 \subsection{项目流程}
 
 \begin{center}
@@ -110,12 +110,12 @@ The project is based on several key assumptions and technical protocols, which a
         >=stealth}
     ]
 
-    \node (collect) [box] {采集数据：不同角度下的切削图像};
-    \node (mix) [box, below of=collect] {混合所有数据并重新标记标签};
-    \node (train) [box, below of=mix] {模型训练：尝试寻找最优模型};
-    \node (test) [box, below of=train] {模型测试集测试};
-    \node (evaluate) [box, below of=test] {对不同角度的标本评估};
-    \node (rate) [box, below of=evaluate] {得出不同角度下的切削完整率};
+    \node (collect) [box] {采集数据};
+    \node (mix) [box, below of=collect] {标记数据};
+    \node (train) [box, below of=mix] {训练模型};
+    \node (test) [box, below of=train] {测试集测试};
+    \node (evaluate) [box, below of=test] {标本评估};
+    \node (rate) [box, below of=evaluate] {得出切削良品率};
     \node (improve) [box, below of=rate] {改进与提升};
     
     \draw [arrow] (collect) -- (mix);
