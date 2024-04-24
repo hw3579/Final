@@ -1,11 +1,49 @@
-\section{Experimental work/analytical investigation/ design}
+\section{Experimental work/ analytical investigation/ design}
+
+\textbf{实验流程}
+
+\begin{center}
+
+\begin{tikzpicture}[node distance=1.5cm,
+    box/.style={
+        rectangle,
+        rounded corners,
+        draw=black, very thick,
+        text width=15em,
+        minimum height=2em,
+        text centered},
+    arrow/.style={
+        thick,
+        ->,
+        >=stealth}
+    ]
+
+    \node (collect) [box] {采集数据};
+    \node (mix) [box, below of=collect] {标记数据};
+    \node (train) [box, below of=mix] {训练模型};
+    \node (test) [box, below of=train] {测试集测试};
+    \node (evaluate) [box, below of=test] {标本评估};
+    \node (rate) [box, below of=evaluate] {得出切削良品率};
+    \node (improve) [box, below of=rate] {改进与提升};
+    
+    \draw [arrow] (collect) -- (mix);
+    \draw [arrow] (mix) -- (train);
+    \draw [arrow] (train) -- (test);
+    \draw [arrow] (test) -- (evaluate);
+    \draw [arrow] (evaluate) -- (rate);
+    \draw [arrow] (rate) -- (improve);
+    
+    \end{tikzpicture}
+\end{center}
+
+
 
 \subsection{采集数据}
 要进行深度学习，所需要的第一步就是采集数据。在本实验中，我们使用了预先从生物实验室制备好的石蜡包埋好的组织切片（鱼的卵巢组织），将其放在HM355s自动切片机上依据切片机的使用手册，以不同的切削角度执行切片操作。记录切削数据。(补充！！切削给进速度和参数)
 
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
 
-其中切片机(\autoref{fig:machine})的切片示意图（以牙齿为例） 如\autoref{fig:cutting_machine}所示
+其中切片机(\autoref{fig:machine})的切片示意图（以牙齿为例） 如\autoref{fig:cutting_machine}所示\cite{4.1}.
 
 \begin{figure}[htbp]
     \centering
@@ -18,16 +56,19 @@
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/10266_2018_353_Fig1_HTML.jpg}
-        \caption{切片机示意图\cite{4.1}}
+        \caption{切片机示意图}
         \label{fig:cutting_machine}
     \end{minipage}
 \end{figure}
 % https://link.springer.com/article/10.1007/s10266-018-0353-6
 
 
-用于切片的生物组织（示例）如\autoref{label:sample}所示
 
-在切削过程中，从切角为8度开始（如\autoref{fig:machine}中的angle of inclination），每次增加0.5度，直到切角为12度。切片机在切片过程中保持给进速度为25，厚度为1。
+% 在切削过程中，从切角为8度开始（如\autoref{fig:machine}中的angle of inclination），每次增加0.5度，直到切角为12度。切片机在切片过程中保持给进速度为25，厚度为1。
+
+在我们的实验中，我们使用切片机的参数如下：模式设置为连续，进给速度为5.0，修整值为25，速度为32，水流速度为7.5，水温约为36摄氏度，切割角度在8到12度之间。
+
+用于切片的生物组织（示例）如\autoref{label:sample}所示
 
 在切片完成之后，将切好的不同类型的组织切片放在载玻片上（如\autoref{fig:采集样本}）所示，待其晾干后转移至VHX7000显微镜下，通过显微镜对每份样品进行拍照，获取到每份样品的电子图像数据（如\autoref{fig:显微镜}）。
 
@@ -55,7 +96,7 @@
 
 %图片需要后续更改为卵巢的
 
-据此，一共得到9组数据，代表了从8到12每0.5度切角的数据。一共得到几百张图片，每张图片的分辨率为2880*2160。其中一张（切角9.5度）如\autoref{fig:sample9.5}所示。
+据此，一共得到几百张图片，每张图片的分辨率为2880*2160。样本示例如\autoref{fig:sample9.5}所示。
 
 \begin{figure}
     \centering
@@ -67,9 +108,9 @@
 
 \subsection{标注数据}
 
-对于这9组数据，我们的目标是需要找到的是在何种切角下，生物组织的完整度最高（质量最好）。因此现在需要将这9组数据根据生物组织的完整度进行重新标注。
+现在使用数据集，根据切片的质量进行进行重新标注。
 
-根据刀片切割对生物组织的影响，我们将生物组织的完整度分为两个类别，分别为：normal和bad。不仅如此，通过分析采集到的数据，我们发现有部分数据的瑕疵具有共同点-切片上存在竖直或水平的白色褶皱（如图\autoref{fig:horizental_line}和\autoref{fig:vertical_line}）-这种类型的切片明显是不可用的。考虑到这个特征特别明显，我们将其多分两个分类，分别是horizental line 和vertical line。 
+总体上，我们将生物组织的良品度分为两个类别，分别为：normal和bad。另外，通过分析采集到的数据，我们发现有部分数据的瑕疵具有共同点-切片上存在竖直或水平的白色褶皱（如图\autoref{fig:horizental_line}和\autoref{fig:vertical_line}）-这种类型的切片明显是不可用的。考虑到这个特征特别明显，我们将其多分两个分类，分别是horizental line 和vertical line。 
 
 \begin{figure}[H]
     \centering
@@ -87,7 +128,7 @@
     \end{minipage}
 \end{figure}
 
-此外，考虑到有一部分图片在采样时存在明显的角度，这种情况下，我们也将其单独分为一类，称为slope（如图\autoref{fig:slope}）。最后，对于剩下的图片，我们将其标注为other(如图\autoref{fig:other})。
+此外，考虑到有一部分图片在采样时存在明显的旋转角度，这种情况下，我们也将其单独分为一类，称为slope（如图\autoref{fig:slope}）。最后，对于剩下的图片，我们将其标注为other(如图\autoref{fig:other})。
 
 \begin{figure}[H]
     \centering

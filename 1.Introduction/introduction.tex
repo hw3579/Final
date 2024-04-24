@@ -13,7 +13,7 @@
 
 \subsection{Introduction}
 
-\subsubsection{Project Overview}
+\textbf{Project Overview}
 
 % This project addresses the critical task of optimizing the cutting parameters of a biological tissue slicer, an essential instrument in biomedical research and clinical diagnostics. The aim is to enhance the precision and efficiency of tissue sample preparation by identifying the optimal slicing conditions. Through the collection of tissue samples under various cutting parameters and subsequent artificial image classification, this study employs deep learning techniques to analyze and predict the most effective slicing parameters. This endeavor not only promises to improve the quality of tissue samples for microscopic examination but also to streamline the workflow in laboratories, thereby contributing to the advancement of biological and medical sciences.
 这个项目致力于优化生物组织切片机的切割参数，这是生物医学研究和临床诊断中的关键设备。目标是通过确定最佳的切片条件，提高组织样本准备的精度和效率。通过收集在各种切割参数下的组织样本，并进行后续的人工图像分类，本研究采用深度学习技术来分析和预测最有效的切割参数。这项工作不仅有望提高显微检查的组织样本质量，还有助于简化实验室的工作流程，从而推动生物和医学科学的进步。
@@ -36,7 +36,7 @@
 \item 通过实证测试和改进来验证模型的预测结果。
 \end{enumerate}
 
-\subsubsection{Structure of the Report}
+\textbf{Structure of the Report}
 
 % This project is organized into the following chapters, each designed to systematically explore the research background, methodologies, experimental work, results presentation, discussions and conclusions, as well as considerations for project management, sustainability, and health and safety:
 
@@ -73,7 +73,7 @@
 
 \textbf{参考文献} - 列出所有引用的文献资料，支持研究并为研究提供基础。
 
-\subsubsection{Assumptions and Technical Specifications}
+\textbf{Assumptions and Technical Specifications}
 
 The project is based on several key assumptions and technical protocols, which are:
 
@@ -92,41 +92,6 @@ The project is based on several key assumptions and technical protocols, which a
 \end{enumerate}
 有关组织切片仪设置、图像分类标准和深度学习架构的技术规格详见方法和理论。
 
-\subsection{项目流程}
-
-\begin{center}
-
-\begin{tikzpicture}[node distance=1.5cm,
-    box/.style={
-        rectangle,
-        rounded corners,
-        draw=black, very thick,
-        text width=15em,
-        minimum height=2em,
-        text centered},
-    arrow/.style={
-        thick,
-        ->,
-        >=stealth}
-    ]
-
-    \node (collect) [box] {采集数据};
-    \node (mix) [box, below of=collect] {标记数据};
-    \node (train) [box, below of=mix] {训练模型};
-    \node (test) [box, below of=train] {测试集测试};
-    \node (evaluate) [box, below of=test] {标本评估};
-    \node (rate) [box, below of=evaluate] {得出切削良品率};
-    \node (improve) [box, below of=rate] {改进与提升};
-    
-    \draw [arrow] (collect) -- (mix);
-    \draw [arrow] (mix) -- (train);
-    \draw [arrow] (train) -- (test);
-    \draw [arrow] (test) -- (evaluate);
-    \draw [arrow] (evaluate) -- (rate);
-    \draw [arrow] (rate) -- (improve);
-    
-    \end{tikzpicture}
-\end{center}
 \section{Literature review}
 
 % This literature review examines the convergence of technologies in biological tissue slicing, with a particular focus on the application of image classification and deep learning to optimize slicing parameters. It aims to highlight significant advancements, identify gaps in current methodologies, and set the groundwork for the proposed project.

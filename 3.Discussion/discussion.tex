@@ -4,69 +4,41 @@
 
 \subsection{带入测试集验证准确度}
 
-在这里我们将训练好的模型应用到测试集上，计算模型的准确度。
+在这里我们将训练好的模型应用到额外准备好的测试集上，计算模型的准确度。
 
 \autoref{tab:model_accuracy}是模型在测试集上的准确度：（准确度定义为标签与模型预测一致的样本数占总样本数的比例）
-
-\begin{table}[H]
-\centering
-\caption{model accuracy on test set}
-\begin{tabular}{cccccc}
-    \toprule
-    & normal & horizental\_line & vertical\_line & slope & other \\
-    \midrule
-    accuracy(\%) & 98.4 & 95.6 & 80.0 & 96.1 & 95.2 \\
-    \bottomrule
-\end{tabular}
-\label{tab:model_accuracy}
-\end{table}
-
-
-
-可见，模型预测结果在normal上表现较好，而在vertical\_line上表现较差。这可能是由于用于测试的样本量较少，导致模型学习不足，难以判断。
 
 \begin{figure}[htbp]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
-        \caption{Model Accuracy on Test Set}
-        \label{fig:accuracy_histogram}
+        \captionof{table}{Model accuracy on test set}
+        \begin{tabular}{cc}
+            \toprule
+            Category & Accuracy(\%) \\
+            \midrule
+            Normal & 98.4 \\
+            Horizontal Line & 95.6 \\
+            Vertical Line & 80.0 \\
+            Slope & 96.1 \\
+            Other & 95.2 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:model_accuracy}
     \end{minipage}
     \begin{minipage}{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy.eps}
-        \caption{Model Accuracy on Different Angle}
-        \label{fig:angle_accuracy_histogram}
+        \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
+        \captionof{figure}{Model Accuracy on Test Set}
+        \label{fig:accuracy_histogram}
     \end{minipage}
 \end{figure}
 
 
-\subsection{判断最佳切削角度}
-
-在这里采用模型3d（inceptionv3）来判断最佳切削角度。我们将模型应用到测试集上，计算在每个切削角度下可用样本的占比。找到可用样本占比最多的区间，即为最佳切削角度。
-
-\begin{table}[H]
-    \centering
-    \caption{normal accuracy on different angle}
-    \begin{tabular}{cccccccccc}
-        \toprule
-        & 8 & 8.5 & 9 & 9.5 & 10 & 10.5 & 11 & 11.5 & 12 \\
-        \midrule
-        accuracy(\%) & 80 & 81.5 & 83.5 & 93.3 & 96.6 & 88.8 & 84.2 & 66.6 & 62.2 \\ 
-        \bottomrule
-    \end{tabular}
-    \label{tab:model_accuracy_angle}
-    \end{table}
+可见，模型预测结果在normal上表现较好，而在vertical\_line上表现较差。这可能是由于用于测试的样本量较少，导致模型学习不足，难以判断。
 
 
-
-由\autoref{tab:model_accuracy_angle}可知，最佳切削角度为10度。
-
-若要在保证切削质量为百分之80的情况下，切削角度应在9度到10.5度之间。
-
-
-\subsection{模型的进一步提高（改变输入分辨率）（数据增强在这里）}
+\subsection{模型的进一步提高（改变输入分辨率）}
 
 在这里我们讨论模型的进一步提高的空间。
 
@@ -112,6 +84,45 @@
     \end{table}
 
 对比修改分辨率前后的模型准确度，可以发现模型的准确度虽有提升但并不显著的，可能是由于准确度已经很接近于1，提升的空间较小导致的。
+
+
+\subsection{探究机器的最佳切削角}
+
+使用预先准备好的各个切削角度的图片，从8-12度，每0.5度一个样本，一共9组数据，每组数据包含100张图片，使用模型4来评估每组的良品率。此时，找到良品率最高的数据组，即为该机器的最佳切削角度。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+        \centering
+        \captionof{table}{Normal accuracy on different angle}
+        \begin{tabular}{cc}
+            \toprule
+            Angle & Accuracy(\%) \\
+            \midrule
+            8 & 80 \\
+            8.5 & 81.5 \\
+            9 & 83.5 \\
+            9.5 & 93.3 \\
+            10 & 96.6 \\
+            10.5 & 88.8 \\
+            11 & 84.2 \\
+            11.5 & 66.6 \\
+            12 & 62.2 \\
+            \bottomrule
+        \end{tabular}
+        \label{tab:model_accuracy_angle}
+    \end{minipage}
+    \begin{minipage}{0.55\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy.eps}
+        \captionof{figure}{Model Accuracy on Different Angle}
+        \label{fig:angle_accuracy_histogram}
+    \end{minipage}
+\end{figure}
+
+由\autoref{tab:model_accuracy_angle}可知，最佳切削角度为10度。
+
+另外，从\autoref{fig:angle_accuracy_histogram}得出若要在保证切削质量为百分之80的情况下，切削角度应在9度到10.5度之间。
 
 
 \subsection{模型通用性}
