@@ -1,0 +1,54 @@
+\section{Literature review}
+
+% This literature review examines the convergence of technologies in biological tissue slicing, with a particular focus on the application of image classification and deep learning to optimize slicing parameters. It aims to highlight significant advancements, identify gaps in current methodologies, and set the groundwork for the proposed project.
+
+这篇文献综述探讨了生物组织切片中技术的融合，特别关注图像分类和深度学习在优化切片参数方面的应用。它旨在突出重要的进展，确定当前方法学中存在的差距，并为拟议的项目奠定基础。
+\subsection{切片机与显微镜的选择}
+%组织切片和图像获取的技术背景   这里写切片机和显微镜的技术参数和采集手册及方法
+
+
+近年来，随着科技的发展，自动切片机的出现能够显著简化切片操作和提高切片质量。
+
+Zimmermann在《Improved reproducibility in preparing precision-cut liver tissue slices》一文中提出，使用新型徕卡振动刀片切片机可以提高大鼠、小鼠和人体组织切片的准确性和重现性。\cite{LR.1}
+
+
+在本次实验中，使用epredia提供的HM355S机器进行切片处理。该机器是一款热门的用于生物组织切片研究的设备，有不少实验和论文都使用了这款设备进行切片处理。
+
+Elzbieta Klimuszko 使用过HM355S机器，以牙齿作为标本进行切片操作，探究牙釉质中的钙镁含量。\cite{LR.2}
+
+
+Andelko Hrzenjak使用HM355S机器，对病变的子宫内膜组织进行切片操作，研究子宫内膜癌的发生机制。\cite{LR.3}
+
+同样，对于显微镜的选择也是至关重要的。在本次实验中，使用了来自Keyence公司的VHX7000显微镜进行图像采集。他不仅能采集生物组织切片的图像（小鼠前列腺细胞
+\cite{LR.4}
+），
+还能采集无机物（如陶瓷\cite{LR.5}，玻璃\cite{LR.6}）的表面图像。
+
+
+实验中将使用HM355s切片机和VHX7000显微镜进行切片和图像采集。
+
+
+\subsection{关于切片组织的深度学习}
+
+深度学习技术在生物医学领域的应用已经取得了显著进展。深度学习模型在图像分类、目标检测和分割等任务中表现出色，为生物医学实验室的研究和诊断提供了强大的工具。
+
+Lorena Guachi-Guachi 提出了一种使用cnn网络对组织切片进行识别并进行修整。\cite{LR.7}
+
+% 应用于切片术的卷积神经网络：识别石蜡包埋组织块的修剪末端切割程序
+% https://www.sciencedirect.com/science/article/abs/pii/S0952197623011478
+
+
+在Biomedical Texture Analysis一书中，Vincent Andrearczyk提出了一种专门用于纹理分析的cnn架构，相比其它传统架构能够显著提高生物组织的分类准确性.\cite{LR.8}
+
+% 第 4 章-纹理分析中的深度学习及其在组织图像分类中的应用
+% https://www.sciencedirect.com/science/article/abs/pii/B9780128121337000041
+
+
+Yan Xu提出，从大型自然图像数据库 ImageNet 训练的 CNN 中提取的特征能够转移到组织病理学图像中，这为我们实现迁移学习提供了一种可行的思路。\cite{LR.9}
+
+% 通过深度卷积激活特征进行大规模组织病理学图像分类、分割和可视化
+% https://link.springer.com/article/10.1186/s12859-017-1685-x
+
+根据以上文献，深度学习技术在组织切片的图像分类和分析中具有广泛的应用前景。通过利用深度学习模型，可以实现对组织样本的高效识别和分类，为优化切片参数提供有力支持。
+
+\FloatBarrier % Now figures cannot float above section title
