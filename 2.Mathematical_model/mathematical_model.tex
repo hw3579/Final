@@ -14,7 +14,7 @@
 
 关于边缘检测，有许多的算法，如sobel算子，laplacian算子、Canny算子等。\cite{3.1}
 
-\textbf{sobel算子}是一种一阶微分算子，可用来检测图像边缘。（Learning OpenCV by Bradski and Kaehler.）假设有一个一维图像$f(x)$，其强度与像素坐标$x$之间的关系可以如图1表示。可以观察到在\autoref{fig:original_function}中，在x=2.2左右斜率最大，可见在此处附近图像强度存在突变（存在边缘）。对其求导得到一阶导数$f'(x)$，如\autoref{fig:first_derivative}所示，此时导数的绝对值最大。sobel算子就是利用这一特性来检测边缘的。
+\textbf{sobel算子}是一种一阶微分算子，可用来检测图像边缘\cite{补充1}。假设有一个一维图像$f(x)$，其强度与像素坐标$x$之间的关系可以如图1表示。可以观察到在\autoref{fig:original_function}中，在x=2.2左右斜率最大，可见在此处附近图像强度存在突变（存在边缘）。对其求导得到一阶导数$f'(x)$，如\autoref{fig:first_derivative}所示，此时导数的绝对值最大。sobel算子就是利用这一特性来检测边缘的。
 
 \begin{figure}[htbp]
     \centering
