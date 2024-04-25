@@ -40,7 +40,7 @@ The experiment workflow is outlined in the diagram below, detailing the sequenti
 
 
 
-\subsection{Data collection}
+\subsection{Data Collection}
 The first essential step for deep learning is data collection. In this experiment, pre-prepared paraffin-embedded tissue sections (fish ovary tissues) were used. These sections were placed on an HM355s automatic microtome, and slicing operations were performed according to different cutting angles as specified in the microtome's manual. The cutting data was recorded meticulously.
 
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
@@ -106,7 +106,7 @@ Based on this, several hundred images were obtained, each with a resolution of 2
 \end{figure}
 
 
-\subsection{Data labeling}
+\subsection{Data Labeling}
 
 For this experiment, the dataset is re-labeled based on the quality of the tissue sections. Overall, the quality of the biological tissues is categorized into two primary classes: normal and bad. Further analysis of the collected data revealed common flaws - the presence of vertical or horizontal white creases on the sections, which clearly indicate unusable slices. Given the distinct nature of these flaws, they are classified into two additional specific categories: \textbf{horizontal line}(\autoref{fig:horizental_line}) and \textbf{vertical line}(\autoref{fig:vertical_line}).
 
@@ -399,7 +399,7 @@ During the literature review, an article was found that described an improved se
 
 The fingerprint algorithm, which is an adaptation of the Otsu method, is particularly effective in differentiating areas of high and low density, which is ideal for applications like fingerprint recognition where contrast between ridges and valleys is critical. The use of this algorithm in the context of biological tissue segmentation may offer a robust way to delineate regions of different cellular densities or structures within a sample.
 
-\subsubsection{Summary}
+\subsubsection*{Summary}
 
 Based on the image preprocessing techniques discussed, both edge detection and threshold segmentation have shown promising results in highlighting the features of biological tissues and eliminating interference from paraffin. These preprocessing steps have significantly enhanced the visibility of essential features while minimizing noise and irrelevant information, which is critical for accurate analysis in histopathology.
 
@@ -446,7 +446,7 @@ Results are displayed in the graphs below(\autoref{fig:model22_acc} and \autoref
 \end{figure}
 
 
-\subsubsection{Summary}
+\subsubsection*{Summary}
 The graphs illustrate that Models 2a and 2c begin to stabilize after approximately 8 training epochs, with training accuracies nearing 100\%, while validation accuracies stabilize around 65\% and 75\%, respectively. Despite high accuracies, both models exhibit relatively high validation losses above 1, suggesting overfitting and limited generalization to unseen data.
 
 Model 2b, however, converges after about 10 training epochs, displaying the highest validation accuracy at approximately 82\% and a lower loss fluctuating between 1 and 1.2. This indicates that Model 2b performs better on the validation set, suggesting better adaptability and robustness. This might be due to Model 2b processing color images, which provide richer features from RGB channels, potentially enhancing feature extraction and generalization capabilities.
@@ -524,7 +524,7 @@ The training and validation performance of these models is depicted below:
 \end{itemize}
 
 
-\subsubsection{Summary}
+\subsubsection*{Summary}
 
 A comparative analysis of the VGG16, VGG19, and InceptionV3 models reveals that InceptionV3 yields the best training results, with both training and validation accuracies converging around 1 and 0.9 respectively, and losses converging around 0.6. This indicates that the InceptionV3 model not only trains effectively but also demonstrates superior generalization capabilities.
 
