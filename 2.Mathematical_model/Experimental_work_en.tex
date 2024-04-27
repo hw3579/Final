@@ -95,20 +95,21 @@ The biological tissues used for sectioning are shown in Figure \ref{label:sample
 \end{figure}
 
 
-Based on this, several hundred images were obtained, each with a resolution of 2880*2160. An example of the samples is shown in \autoref{fig:sample9.5}.
+Based on this, several hundred images were obtained, each with a resolution of 2880*2160. 
+% An example of the samples is shown in \autoref{fig:sample9.5}.
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{./fig/sample9.5.jpg}
-    \caption{Sample with a cutting angle of 9.5 degrees}
-    \label{fig:sample9.5}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{./fig/sample9.5.jpg}
+%     \caption{Sample with a cutting angle of 9.5 degrees}
+%     \label{fig:sample9.5}
+% \end{figure}
 
 
 \subsection{Data Labeling}
 
-For this experiment, the dataset is re-labeled based on the quality of the tissue sections. Overall, the quality of the biological tissues is categorized into two primary classes: normal and bad. Further analysis of the collected data revealed common flaws - the presence of vertical or horizontal white creases on the sections, which clearly indicate unusable slices. Given the distinct nature of these flaws, they are classified into two additional specific categories: \textbf{horizontal line}(\autoref{fig:horizental_line}) and \textbf{vertical line}(\autoref{fig:vertical_line}).
+For this experiment, the dataset is labeled based on the quality of the tissue sections. Overall, the quality of the biological tissues is categorized into two primary classes: normal and bad. Further analysis of the collected data revealed common flaws - the presence of vertical or horizontal white creases on the sections, which clearly indicate unusable slices. Given the distinct nature of these flaws, they are classified into two additional specific categories: \textbf{horizontal line}(\autoref{fig:horizental_line}) and \textbf{vertical line}(\autoref{fig:vertical_line}).
 
 \begin{figure}[H]
     \centering
@@ -229,7 +230,7 @@ In cases where model performance is suboptimal, it may be due to the complexity 
 
 \subsubsection{Edge Detection}
 
-As mentioned in section 3.1.1, the principle of edge detection involves identifying changes in pixel intensity (gradients) to determine edges within an image. Assuming the original image is displayed in \autoref{fig:sample9.5}.
+As mentioned in section 3.1.1, the principle of edge detection involves identifying changes in pixel intensity (gradients) to determine edges within an image. 
 
 Before proceeding with edge detection, an initial preprocessing step—Gaussian blur—is applied. The rationale behind Gaussian blurring is that it helps reduce noise in the image, smoothens the gradient transitions, and decreases the likelihood of detecting false edges, thus enhancing the accuracy of edge detection\cite{4.3}. We experiment with Gaussian kernels of sizes 21, 41, 61, and 81, which correspond to 1\%, 2\%, 3\%, and 4\% of the image width, respectively.
 
@@ -237,69 +238,65 @@ The images post-Gaussian blurring are displayed below. To better demonstrate the
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/blurred21.jpg}
-        \caption{blurred k=21}
-        \label{fig:blurred21}
+        \caption*{k=21}
+        % \label{fig:blurred21}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/gausssian/sobel21.jpg}
-        \caption{sobel k=21}
-        \label{fig:sobel21}
-    \end{minipage}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/blurred41.jpg}
-        \caption{blurred k=41}
-        \label{fig:blurred41}
+        \caption*{k=41}
+        % \label{fig:blurred41}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/gausssian/sobel41.jpg}
-        \caption{sobel k=41}
-        \label{fig:sobel41}
-    \end{minipage}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/blurred61.jpg}
-        \caption{blurred k=61}
-        \label{fig:blurred61}
+        \caption*{k=61}
+        % \label{fig:blurred61}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/gausssian/sobel61.jpg}
-        \caption{sobel k=61}
-        \label{fig:sobel61}
+        \includegraphics[width=\textwidth]{./fig/gausssian/blurred81.jpg}
+        \caption*{k=81}
+        % \label{fig:blurred81}
     \end{minipage}
+    \caption{Images post-Gaussian blur}
+    \label{fig:blurred}
 \end{figure}
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/gausssian/blurred81.jpg}
-        \caption{blurred k=81}
-        \label{fig:blurred81}
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel21.jpg}
+        \caption*{k=21}
+        % \label{fig:sobel21}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel41.jpg}
+        \caption*{k=41}
+        % \label{fig:sobel41}
+    \end{minipage}
+    \begin{minipage}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{./fig/gausssian/sobel61.jpg}
+        \caption*{k=61}
+        % \label{fig:sobel61}
+    \end{minipage}
+    \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/sobel81.jpg}
-        \caption{sobel k=81}
-        \label{fig:sobel81}
+        \caption*{k=81}
+        % \label{fig:sobel81}
     \end{minipage}
+    \caption{Images post-Sobel operator}
+    \label{fig:sobel}
 \end{figure}
 
-From \autoref{fig:blurred21} to \autoref{fig:blurred81}, it can be observed that as the Gaussian blur kernel size increases, the image details become progressively more blurred, and the edges also become more indistinct. From \autoref{fig:sobel21} to \autoref{fig:sobel81}, the effectiveness of edge detection diminishes as the kernel size increases, with the edges becoming less prominent. Considering the clarity of image edges against background noise, a Gaussian kernel size of 61 is selected.
+In \autoref{fig:blurred}, it can be observed that as the Gaussian blur kernel size increases, the image details become progressively more blurred, and the edges also become more indistinct. In \autoref{fig:sobel} the effectiveness of edge detection diminishes as the kernel size increases, with the edges becoming less prominent. Considering the clarity of image edges against background noise, a Gaussian kernel size of 61 is selected.
 
 
 Following the application of Gaussian blur (k=61), the results using the Laplacian operator via Python's OpenCV library are depicted below:
@@ -477,6 +474,7 @@ These findings highlight the challenges in image preprocessing. Aggressive prepr
 \subsection{Model 3: Original Images with Transfer Learning}
 
 \textbf{Transfer Learning with Pre-trained Models}
+
 We are incorporating three well-known models pre-trained on the ImageNet dataset: VGG16, VGG19, and InceptionV3. These models come with pre-trained weights that are highly optimized and are expected to improve feature extraction capabilities significantly when adapted to our specific dataset.
 
 \begin{itemize}

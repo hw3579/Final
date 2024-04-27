@@ -54,24 +54,23 @@ The Final selected model configuration, illustrated below, highlights the struct
 
 \textbf{Broadening Classification Categories}
 
-The current research has demonstrated promising results with the classification methods employed; however, the scope of classification remains limited to five categories. Enhancing the diversity of these categories could facilitate a deeper understanding of the relationships between cutting angles and sample quality, providing more precise analytical capabilities. More comprehensive classification could enable the prediction of optimal cutting angles based on a wider range of tissue responses, potentially improving outcomes for various tissue types and conditions.
+Current research shows promising outcomes using existing classification methods; however, these methods are confined to five categories. Expanding these categories could deepen insights into the correlation between cutting angles and sample quality, enhancing analytical precision. A broader classification spectrum could also improve predictions of optimal cutting angles for diverse tissue types and conditions.
 
 \textbf{Transitioning to Linear Analytical Methods}
 
-With a sufficiently granular set of classification points, it may become feasible to transition from a categorical framework to linear analytical methods. When enough categories are present, these can be approximated as discrete points within a linear relationship, allowing for linear regression to model the relationship between cutting angles and sample quality.
+Introducing a more detailed classification could enable a shift from categorical to linear analytical methods. With sufficient categories acting as discrete points, linear relationships can be formed, allowing linear regression to accurately model the connection between cutting angles and sample quality.
 
-Linear Discriminant Analysis (LDA) is a statistical method used when categorical outcomes can be linearized, as discussed in the context of cutting angles. Employing LDA, especially in determining optimal cutting angles, could provide a more refined approach to correlating tissue quality with cutting parameters. This method could simplify the prediction of cutting parameters and aid in more precisely controlling the tissue sectioning process.
+Linear Discriminant Analysis (LDA) is valuable here, particularly for refining the determination of optimal cutting angles and correlating them with tissue quality. This approach simplifies predicting cutting parameters and enhances control over the tissue sectioning process.
 
 \textbf{Challenges and Considerations}
 
-Transitioning from a classification problem to a linear discriminant analysis framework is challenging. One significant issue is that while binary classification models output probabilities, linear regression inherently seeks to identify relationships between variables (e.g., cutting angles as independent variables and cutting quality as the dependent variable). Moreover, the relationship between cutting angles and tissue quality is likely not a simple linear one, complicating the data the model needs to handle.
+Switching to a linear discriminant analysis framework poses significant challenges. Unlike binary classification models that provide probabilities, linear regression models explore direct relationships between variables, such as between cutting angles and tissue quality, which may not be straightforwardly linear.
 
-Further, training and validating linear models require significantly more data, potentially several orders of magnitude greater than currently used, making data collection a lengthy and challenging process. In addition, training and validating linear regression models demand substantial computational resources. Currently, using the TensorFlow framework with an InceptionV3 model at an input resolution of 1152x864 is pushing the limits of available GPU memory, suggesting that advancements in this area require additional hardware and computational power.
+Moreover, linear models require substantially more data, increasing both the duration and complexity of data collection and demanding greater computational resources. Current setups using TensorFlow and InceptionV3 models are already taxing GPU capacities, indicating a need for more advanced hardware and computational capabilities.
 
 \textbf{Long-term Goals and Resource Needs}
 
-These improvements represent long-term goals needing considerable resources and time. Research into linear discriminant analysis, for instance, involves deeper theoretical exploration and practical testing. For example, Jie Wen's work on "Robust Sparse Linear Discriminant Analysis" introduces sparsity into the LDA framework, making the model more robust and potentially more suited to complex real-world applications\cite{6.1}.
-
+These advancements are long-term objectives that require extensive resources and time. Research into linear discriminant analysis necessitates further theoretical study and practical experimentation. For instance, Jie Wen's "Robust Sparse Linear Discriminant Analysis" integrates sparsity into the LDA model, enhancing its robustness and suitability for complex applications.
 
 % （如果可以增加相关论文证明观点：二分类和线性回归问题的对比和性能开销）
 
@@ -86,7 +85,20 @@ The article "Analysis of the Application Efficiency of TensorFlow and PyTorch in
 
 Pascal Fua's "Comparing Python, Go, and C++ on the N-Queens Problem" presents methods to optimize deep learning performance by comparing the efficiency of Python, Go, and C++ in solving the N-Queens problem.\cite{6.3} It was found that runtime languages have clear advantages in handling loops and data flows, suggesting that compiling tools like Numba, Cython, and Pybind11 can enhance performance in deep learning applications.
 
-% （论文：tf和torch的对比，libtf libtf，opencv c++和py的对比）
+
+
+
+\subsubsection{Exploring the Impact of Additional Parameters on Cutting Quality}
+
+In previous experiments, we established a model by setting the cutting angle as the independent variable and the cutting quality as the dependent variable. However, in reality, cutting quality may be influenced by other parameters such as cutting speed, feed rate (chip thickness), and tool wear.
+
+In future work, if our focus is on the factors affecting cutting quality, research on these additional variables will be necessary. Indeed, the impact of these parameters on quality can be intuitively represented by a function:
+
+\begin{equation}
+Q = f(\theta, v, f, w)
+\end{equation}
+
+Here, $Q$ represents cutting quality, $\theta$ denotes the cutting angle, $v$ indicates the cutting speed, $f$ stands for the feed rate, and $w$ symbolizes tool wear. As for the specific form of this function, i.e., the weights of each parameter, it will require extensive experimental data for statistical analysis and fitting. This represents yet another challenge.
 
 \subsubsection{Optimization of the Sectioning Process}
 
@@ -114,7 +126,7 @@ By evaluating the quality of sections at different angles, we have discovered th
 
 However, the study also highlighted the limitations of traditional image preprocessing techniques. Initial attempts to enhance model performance through image preprocessing did not yield significant improvements and, in some cases, potentially obscured critical details necessary for accurate classification. This finding suggests that maintaining the integrity of original image data might be more beneficial than applying aggressive preprocessing techniques.
 
-The research also explored the possibility of real-time assessment and automatic adjustment of sectioning parameters, proposing a feedback system that integrates image capture, real-time analysis, and mechanical adjustment to enhance the quality of sections dynamically. This system points towards the future of automated histology instruments, which could significantly reduce human error and variability in tissue sectioning.
+The research further explores enhancing the tissue slicing process through the expansion of classification methods and performance optimization. This includes integrating a greater number of classification categories and linear analysis methods such as Linear Discriminant Analysis (LDA), to more precisely understand the relationship between cutting parameters and sample quality. Concurrently, adopting more efficient computational frameworks and parallel processing techniques to optimize performance, as well as exploring additional parameters such as cutting speed and feed rate, will enhance the predictive capability of the model and the quality of tissue slices. Moreover, the implementation of a real-time feedback system, utilizing machine learning to dynamically adjust cutting parameters, will propel histological preparation towards automation, ensuring more consistent and high-quality tissue slices.
 
 In conclusion, this project not only demonstrates the important role of deep learning in biomedical research and applications, but also provides feasibility for the further improvement of tissue sectioning technology. The combination of these technologies can bring improvements to biological sectioning equipment, provide a possible solution to improve the yield rate of tissue samples and the efficiency of sectioning. This research provides new ideas and methods for future tissue sectioning technology, and is expected to have a profound impact in the field of biomedicine.
 
