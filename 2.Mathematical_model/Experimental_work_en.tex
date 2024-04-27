@@ -163,9 +163,6 @@ An example of a normal slice that meets observational requirements is shown in \
 
 For each image, we need to label it as one of the above five categories. This will serve as our dataset for training the model.
 
-
-\FloatBarrier
-
 \subsection{Model 1: Original Images with a Simple CNN Network}
 
 For a new dataset, where the appropriate complexity of the model for the given image complexity is uncertain, a basic CNN architecture is initially employed to gauge the characteristics of the dataset and the complexity of the images.
@@ -222,9 +219,6 @@ From the charts, it is observed that Models 1a, 1b, and 1c exhibit a gradual inc
 The likely cause of overfitting here could be the insufficient complexity of the models relative to the complexity of the dataset, indicating that the models may not be effectively extracting features from the data. Although the models achieve high accuracy and low losses on the training set, their generalization capabilities on the validation set need enhancement.
 
 To improve model accuracy, considering preprocessing of the images and assisting the model with feature extraction manually might be beneficial, helping the model better generalize to new data.
-
-\FloatBarrier
-
 
 \subsection{Image Preprocessing Improvement}
 
@@ -345,9 +339,6 @@ Among the three Canny results, \autoref{fig:canny4_10} exhibits the best perform
 
 Comparing the results of the Sobel, Laplacian, and Canny algorithms, the Sobel algorithm shows average performance, with significant edge detection but limited noise reduction. The Laplacian algorithm performs the worst, with edges becoming nearly invisible, likely due to its high sensitivity to noise. The Canny algorithm delivers the best results, maintaining edge details while effectively removing most noise. Therefore, the Canny algorithm is selected as the method for image preprocessing, enhancing the model's ability to focus on relevant features for further analysis.
 
-\FloatBarrier
-
-
 \subsubsection{Threshold Segmentation}
 
 Considering the distinct colors of the biological tissue samples (yellow) and paraffin (white) in the specimens, threshold segmentation offers a straightforward method to distinguish between these two components by isolating the white regions of the image, leaving the biological tissue intact. This procedure involves enhancing the image contrast and saturation to better highlight the yellow color of the biological tissues, as demonstrated in \autoref{fig:enhanced_image}. The processing steps are executed using Python's OpenCV library.
@@ -408,9 +399,6 @@ To leverage these improvements, three datasets can be established:
 \end{itemize}
 
 These datasets will serve as training sets for the upcoming model training phase. Utilizing diverse preprocessing approaches not only enhances model robustness by providing varied representations of the data but also helps in exploring which image preprocessing technique best assists the model in learning relevant features effectively.
-\FloatBarrier
-
-
 
 \subsection{Model 2: Preprocessed Images with a Simple CNN Network}
 
