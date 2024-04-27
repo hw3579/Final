@@ -4,12 +4,6 @@
 
 \subsection{Background}
 
-% 作为生命的基本单位，人类对细胞和组织的研究从未停止。生物组织切片作为直接观察细胞形态和结构的关键手段，对于生物医学研究和临床诊断至关重要。一份完整且可用的组织切片对于研究人员和医生来说非常重要，因为它提供了关于细胞结构、组织形态和病理变化的重要信息。在此过程中，切片的质量至关重要。
-
-% 传统的手动切割方法既耗时又容易出现变异，因此自动切割机的出现为这些问题提供了解决方案。对于不同的生物组织，不同的切割参数可以产生不同的结果，既有积极的，也有消极的。因此，为了提高生物切片的利用率并增加高质量标本的产量，确定特定组织的最佳切割参数仍然是一个目标。
-
-% 机器学习和深度学习在计算机视觉和图像处理领域取得了显著的成功。机器学习被定义为一系列可以自动检测数据中模式的方法，这些模式随后被用来预测未来的结果或做出决策 \cite{1.1}。在本文中，我们整合了先进的图像分析和机器学习技术，以识别切片质量，然后评估不同切割参数下组织样本的质量。
-
 As the fundamental units of life, human research into cells and tissues has never ceased. Biological tissue sections, serving as crucial means for the direct observation of cellular morphology and structure, are essential for biomedical research and clinical diagnosis. A complete and usable tissue section is of great importance to researchers and physicians, as it provides vital information about cell structure, tissue morphology, and pathological changes. Within this, the quality of the section is of paramount importance.
 
 Traditional manual sectioning methods are time-consuming and prone to variability, hence the emergence of automatic microtomes has provided a solution to these issues. For different biological tissues, varying cutting parameters can yield differing results, both positive and negative. Therefore, to enhance the utilization rate of biological sections and increase the production of high-quality specimens, determining optimal cutting parameters for specific tissues remains a goal.
@@ -19,9 +13,6 @@ Machine learning and deep learning have achieved significant success in the fiel
 \subsection{Introduction}
 
 \textbf{Project Overview}
-
-
-% 这个项目致力于优化生物组织切片机的切割参数，这是生物医学研究和临床诊断中的关键设备。目标是通过确定最佳的切片条件，提高组织样本准备的精度和效率。通过收集在各种切割参数下的组织样本，并进行后续的人工图像分类，本研究采用深度学习技术来分析和预测最有效的切割参数。这项工作不仅有望提高显微检查的组织样本质量，还有助于简化实验室的工作流程，从而推动生物和医学科学的进步。
 
 This project aims to optimize the cutting parameters of biological tissue microtomes, which are crucial devices in biomedical research and clinical diagnostics. The objective is to enhance the precision and efficiency of tissue sample preparation by determining the optimal slicing conditions. By collecting tissue samples under various cutting parameters and conducting subsequent manual image classification, this study employs deep learning techniques to analyze and predict the most effective cutting parameters. This work not only promises to improve the quality of tissue samples for microscopic examination but also helps to simplify laboratory workflows, thereby advancing biological and medical sciences.
 
@@ -34,33 +25,9 @@ This project aims to optimize the cutting parameters of biological tissue microt
     \item Use the model's insights to determine the optimal cutting parameters for the tissue slicer.
     \item Validate the model's predictions through empirical testing and refinement.
 \end{enumerate}
-% \begin{enumerate}
-% \item 收集在不同参数下切割的组织样本的全面数据集。
-% \item 使用人工图像分类来对这些样本的质量和特征进行分类。
-% \item 开发和训练一个能够评估组织样本质量的深度学习模型。
-% \item 利用模型的见解来确定组织切片仪的最佳切割参数。
-% \item 通过实证测试和改进来验证模型的预测结果。
-% \end{enumerate}
+
 
 \subsection{Structure of the Report}
-
-% 本项目分为以下几个章节，每个章节都旨在系统地探索研究背景、方法论、实验工作、结果展示、讨论和结论，以及项目管理、可持续性和健康安全方面的考虑：
-
-% \textbf{引言和背景} - 本章概述了项目的目标、目标和结构安排。它简要介绍了研究的动机和必要性，以及采用的技术协议和规范。
-
-% \textbf{文献综述} - 对生物组织切片、图像分类和深度学习在生物样本制备中的应用进行深入讨论。本节将当前研究定位于现有研究的背景下。
-
-% \textbf{方法和理论} - 详细描述了实验方法、理论框架以及数据收集和处理的具体计划。
-
-% \textbf{实验工作/分析调查/设计} - 描述了实验设计、实施和分析调查的详细步骤。详细阐述了实现项目目标所采用的策略和方法。
-
-% \textbf{实验或分析结果展示/最终构建产品描述} - 本章展示了实验数据、分析结果或最终设计产品，详细描述了实验或设计结果。
-
-% \textbf{讨论和结论} - 对结果进行分析，讨论其科学意义和实际价值。本章还提供研究结论，并提出未来研究的潜在方向。
-
-% \textbf{项目管理、可持续性和健康安全考虑} - 讨论项目管理策略、可持续性问题和健康安全措施，以确保研究工作的高效和安全进行。
-
-% \textbf{参考文献} - 列出所有引用的文献资料，支持研究并为研究提供基础。
 
 The project is structured into several chapters, each aimed at systematically exploring research background, methodologies, experimental work, results presentation, discussions and conclusions, as well as considerations for project management, sustainability, and health safety:
 
@@ -93,13 +60,3 @@ The project is based on several key assumptions and technical protocols, which i
 \end{enumerate}
 
 Technical specifications regarding tissue microtome settings, image classification standards, and deep learning architecture are detailed in the Methods and Theory section.
-
-% 该项目基于几个关键的假设和技术协议，包括：
-
-% \begin{enumerate} 
-%     \item 不同批次的组织样本性质的一致性。 
-%     \item 生物组织切片机和成像设备的可靠性和准确性。 
-%     \item 深度学习模型在解释复杂的生物图像数据方面的充分性。 
-% \end{enumerate}
-
-% 关于组织切片机设置、图像分类标准和深度学习架构的技术规格详见方法和理论部分。
