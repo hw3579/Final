@@ -112,13 +112,13 @@
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/horizental_line.jpg}
         \caption{horizental line}
         \label{fig:horizental_line}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/vertical_line.jpg}
         \caption{vertical line}
@@ -130,25 +130,19 @@
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/slope.jpg}
         \caption{slope}
         \label{fig:slope}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/other.jpg}
         \caption{other}
         \label{fig:other}
     \end{minipage}
-\end{figure}
-
-正常的符合观察要求的切片如\autoref{fig:normal}所示。
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/normal.jpg}
         \caption{normal}
@@ -156,6 +150,7 @@
     \end{minipage}
 \end{figure}
 
+正常的符合观察要求的切片如\autoref{fig:normal}所示。
 
 对于每一张图片，我们需要将其标注为以上五个类别中的一个。这将作为我们的数据集，用于训练模型。
 
@@ -324,29 +319,26 @@
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+2.jpg}
         \caption{canny 2 5}
         \label{fig:canny2_5}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+4.jpg}
         \caption{canny 4 10}
         \label{fig:canny4_10}
     \end{minipage}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+6.jpg}
         \caption{canny 6 15}
         \label{fig:canny6_15}
     \end{minipage}
 \end{figure}
+
 
 在三张canny算法的结果中，可见\autoref{fig:canny4_10}的效果最好，其能在保证边缘细节得到大部分保留的情况下，去除了大部分的噪声。因此我们选择canny算法的阈值为4 10。
 

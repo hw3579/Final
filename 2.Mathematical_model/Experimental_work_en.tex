@@ -113,13 +113,13 @@ For this experiment, the dataset is labeled based on the quality of the tissue s
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/horizental_line.jpg}
         \caption{horizental line}
         \label{fig:horizental_line}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.33\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/vertical_line.jpg}
         \caption{vertical line}
@@ -131,31 +131,27 @@ Additionally, some images were noted to have a significant rotational angle at t
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/slope.jpg}
         \caption{slope}
         \label{fig:slope}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/other.jpg}
         \caption{other}
         \label{fig:other}
     \end{minipage}
-\end{figure}
-
-An example of a normal slice that meets observational requirements is shown in \autoref{fig:normal}.
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/sample_1/normal.jpg}
         \caption{normal}
         \label{fig:normal}
     \end{minipage}
 \end{figure}
+
+An example of a normal slice that meets observational requirements is shown in \autoref{fig:normal}.
 
 
 For each image, we need to label it as one of the above five categories. This will serve as our dataset for training the model.
@@ -314,28 +310,24 @@ Typically, the ratio between the high and low thresholds is between 2:1 and 3:1.
 
 The chosen low thresholds are 2, 4, and 6, with corresponding high thresholds of 5, 10, and 15, respectively. The results of the Canny algorithm are shown below:
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+2.jpg}
-        \caption{Canny thresholds 2 and 5}
+        \caption{canny 2 5}
         \label{fig:canny2_5}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+4.jpg}
-        \caption{Canny thresholds 4 and 10}
+        \caption{canny 4 10}
         \label{fig:canny4_10}
     \end{minipage}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+6.jpg}
-        \caption{Canny thresholds 6 and 15}
+        \caption{canny 6 15}
         \label{fig:canny6_15}
     \end{minipage}
 \end{figure}
