@@ -3,7 +3,6 @@
 
 \subsection{Discussion of results}
 
-
 As detailed above, this research aimed to establish a reliable model for classifying tissue section images. Initially, simple CNN models were implemented, but upon observing limited success, the study shifted towards image preprocessing and finally settled on transfer learning with the InceptionV3 model, which produced the best results.
 
 It is worth noting that with the trial of different models, as the model parameters are adjusted or the model architecture becomes more complex (such as InceptionV3), the model's performance significantly improves, i.e., the accuracy of the validation set becomes higher and the loss becomes lower.
@@ -12,41 +11,50 @@ Furthermore, comparing model series 1 and 2, we found that using preprocessed im
 
 In Section 5, we tested the model in application. First, we selected an additional test set to test the model's accuracy and found that the model's accuracy on all test sets was greater than 85\%. Then we used the model to evaluate different cutting angles and found that if the cutting quality is to be guaranteed at 80\%, the cutting angle should be between 9 degrees and 10.5 degrees. Finally, we used another dataset of fish alveolar slice images for secondary verification and found that the model's prediction accuracy for the test set labels was all above 90\%, reflecting that the model can be well applied to other datasets.
 
-The Final selected model configuration, illustrated below, highlights the structured approach taken to integrate the InceptionV3 architecture effectively within the training framework.
+The Final selected model configuration, showed below, highlights the structured approach taken to integrate the InceptionV3 architecture effectively within the training framework.
 
-\begin{center}
+% \begin{center}
 
-    \begin{tikzpicture}[node distance=1.5cm,
-        box/.style={
-            rectangle,
-            rounded corners,
-            draw=black, very thick,
-            text width=15em,
-            minimum height=2em,
-            text centered},
-        arrow/.style={
-            thick,
-            ->,
-            >=stealth}
-        ]
+%     \begin{tikzpicture}[node distance=1.5cm,
+%         box/.style={
+%             rectangle,
+%             rounded corners,
+%             draw=black, very thick,
+%             text width=15em,
+%             minimum height=2em,
+%             text centered},
+%         arrow/.style={
+%             thick,
+%             ->,
+%             >=stealth}
+%         ]
     
-        \node (collect) [box] {Input Layer: 1152*864};
-        \node (mix) [box, below of=collect] {Base Model: InceptionV3};
-        \node (train) [box, below of=mix] {Global Average Pooling Layer};
-        \node (test) [box, below of=train] {Fully Connected Layer (Nodes based on Labels) - Output Layer};
-        \node (evaluate) [box, below of=test] {Learning Rate: 1e-4, Optimizer: Adam};
-        \node (rate) [box, below of=evaluate] {Loss Function: Cross-Entropy, Performance Metric: Accuracy};
-        \node (improve) [box, below of=rate] {Early Stopping: Enabled};
+%         \node (collect) [box] {Input Layer: 1152*864};
+%         \node (mix) [box, below of=collect] {Base Model: InceptionV3};
+%         \node (train) [box, below of=mix] {Global Average Pooling Layer};
+%         \node (test) [box, below of=train] {Fully Connected Layer (Nodes based on Labels) - Output Layer};
+%         \node (evaluate) [box, below of=test] {Learning Rate: 1e-4, Optimizer: Adam};
+%         \node (rate) [box, below of=evaluate] {Loss Function: Cross-Entropy, Performance Metric: Accuracy};
+%         \node (improve) [box, below of=rate] {Early Stopping: Enabled};
         
-        \draw [arrow] (collect) -- (mix);
-        \draw [arrow] (mix) -- (train);
-        \draw [arrow] (train) -- (test);
-        \draw [arrow] (test) -- (evaluate);
-        \draw [arrow] (evaluate) -- (rate);
-        \draw [arrow] (rate) -- (improve);
+%         \draw [arrow] (collect) -- (mix);
+%         \draw [arrow] (mix) -- (train);
+%         \draw [arrow] (train) -- (test);
+%         \draw [arrow] (test) -- (evaluate);
+%         \draw [arrow] (evaluate) -- (rate);
+%         \draw [arrow] (rate) -- (improve);
         
-        \end{tikzpicture}
-\end{center}
+%         \end{tikzpicture}
+% \end{center}
+\begin{itemize}
+    \item Input Layer: 1152*864
+    \item Base Model: InceptionV3
+    \item Global Average Pooling Layer
+    \item Fully Connected Layer (Number of nodes based on Labels) - Output Layer
+    \item Learning Rate: 1e-4, Optimizer: Adam
+    \item Loss Function: Cross-Entropy, Performance Metric: Accuracy
+    \item Early Stopping: Enabled
+\end{itemize}
 
 \subsection{Future work}
 
@@ -117,18 +125,16 @@ Implementing this system presents several challenges:
 
 A pertinent example can be found in the study "Convolutional neural networks applied to microtomy: Identifying the trimming-end cutting routine on paraffin-embedded tissue blocks"\cite{6.4}. This research automated the sectioning process by monitoring it with a camera, analyzing the images with a CNN, and adjusting the microtome parameters based on the analysis. This integration of the microtome, camera, and deep learning model provides a feasible solution for real-time assessment and adjustment of cutting parameters during the sectioning process.
 
+\subsection{Conclusion}
+This research significantly enhances the understanding of optimizing biopsy parameters by integrating deep learning with biomedical tissue sectioning devices. Employing the InceptionV3 model adapted through transfer learning, the study showcases a robust framework for high-precision assessment of tissue section quality. This innovative approach not only refines the accuracy of tissue analysis but also revolutionizes the operational methods of tissue sectioning.
 
-\subsection{Conclusions}
+The study identified a clear correlation between the cutting angles and the quality of tissue sections, offering a practical method to enhance future section quality. The model’s effectiveness across various tissue types, such as fish ovaries and lung tissues, underscores its broad adaptability and potential for widespread application.
 
-This research has significantly advanced our understanding of optimizing biopsy parameters through the application of deep learning techniques to biomedical tissue sectioning devices. By employing sophisticated convolutional neural networks, particularly through the adaptation of the InceptionV3 model via transfer learning, the study has demonstrated a robust framework capable of assessing the quality of tissue sections with high precision. This approach not only improves the accuracy of tissue sample analysis but also introduces a paradigm shift in the operational methodology of tissue sectioning.
+However, the research also points out the limitations of traditional image preprocessing techniques. Initial enhancements through preprocessing did not significantly improve performance and sometimes obscured essential details for accurate classification. This suggests that preserving the original image data might be more advantageous than applying extensive preprocessing.
 
-By evaluating the quality of sections at different angles, we have discovered the relationship between the cutting angle and the quality of the sections. This provides us with a feasible method to improve the quality of sections in the future. In addition, the application of this model in different types of tissues (including fish ovaries and lung tissues) has confirmed its wide adaptability and potential for promotion, indicating that it is suitable for various tissue sections and research tasks.
+The research proposes improvements in the tissue slicing process through expanded classification methods and performance optimization. This includes incorporating more classification categories and linear analysis methods, like Linear Discriminant Analysis (LDA), to refine the understanding of the relationship between cutting parameters and sample quality. Future work will focus on optimizing computational frameworks and parallel processing, and on examining additional parameters such as cutting speed and feed rate to enhance model predictiveness and tissue slice quality. Implementing a real-time feedback system that uses machine learning to dynamically adjust cutting parameters is poised to drive histological preparation towards full automation, ensuring consistent high-quality tissue sections.
 
-However, the study also highlighted the limitations of traditional image preprocessing techniques. Initial attempts to enhance model performance through image preprocessing did not yield significant improvements and, in some cases, potentially obscured critical details necessary for accurate classification. This finding suggests that maintaining the integrity of original image data might be more beneficial than applying aggressive preprocessing techniques.
-
-The research further explores enhancing the tissue slicing process through the expansion of classification methods and performance optimization. This includes integrating a greater number of classification categories and linear analysis methods such as Linear Discriminant Analysis (LDA), to more precisely understand the relationship between cutting parameters and sample quality. Concurrently, adopting more efficient computational frameworks and parallel processing techniques to optimize performance, as well as exploring additional parameters such as cutting speed and feed rate, will enhance the predictive capability of the model and the quality of tissue slices. Moreover, the implementation of a real-time feedback system, utilizing machine learning to dynamically adjust cutting parameters, will propel histological preparation towards automation, ensuring more consistent and high-quality tissue slices.
-
-In conclusion, this project not only demonstrates the important role of deep learning in biomedical research and applications, but also provides feasibility for the further improvement of tissue sectioning technology. The combination of these technologies can bring improvements to biological sectioning equipment, provide a possible solution to improve the yield rate of tissue samples and the efficiency of sectioning. This research provides new ideas and methods for future tissue sectioning technology, and is expected to have a profound impact in the field of biomedicine.
+In conclusion, this project not only underscores the critical role of deep learning in advancing biomedical research and applications but also sets the stage for substantial improvements in tissue sectioning technology. These advancements could significantly enhance the yield and efficiency of tissue sample processing, offering new strategies and methodologies for future developments in tissue sectioning technology and having a lasting impact on biomedicine.
 
 % 总之，该项目不仅体现了深度学习在生物医学研究和应用中的重要作用，而且为组织切片技术的进一步提高提供了可行性。将这些技术的有机结合能够为生物切片设备带来改进，提高组织样本的良品率及提高切片效率提供了一个可能的解决方案。这一研究为未来的组织切片技术提供了新的思路和方法，有望在生物医学领域产生深远的影响。
 

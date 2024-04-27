@@ -5,7 +5,6 @@
 The experiment workflow is outlined in the diagram below, detailing the sequential steps from data collection to iterative improvement of the model.
 
 \begin{center}
-
 \begin{tikzpicture}[node distance=1.5cm,
     box/.style={
         rectangle,
@@ -38,7 +37,15 @@ The experiment workflow is outlined in the diagram below, detailing the sequenti
     \end{tikzpicture}
 \end{center}
 
-
+% \begin{enumerate}
+%     \item Collect Data
+%     \item Label Data
+%     \item Train Model
+%     \item Test on Test Set
+%     \item Evaluate Specimens
+%     \item Determine Quality of each angle
+%     \item Refine and Improve
+% \end{enumerate}
 
 \subsection{Data Collection}
 The first essential step for deep learning is data collection. In this experiment, pre-prepared paraffin-embedded tissue sections (fish ovary tissues) were used. These sections were placed on an HM355s automatic microtome, and slicing operations were performed according to different cutting angles as specified in the microtome's manual. The cutting data was recorded meticulously.
@@ -49,13 +56,13 @@ The schematic diagram of the microtome (taking a tooth as an example) is shown i
 
 \begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.48\textwidth}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/machine.jpg}
         \caption{Microtome}
         \label{fig:machine}
     \end{minipage}
-    \begin{minipage}{0.48\textwidth}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/10266_2018_353_Fig1_HTML.jpg}
         \caption{Working principle of the microtome}
@@ -299,7 +306,7 @@ Following the application of Gaussian blur (k=61), the results using the Laplaci
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{./fig/gausssian/laplacian61.jpg}
+\includegraphics[width=0.4\textwidth]{./fig/gausssian/laplacian61.jpg}
 \caption{Result of applying the Laplacian operator}
 \label{fig:laplacian}
 \end{figure}
@@ -349,13 +356,13 @@ Initially, each pixel in the image is evaluated, and pixels within approximately
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.40\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/enhanced_image.jpg}
         \caption{Enhanced image for better color differentiation}
         \label{fig:enhanced_image}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/yellowpic.jpg}
         \caption{Segmentation focused on yellow pixels}
@@ -367,13 +374,13 @@ To refine the segmentation, further processing is required to eliminate black bl
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/final.jpg}
         \caption{Final image after removing black blocks}
         \label{fig:mask}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/fingerprint.jpg}
         \caption{Result of segmentation using the fingerprint algorithm}
@@ -388,7 +395,7 @@ During the literature review, an article was found that described an improved se
 
 The fingerprint algorithm, which is an adaptation of the Otsu method, is particularly effective in differentiating areas of high and low density, which is ideal for applications like fingerprint recognition where contrast between ridges and valleys is critical. The use of this algorithm in the context of biological tissue segmentation may offer a robust way to delineate regions of different cellular densities or structures within a sample.
 
-\subsubsection*{Summary}
+\subsubsection{Summary}
 
 Based on the image preprocessing techniques discussed, both edge detection and threshold segmentation have shown promising results in highlighting the features of biological tissues and eliminating interference from paraffin. These preprocessing steps have significantly enhanced the visibility of essential features while minimizing noise and irrelevant information, which is critical for accurate analysis in histopathology.
 
@@ -435,7 +442,7 @@ Results are displayed in the graphs below(\autoref{fig:model22_acc} and \autoref
 \end{figure}
 
 
-\subsubsection*{Summary}
+\subsubsection{Summary}
 The graphs illustrate that Models 2a and 2c begin to stabilize after approximately 8 training epochs, with training accuracies nearing 100\%, while validation accuracies stabilize around 65\% and 75\%, respectively. Despite high accuracies, both models exhibit relatively high validation losses above 1, suggesting overfitting and limited generalization to unseen data.
 
 Model 2b, however, converges after about 10 training epochs, displaying the highest validation accuracy at approximately 82\% and a lower loss fluctuating between 1 and 1.2. This indicates that Model 2b performs better on the validation set, suggesting better adaptability and robustness. This might be due to Model 2b processing color images, which provide richer features from RGB channels, potentially enhancing feature extraction and generalization capabilities.
@@ -514,7 +521,7 @@ The training and validation performance of these models is depicted below:
 \end{itemize}
 
 
-\subsubsection*{Summary}
+\subsubsection{Summary}
 
 A comparative analysis of the VGG16, VGG19, and InceptionV3 models reveals that InceptionV3 yields the best training results, with both training and validation accuracies converging around 1 and 0.9 respectively, and losses converging around 0.6. This indicates that the InceptionV3 model not only trains effectively but also demonstrates superior generalization capabilities.
 

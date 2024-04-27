@@ -3,7 +3,6 @@
 \textbf{实验流程}
 
 \begin{center}
-
 \begin{tikzpicture}[node distance=1.5cm,
     box/.style={
         rectangle,
@@ -36,7 +35,15 @@
     \end{tikzpicture}
 \end{center}
 
-
+% \begin{enumerate}
+%     \item Collect Data
+%     \item Label Data
+%     \item Train Model
+%     \item Test on Test Set
+%     \item Evaluate Specimens
+%     \item Determine Quality of each angle
+%     \item Refine and Improve
+% \end{enumerate}
 
 \subsection{采集数据}
 要进行深度学习，所需要的第一步就是采集数据。在本实验中，我们使用了预先从生物实验室制备好的石蜡包埋好的组织切片（鱼的卵巢组织），将其放在HM355s自动切片机上依据切片机的使用手册，以不同的切削角度执行切片操作。记录切削数据。
@@ -47,13 +54,13 @@
 
 \begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.48\textwidth}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/machine.jpg}
         \caption{切片机}
         \label{fig:machine}
     \end{minipage}
-    \begin{minipage}{0.48\textwidth}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/10266_2018_353_Fig1_HTML.jpg}
         \caption{切片机示意图}
@@ -303,7 +310,7 @@
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/laplacian61.jpg}
         \caption{laplacian}
@@ -355,13 +362,13 @@
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/enhanced_image.jpg}
         \caption{enhanced image}
         \label{fig:enhanced_image}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/yellowpic.jpg}
         \caption{yellow picture}
@@ -373,13 +380,13 @@
 
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/final.jpg}
         \caption{final}
         \label{fig:mask}
     \end{minipage}
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/threshold/fingerprint.jpg}
         \caption{fingerprint}
