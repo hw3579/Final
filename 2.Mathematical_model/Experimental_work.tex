@@ -1,56 +1,14 @@
 \section{Experimental work/ analytical investigation/ design}
 
-\textbf{实验流程}
-
-\begin{center}
-\begin{tikzpicture}[node distance=1.5cm,
-    box/.style={
-        rectangle,
-        rounded corners,
-        draw=black, very thick,
-        text width=15em,
-        minimum height=2em,
-        text centered},
-    arrow/.style={
-        thick,
-        ->,
-        >=stealth}
-    ]
-
-    \node (collect) [box] {采集数据};
-    \node (mix) [box, below of=collect] {标记数据};
-    \node (train) [box, below of=mix] {训练模型};
-    \node (test) [box, below of=train] {测试集测试};
-    \node (evaluate) [box, below of=test] {标本评估};
-    \node (rate) [box, below of=evaluate] {得出切削良品率};
-    \node (improve) [box, below of=rate] {改进与提升};
-    
-    \draw [arrow] (collect) -- (mix);
-    \draw [arrow] (mix) -- (train);
-    \draw [arrow] (train) -- (test);
-    \draw [arrow] (test) -- (evaluate);
-    \draw [arrow] (evaluate) -- (rate);
-    \draw [arrow] (rate) -- (improve);
-    
-    \end{tikzpicture}
-\end{center}
-
-% \begin{enumerate}
-%     \item Collect Data
-%     \item Label Data
-%     \item Train Model
-%     \item Test on Test Set
-%     \item Evaluate Specimens
-%     \item Determine Quality of each angle
-%     \item Refine and Improve
-% \end{enumerate}
 
 \subsection{采集数据}
-要进行深度学习，所需要的第一步就是采集数据。在本实验中，我们使用了预先从生物实验室制备好的石蜡包埋好的组织切片（鱼的卵巢组织），将其放在HM355s自动切片机上依据切片机的使用手册，以不同的切削角度执行切片操作。记录切削数据。
+在本实验中，我们使用了预先从生物实验室制备并染色的石蜡包埋组织切片（\ref{label:sample}）。使用HM355s自动切片机，按照操作手册，以不同切削角度进行切片，记录切削参数。切片后，组织样本放置于平面上并干燥（\ref{fig:采集样本}），随后在VHX7000显微镜下进行成像，以捕获电子图像数据（\ref{fig:显微镜}）。
 
+其中切片机(\autoref{fig:machine})的切片示意图（以牙齿为例） 如\autoref{fig:cutting_machine}所示\cite{4.1}。记录下的切削参数如下：模式设置为连续，进给速度为5.0，修整值为25，速度设定为32，水流速度为7.5，水温约为36摄氏度。切割角度在8到12度之间。
+
+据此，一共得到分辨率为2880*2160的图像数据集。
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
 
-其中切片机(\autoref{fig:machine})的切片示意图（以牙齿为例） 如\autoref{fig:cutting_machine}所示\cite{4.1}.
 
 \begin{figure}[htbp]
     \centering
@@ -70,14 +28,7 @@
 % https://link.springer.com/article/10.1007/s10266-018-0353-6
 
 
-
 % 在切削过程中，从切角为8度开始（如\autoref{fig:machine}中的angle of inclination），每次增加0.5度，直到切角为12度。切片机在切片过程中保持给进速度为25，厚度为1。
-
-在我们的实验中，我们使用切片机的参数如下：模式设置为连续，进给速度为5.0，修整值为25，速度为32，水流速度为7.5，水温约为36摄氏度，切割角度在8到12度之间。
-
-用于切片的生物组织（示例）如\autoref{label:sample}所示
-
-在切片完成之后，将切好的不同类型的组织切片放在载玻片上（如\autoref{fig:采集样本}）所示，待其晾干后转移至VHX7000显微镜下，通过显微镜对每份样品进行拍照，获取到每份样品的电子图像数据（如\autoref{fig:显微镜}）。
 
 \begin{figure}[htbp]
     \centering
@@ -103,7 +54,8 @@
 
 %图片需要后续更改为卵巢的
 
-% 据此，一共得到几百张图片，每张图片的分辨率为2880*2160。样本示例如\autoref{fig:sample9.5}所示。
+
+% 样本示例如\autoref{fig:sample9.5}所示。
 
 % \begin{figure}
 %     \centering
@@ -223,7 +175,7 @@
 
 \subsubsection{边缘检测}
 
-如3.1.1节所述，边缘检测的原理涉及识别像素强度（梯度）的变化，以确定图像内的边缘。
+如3.2.1节所述，边缘检测的原理涉及识别像素强度（梯度）的变化，以确定图像内的边缘。
 
 在进行边缘检测之前，首先应用一个初始预处理步骤——高斯模糊。高斯模糊的理由是它有助于减少图像中的噪声，平滑梯度过渡，并降低检测到假边缘的可能性，从而提高边缘检测的准确性\cite{4.3}。我们试验了21、41、61和81大小的高斯核，分别对应于图像宽度的1％、2％、3％和4％。
 
@@ -334,6 +286,7 @@
 
 
 在三个Canny结果中，\autoref{fig:canny4_10} 的表现最好，能够保留大部分边缘细节，同时有效地消除了大部分噪声。因此，选择了4和10作为Canny算法的阈值。
+
 \textbf{总结}
 
 比较Sobel、Laplacian和Canny算法的结果，Sobel算法的表现一般，边缘检测明显，但噪声减少有限。Laplacian算法的表现最差，边缘几乎变得不可见，可能是由于其对噪声的高敏感度。Canny算法的结果最好，保持了边缘细节，同时有效地去除了大部分噪声。因此，选择Canny算法作为图像预处理的方法，增强了模型对于进一步分析的相关特征的关注能力。

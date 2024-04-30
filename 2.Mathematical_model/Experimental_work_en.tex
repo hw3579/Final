@@ -1,58 +1,12 @@
 \section{Experimental work/ analytical investigation/ design}
 
-\textbf{Experimental workflow}
-
-The experiment workflow is outlined in the diagram below, detailing the sequential steps from data collection to iterative improvement of the model.
-
-\begin{center}
-\begin{tikzpicture}[node distance=1.5cm,
-    box/.style={
-        rectangle,
-        rounded corners,
-        draw=black, very thick,
-        text width=15em,
-        minimum height=2em,
-        text centered},
-    arrow/.style={
-        thick,
-        ->,
-        >=stealth}
-    ]
-
-    \node (collect) [box] {Collect Data};
-    \node (mix) [box, below of=collect] {Label Data};
-    \node (train) [box, below of=mix] {Train Model};
-    \node (test) [box, below of=train] {Test on Test Set};
-    \node (evaluate) [box, below of=test] {Evaluate Specimens};
-    \node (rate) [box, below of=evaluate] {Determine Quality of each angle};
-    \node (improve) [box, below of=rate] {Refine and Improve};
-    
-    \draw [arrow] (collect) -- (mix);
-    \draw [arrow] (mix) -- (train);
-    \draw [arrow] (train) -- (test);
-    \draw [arrow] (test) -- (evaluate);
-    \draw [arrow] (evaluate) -- (rate);
-    \draw [arrow] (rate) -- (improve);
-    
-    \end{tikzpicture}
-\end{center}
-
-% \begin{enumerate}
-%     \item Collect Data
-%     \item Label Data
-%     \item Train Model
-%     \item Test on Test Set
-%     \item Evaluate Specimens
-%     \item Determine Quality of each angle
-%     \item Refine and Improve
-% \end{enumerate}
-
 \subsection{Data Collection}
-The first essential step for deep learning is data collection. In this experiment, pre-prepared paraffin-embedded tissue sections (fish ovary tissues) were used. These sections were placed on an HM355s automatic microtome, and slicing operations were performed according to different cutting angles as specified in the microtome's manual. The cutting data was recorded meticulously.
+In this experiment, pre-prepared and stained paraffin-embedded tissue sections from a biological laboratory were utilized (\ref{label:sample}). Slicing was performed using an HM355s automatic microtome, following the operating manual at various cutting angles, and cutting parameters were recorded. After slicing, the tissue samples were placed on a flat surface and dried (\ref{fig:采集样本}), followed by imaging under a VHX7000 microscope to capture electronic image data (\ref{fig:显微镜}).
 
+A schematic illustration of the slicing process using the microtome (as exemplified by a tooth) is shown in \autoref{fig:cutting_machine} \cite{4.1}. The recorded cutting parameters are as follows: the mode was set to continuous, the feed rate was 5.0, the trimming value was 25, the speed setting was 32, the water flow rate was 7.5, and the water temperature was approximately 36 degrees Celsius. The cutting angles ranged from 8 to 12 degrees.
+
+As a result, we obtained an image dataset with a resolution of 2880*2160.
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
-
-The schematic diagram of the microtome (taking a tooth as an example) is shown in \autoref{fig:cutting_machine} \cite{4.1}.
 
 \begin{figure}[htbp]
     \centering
@@ -71,13 +25,7 @@ The schematic diagram of the microtome (taking a tooth as an example) is shown i
 \end{figure}
 % https://link.springer.com/article/10.1007/s10266-018-0353-6
 
-
-
 % 在切削过程中，从切角为8度开始（如\autoref{fig:machine}中的angle of inclination），每次增加0.5度，直到切角为12度。切片机在切片过程中保持给进速度为25，厚度为1。
-
-In the experiment, the microtome was configured with the following parameters: the mode was set to continuous, the feed rate was 5.0, the trimming value was 25, the speed was set at 32, the water flow rate was 7.5, and the water temperature was approximately 36 degrees Celsius. The cutting angle was adjusted between 8 to 12 degrees.
-
-The biological tissues used for sectioning are shown in Figure \ref{label:sample}. After sectioning, the different types of tissue sections were placed on slides as depicted in Figure \ref{fig:采集样本}. Once dried, these slides were transferred under a VHX7000 microscope for imaging. Each sample was photographed under the microscope to capture electronic image data, as shown in Figure \ref{fig:显微镜}.
 
 \begin{figure}[htbp]
     \centering
@@ -101,8 +49,6 @@ The biological tissues used for sectioning are shown in Figure \ref{label:sample
     \end{minipage}
 \end{figure}
 
-
-Based on this, several hundred images were obtained, each with a resolution of 2880*2160. 
 % An example of the samples is shown in \autoref{fig:sample9.5}.
 
 
@@ -227,7 +173,7 @@ In cases where model performance is suboptimal, it may be due to the complexity 
 
 \subsubsection{Edge Detection}
 
-As mentioned in section 3.1.1, the principle of edge detection involves identifying changes in pixel intensity (gradients) to determine edges within an image. 
+As mentioned in section 3.2.1, the principle of edge detection involves identifying changes in pixel intensity (gradients) to determine edges within an image. 
 
 Before proceeding with edge detection, an initial preprocessing step—Gaussian blur—is applied. The rationale behind Gaussian blurring is that it helps reduce noise in the image, smoothens the gradient transitions, and decreases the likelihood of detecting false edges, thus enhancing the accuracy of edge detection\cite{4.3}. We experiment with Gaussian kernels of sizes 21, 41, 61, and 81, which correspond to 1\%, 2\%, 3\%, and 4\% of the image width, respectively.
 

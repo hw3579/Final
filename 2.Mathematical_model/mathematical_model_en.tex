@@ -1,7 +1,58 @@
 \section{Methodology and theory}
 \label{sec:problem_description}
 
-\subsection{Computer Vision - Image Segmentation}
+\subsection{Experimental Workflow}
+
+The experiment workflow is outlined in the diagram below, detailing the sequential steps from data collection to iterative improvement of the model.
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm,
+    box/.style={
+        rectangle,
+        rounded corners,
+        draw=black, very thick,
+        text width=15em,
+        minimum height=2em,
+        text centered},
+    arrow/.style={
+        thick,
+        ->,
+        >=stealth}
+    ]
+
+    \node (collect) [box] {Collect Data};
+    \node (mix) [box, below of=collect] {Label Data};
+    \node (train) [box, below of=mix] {Train Model};
+    \node (test) [box, below of=train] {Test on Test Set};
+    \node (evaluate) [box, below of=test] {Evaluate Specimens};
+    \node (rate) [box, below of=evaluate] {Determine Quality of each angle};
+    \node (improve) [box, below of=rate] {Refine and Improve};
+    
+    \draw [arrow] (collect) -- (mix);
+    \draw [arrow] (mix) -- (train);
+    \draw [arrow] (train) -- (test);
+    \draw [arrow] (test) -- (evaluate);
+    \draw [arrow] (evaluate) -- (rate);
+    \draw [arrow] (rate) -- (improve);
+    
+    \end{tikzpicture}
+\end{center}
+
+\textbf{Data Collection:} Utilize a microtome to slice tissue sections that have been pre-prepared and paraffin-embedded in a biological laboratory following staining procedures. Operate the microtome according to its manual to obtain images of the sections and record the cutting parameters.
+
+\textbf{Data Labeling:} Label the collected image data based on the quality of the sections and their suitability for biological observation and analysis.
+
+\textbf{Model Training:} Experiment with various structures and forms of deep learning convolutional models to train the labeled data. Monitor accuracy and loss functions during the training process to assess model performance.
+
+\textbf{Testing with Test Set:} Evaluate the trained model using a test set to assess its generalization capability.
+
+\textbf{Specimen Evaluation:} Assess an additional prepared test set to observe the practical application effects of the model, calculating the model’s prediction accuracy.
+
+\textbf{Determination of Cutting Yield:} Use pre-prepared image data of sections cut at different angles to evaluate with the model, deriving the yield of good cuts at various angles to determine the optimal cutting angle.
+
+\textbf{Improvements and Enhancements:} Based on the evaluation results, adjust and enhance the model to improve its accuracy and generalization capabilities.
+
+\subsection{Image Processing Methods}
 
 For the acquired image data, appropriate image preprocessing can be applied. Under the premise of maintaining the integrity and quality of images, certain processing can be implemented to highlight the features intended for computer recognition and, to some extent, remove irrelevant features and noise. This enhances the accuracy of subsequent deep learning models.
 

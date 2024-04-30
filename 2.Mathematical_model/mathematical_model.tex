@@ -1,7 +1,55 @@
 \section{Methodology and theory}
 \label{sec:problem_description}
 
-\subsection{计算机视觉-图像分割}
+\subsection{实验流程}
+\begin{center}
+    \begin{tikzpicture}[node distance=1.5cm,
+        box/.style={
+            rectangle,
+            rounded corners,
+            draw=black, very thick,
+            text width=15em,
+            minimum height=2em,
+            text centered},
+        arrow/.style={
+            thick,
+            ->,
+            >=stealth}
+        ]
+    
+        \node (collect) [box] {采集数据};
+        \node (mix) [box, below of=collect] {标记数据};
+        \node (train) [box, below of=mix] {训练模型};
+        \node (test) [box, below of=train] {测试集测试};
+        \node (evaluate) [box, below of=test] {标本评估};
+        \node (rate) [box, below of=evaluate] {得出切削良品率};
+        \node (improve) [box, below of=rate] {改进与提升};
+        
+        \draw [arrow] (collect) -- (mix);
+        \draw [arrow] (mix) -- (train);
+        \draw [arrow] (train) -- (test);
+        \draw [arrow] (test) -- (evaluate);
+        \draw [arrow] (evaluate) -- (rate);
+        \draw [arrow] (rate) -- (improve);
+        
+        \end{tikzpicture}
+    \end{center}
+    
+\textbf{采集数据：}使用切片机对已预先从生物实验室制备好经过染色处理后石蜡包埋好的组织切片，按照切片机的操作手册进行切片操作，得到切片并记录切削参数。然后转移切片到显微镜下，拍摄切片图像。
+
+\textbf{标记数据：}对采集到的图像数据根据质量的好坏和能否用于生物学观察和分析进行标记。
+
+\textbf{训练模型：}尝试不同结构和形式的深度学习卷积模型，对标记好的数据进行训练。然后监测训练过程中的准确率和损失函数，评估模型性能。
+
+\textbf{测试集测试：}使用测试集对训练好的模型进行测试，评估模型的泛化能力。
+
+\textbf{标本评估：}对另外准备的测试集进行评估，观察模型的实际应用效果，计算模型预测准确率。
+
+\textbf{得出切削良品率：}使用预先准备好的不同角度下的切片图像数据，使用模型进行评估，得出不同角度下的切削良品率，确定最佳切削角度。
+
+\textbf{改进与提升：}根据评估结果，对模型进行调整和改进，提高模型的准确率和泛化能力。
+
+\subsection{图像处理方法}
 
 对于获取的图像数据，可以应用适当的图像预处理。在保持图像完整性和质量的前提下，可以实施某些处理以突出计算机识别的特征，并在一定程度上去除无关特征和噪声。这增强了后续深度学习模型的准确性。
 
