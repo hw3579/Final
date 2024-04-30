@@ -60,81 +60,8 @@ Additionally, there are more sophisticated methods of threshold segmentation, su
 
 Comparisons and experiments related to these segmentation techniques will be conducted in the \textit{Experimental Work/Analytical Investigation/Design} chapter.
 
-\subsection{Deep Learning}
-
-\subsubsection{Convolutional Neural Networks (CNN)}
-
-Convolutional Neural Networks (CNNs) are a type of deep learning model that are particularly effective at processing image data. They automatically learn spatial hierarchies of features through a series of convolutional layers without the need for manual feature extraction. A typical CNN model includes layers such as convolutional layers, pooling layers, and fully connected layers \cite{3.4}. The architecture of a CNN is illustrated below:
 
 
-\begin{tikzpicture}[
-    node distance=1cm and 0.5cm,
-    block/.style={rectangle, draw, text width=4em, text centered, minimum height=15mm, fill=blue!30},
-    arrow/.style={->,>=stealth}
-]
-
-% Define nodes in a matrix
-\matrix [column sep=10mm, row sep=10mm] {
-  \node (n1) [block] {1 Input}; & \node (n2) [block] {2 Conv}; & \node (n3) [block] {3 Pool} ;& \node
-  (n4) [block] {4 Conv};    & \node (n5) [block] {5 FC};   & \node (n6) [block] {6 Output}; \\
-};
-
-% Connect nodes
-\draw [arrow] (n1) -- (n2);
-\draw [arrow] (n2) -- (n3);
-\draw [arrow] (n3) -- (n4);
-\draw [arrow] (n4) -- (n5);
-\draw [arrow] (n5) -- (n6);
-\end{tikzpicture}
-
-In this model:
-
-\textbf{Convolutional layers (Conv)}: These are the core layers of a CNN, responsible for feature extraction from images.
-
-\textbf{Pooling layers (Pool)}: These serve to reduce the dimensionality of the feature maps, thereby decreasing the computational load.
-
-\textbf{Fully connected layers (FC)}: These integrate the features extracted by the convolutional and pooling layers for classification or regression analysis, eventually leading to the output.
-
-The typical method for training a CNN involves several key processes:
-
-\begin{enumerate}
-    \item \textbf{Forward Propagation:} Input data passes through each layer of the network until it reaches the output layer.
-    \item \textbf{Loss Computation:} The network's output is compared to the actual labels using a loss function, such as cross-entropy loss, to calculate the difference.
-    \item \textbf{Backpropagation:} The gradient of the loss function with respect to the network weights is computed.
-    \item \textbf{Weight Update:} The network weights are updated using an optimization algorithm such as gradient descent or its variants like Adam or RMSprop, with the aim of minimizing the loss function.
-\end{enumerate}
-
-Once trained, the CNN can be employed to predict labels for new, unseen images. The distinctive feature of CNNs is their ability to automatically and efficiently learn features at different levels of abstraction, making them highly effective for tasks involving complex image data, such as medical image analysis, where accuracy and detail are paramount.
-
-\subsubsection{Transfer Learning}
-
-Indeed, for complex image tasks, constructing a simple CNN network is often insufficient. In such cases, transfer learning becomes essential. Transfer learning is a machine learning method that accelerates the training process by transferring knowledge from a pre-trained model to a new task. The core idea of transfer learning is to leverage knowledge from the source domain to aid learning in the target domain.
-
-For CNN models, there are several approaches to transfer learning, such as fine-tuning and feature extraction: 
-
-\textbf{Fine-tuning} involves adjusting the parameters of a pre-trained model to adapt it to a new task. This often includes retraining some of the convolutional layers along with the fully connected layers on the new data, which allows the model to fine-tune the features to the specific characteristics of the new dataset. 
-
-\textbf{Feature extraction} involves using a pre-trained model as a fixed feature extractor, where only the fully connected layers are trained on the new data. In this approach, the convolutional layers retain their learned weights and act solely to extract features, which are then used by the newly trained classifier layers to perform tasks specific to the new dataset.
-
-Commonly used pre-trained models include VGG, Inception, and others. These models have been extensively trained on large datasets like ImageNet, where the weights of various layers in the model have been optimized and can be effectively used for transfer learning.
-
-Table 2 shows the number of parameters in models such as VGG16, VGG19 \cite{3.5}, InceptionV3 \cite{3.6}, Xception \cite{3.7}, etc. These models have a large number of parameters, allowing them to accurately extract features from complex images. The capability to leverage these well-trained models enables researchers and practitioners to achieve high performance on specific tasks without the need to train an entire network from scratch, saving both time and resources while maintaining high accuracy.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Comparison of CNN Models}
-    \label{tab:model_comparison}
-    \begin{tabular}{ccccc}
-        \toprule
-        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3} & \textbf{Xception} \\
-        \midrule
-        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 & 22,910,480 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-
-\FloatBarrier
 
 
 

@@ -32,8 +32,82 @@ The experiments will employ the HM355s microtome and VHX7000 microscope for sect
 % 同样，显微镜的选择也至关重要。在这个实验中，我们使用Keyence的VHX7000显微镜进行图像采集。它能够捕获生物组织切片的图像（例如，小鼠前列腺细胞 \cite{LR.4}），以及无机材料（如陶瓷 \cite{LR.5}，玻璃 \cite{LR.6}）。
 
 % 实验将使用HM355s切片机和VHX7000显微镜进行切片和图像采集。这种设置确保了设备选择和技术应用的最佳配合，以提高组织切片过程的精度和效率，支持研究项目的总体目标。
+\subsection{Deep Learning}
 
-\subsection{Deep Learning in Tissue Sectioning}
+\subsubsection{Convolutional Neural Networks (CNN)}
+
+Convolutional Neural Networks (CNNs) are a type of deep learning model that are particularly effective at processing image data. They automatically learn spatial hierarchies of features through a series of convolutional layers without the need for manual feature extraction. A typical CNN model includes layers such as convolutional layers, pooling layers, and fully connected layers \cite{DL.4}. A typical CNN architecture is shown below
+:\cite{4.30 1}
+
+
+\begin{tikzpicture}[
+    node distance=1cm and 0.5cm,
+    block/.style={rectangle, draw, text width=4em, text centered, minimum height=15mm, fill=blue!30},
+    arrow/.style={->,>=stealth}
+]
+
+% Define nodes in a matrix
+\matrix [column sep=10mm, row sep=10mm] {
+  \node (n1) [block] {1 Input}; & \node (n2) [block] {2 Conv}; & \node (n3) [block] {3 Pool} ;& \node
+  (n4) [block] {4 Conv};    & \node (n5) [block] {5 FC};   & \node (n6) [block] {6 Output}; \\
+};
+
+% Connect nodes
+\draw [arrow] (n1) -- (n2);
+\draw [arrow] (n2) -- (n3);
+\draw [arrow] (n3) -- (n4);
+\draw [arrow] (n4) -- (n5);
+\draw [arrow] (n5) -- (n6);
+\end{tikzpicture}
+
+In this model:
+
+\textbf{Convolutional layers (Conv)}: These are the core layers of a CNN, responsible for feature extraction from images.
+
+\textbf{Pooling layers (Pool)}: These serve to reduce the dimensionality of the feature maps, thereby decreasing the computational load.
+
+\textbf{Fully connected layers (FC)}: These integrate the features extracted by the convolutional and pooling layers for classification or regression analysis, eventually leading to the output.
+
+The typical method for training a CNN involves several key processes:\cite{4.30 2}
+
+\begin{enumerate}
+    \item \textbf{Forward Propagation:} Input data passes through each layer of the network until it reaches the output layer.
+    \item \textbf{Loss Computation:} The network's output is compared to the actual labels using a loss function, such as cross-entropy loss, to calculate the difference.
+    \item \textbf{Backpropagation:} The gradient of the loss function with respect to the network weights is computed.
+    \item \textbf{Weight Update:} The network weights are updated using an optimization algorithm such as gradient descent or its variants like Adam or RMSprop, with the aim of minimizing the loss function.
+\end{enumerate}
+
+Once trained, the CNN can be employed to predict labels for new, unseen images. The distinctive feature of CNNs is their ability to automatically and efficiently learn features at different levels of abstraction, making them highly effective for tasks involving complex image data, such as medical image analysis, where accuracy and detail are paramount.\cite{4.30 3}
+
+\subsubsection{Transfer Learning}
+
+Indeed, for complex image tasks, constructing a simple CNN network is often insufficient. In such cases, transfer learning becomes essential. Transfer learning is a machine learning method that accelerates the training process by transferring knowledge from a pre-trained model to a new task. The core idea of transfer learning is to leverage knowledge from the source domain to aid learning in the target domain.\cite{4.30 4}
+
+For CNN models, there are several approaches to transfer learning, such as fine-tuning and feature extraction: 
+
+\textbf{Fine-tuning} involves adjusting the parameters of a pre-trained model to adapt it to a new task. This often includes retraining some of the convolutional layers along with the fully connected layers on the new data, which allows the model to fine-tune the features to the specific characteristics of the new dataset. \cite{4.30 5}
+
+\textbf{Feature extraction} involves using a pre-trained model as a fixed feature extractor, where only the fully connected layers are trained on the new data. In this approach, the convolutional layers retain their learned weights and act solely to extract features, which are then used by the newly trained classifier layers to perform tasks specific to the new dataset.\cite{4.30 6}
+
+
+Commonly used pre-trained models include VGG16, VGG19, Inception, and others. These models have been extensively trained on large datasets like ImageNet, where the weights of various layers in the model have been optimized and can be effectively used for transfer learning.\cite{4.30 7}
+
+\autoref{tab:model_comparison} displays the number of parameters for models such as the VGG series (VGG16, VGG19) designed by the Visual Geometry Group at the University of Oxford \cite{DL.5}, as well as the modular deep learning models InceptionV3 \cite{DL.6} and Xception \cite{DL.7} developed by Google. These models possess a vast quantity of parameters, enabling them to accurately extract features from complex images. Utilizing the capabilities of these well-trained models allows researchers and practitioners to achieve high performance on specific tasks without the need to train the entire network from scratch, thereby saving time and resources while maintaining high accuracy.\cite{4.30 8}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Comparison of CNN Models}
+    \label{tab:model_comparison}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3} & \textbf{Xception} \\
+        \midrule
+        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 & 22,910,480 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Deep Learning in Tissue Sectioning}
 
 The application of deep learning technologies in the biomedical field has achieved significant advancements. Deep learning models excel in tasks such as image classification, object detection, and segmentation, providing powerful tools for research and diagnostics in biomedical laboratories.
 

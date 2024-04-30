@@ -27,10 +27,78 @@ Andelko Hrzenjak也使用HM355S切片机切割病理性子宫内膜组织，以�
 
 
 
+\subsection{深度学习}
+
+\subsubsection{卷积神经网络}
+
+卷积神经网络（CNN）是一种深度学习模型，尤其擅长处理图像数据。它通过一系列卷积层自动学习空间层次的特征，无需手动特征提取。一个典型的CNN模型包括卷积层、池化层、全连接层等\cite{DL.4}。一个典型的CNN架构如下所示：\cite{4.30 1}
 
 
+\begin{tikzpicture}[
+    node distance=1cm and 0.5cm,
+    block/.style={rectangle, draw, text width=4em, text centered, minimum height=15mm, fill=blue!30},
+    arrow/.style={->,>=stealth}
+]
 
-\subsection{关于切片组织的深度学习}
+% Define nodes in a matrix
+\matrix [column sep=10mm, row sep=10mm] {
+  \node (n1) [block] {1 Input}; & \node (n2) [block] {2 Conv}; & \node (n3) [block] {3 Pool} ;& \node
+  (n4) [block] {4 Conv};    & \node (n5) [block] {5 FC};   & \node (n6) [block] {6 Output}; \\
+};
+
+% Connect nodes
+\draw [arrow] (n1) -- (n2);
+\draw [arrow] (n2) -- (n3);
+\draw [arrow] (n3) -- (n4);
+\draw [arrow] (n4) -- (n5);
+\draw [arrow] (n5) -- (n6);
+\end{tikzpicture}
+
+在这个模型中：
+
+\textbf{卷积层（Conv）}：这是CNN的核心层，负责从图像中提取特征。
+
+\textbf{池化层（Pool）}：这些层用于减少特征图的维度，从而降低计算负载。
+
+\textbf{全连接层（FC）}：这些层整合了卷积层和池化层提取的特征，用于分类或回归分析，最终导致输出。
+
+对于一个典型的训练CNN的方法，包括前向传播、损失计算、反向传播和权重更新的过程。\cite{4.30 2}
+\begin{enumerate}
+    \item 前向传播：输入数据通过网络的每一层，直到输出层。
+    \item 计算损失：使用损失函数（如交叉熵损失）计算网络输出和实际标签之间的差异。
+    \item 反向传播：计算损失函数关于网络权重的梯度。
+    \item 权重更新：使用梯度下降算法或其变种（如Adam或RMSprop）来更新网络权重，目标是减少损失函数的值。
+\end{enumerate}
+一旦训练完成，CNN可以用来预测新的、未见过的图像的标签。CNN的独特之处在于它们能够自动且高效地学习不同层次的抽象特征，使它们对于涉及复杂图像数据的任务非常有效，如医学图像分析，其中准确性和细节至关重要。\cite{4.30 3}
+
+\subsubsection{迁移学习}
+
+显然，对于复杂的图像来说，搭建简单的cnn网络明显不够。这时候就需要迁移学习。迁移学习是一种机器学习方法，通过将一个模型训练的知识迁移到另一个模型上，从而加速训练过程。迁移学习的核心思想是利用源领域的知识来帮助目标领域的学习。\cite{4.30 4}
+
+对于CNN模型，有几种迁移学习的方法，如微调和特征提取：
+
+\textbf{微调}涉及调整预训练模型的参数以适应新任务。这通常包括在新数据上重新训练一些卷积层和全连接层，使模型能够将特征微调到新数据集的特定特性。\cite{4.30 5}
+
+\textbf{特征提取}涉及使用预训练模型作为固定的特征提取器，其中只有全连接层在新数据上进行训练。在这种方法中，卷积层保持其学习的权重，并仅用于提取特征，这些特征然后被新训练的分类器层用于执行特定于新数据集的任务。\cite{4.30 6}
+
+常用的预训练模型包括 VGG16, VGG19、Inception等。这些模型已经在像ImageNet这样的大型数据集上进行了大量训练，其中模型中各层的权重已经被优化，可以有效地用于迁移学习。\cite{4.30 7}
+
+\autoref{tab:model_comparison}显示了由牛津大学视觉几何组设计的VGG系列（VGG16，VGG19）模型\cite{DL.5}，以及由Google开发的模块化深度学习模型InceptionV3 \cite{DL.6}和Xception \cite{DL.7}的参数数量。这些模型拥有大量的参数，使它们能够从复杂的图像中准确地提取特征。利用这些训练有素的模型的能力使研究人员和实践者能够在特定任务上获得高性能，而无需从头开始训练整个网络，既节省了时间和资源，又保持了高准确性。\cite{4.30 8}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Comparison of CNN Models}
+    \label{tab:model_comparison}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3} & \textbf{Xception} \\
+        \midrule
+        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 & 22,910,480 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{关于切片组织的深度学习}
 
 在生物医学领域，深度学习技术的应用已取得了显著的进步。深度学习模型在图像分类、对象检测和分割等任务中表现出色，为生物医学实验室的研究和诊断提供了强大的工具。
 

@@ -59,67 +59,6 @@ Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementat
 
 相关的对比和实验将在 Experimental work/analytical investigation/ design这一章节中进行。
 
-\subsection{深度学习}
-
-\subsubsection{卷积神经网络}
-
-卷积神经网络（CNN）是一种深度学习模型，尤其擅长处理图像数据。它通过一系列卷积层自动学习空间层次的特征，无需手动特征提取。一个典型的CNN模型包括卷积层、池化层、全连接层等。\cite{3.4}其架构如下所示。
-
-
-\begin{tikzpicture}[
-    node distance=1cm and 0.5cm,
-    block/.style={rectangle, draw, text width=4em, text centered, minimum height=15mm, fill=blue!30},
-    arrow/.style={->,>=stealth}
-]
-
-% Define nodes in a matrix
-\matrix [column sep=10mm, row sep=10mm] {
-  \node (n1) [block] {1 Input}; & \node (n2) [block] {2 Conv}; & \node (n3) [block] {3 Pool} ;& \node
-  (n4) [block] {4 Conv};    & \node (n5) [block] {5 FC};   & \node (n6) [block] {6 Output}; \\
-};
-
-% Connect nodes
-\draw [arrow] (n1) -- (n2);
-\draw [arrow] (n2) -- (n3);
-\draw [arrow] (n3) -- (n4);
-\draw [arrow] (n4) -- (n5);
-\draw [arrow] (n5) -- (n6);
-\end{tikzpicture}
-
-where Conv is convolutional layer，是cnn的核心层，用于提取图像的特征。Pool是池化层，用于减小特征图的尺寸，减少计算量。FC是全连接层，用于将卷积层和池化层提取的特征进行分类或回归分析，最后输出结果。
-
-对于一个典型的训练cnn的方法，包括前向传播、损失计算、反向传播和权重更新的过程。
-\begin{enumerate}
-    \item 前向传播：输入数据通过网络的每一层，直到输出层。
-    \item 计算损失：使用损失函数（如交叉熵损失）计算网络输出和实际标签之间的差异。
-    \item 反向传播：计算损失函数关于网络权重的梯度。
-    \item 权重更新：使用梯度下降算法或其变种（如Adam或RMSprop）来更新网络权重，目标是减少损失函数的值。
-\end{enumerate}
-训练完成后，CNN可以用来预测新的、未见过的图像的标签。CNN的特点就是在于能够自动、有效地学习空间层次结构的特征。
-
-\subsubsection{迁移学习}
-
-显然，对于复杂的图像来说，搭建简单的cnn网络明显不够。这时候就需要迁移学习。迁移学习是一种机器学习方法，通过将一个模型训练的知识迁移到另一个模型上，从而加速训练过程。迁移学习的核心思想是利用源领域的知识来帮助目标领域的学习。
-
-对于cnn模型来说，迁移学习的方法有很多，比如微调、特征提取等。微调是指在一个预训练的模型上，通过调整网络的参数，使其适应新的任务。特征提取是指在一个预训练的模型上，固定网络的参数，只训练全连接层，以适应新的任务。
-
-常用的已经训练好的模型有VGG、Inception等。这些模型在ImageNet等数据集上已经训练好，即模型内部各层的权重已经确定，可以用来进行迁移学习。
-
-表2展示了VGG16，VGG19\cite{3.5}，InceptionV3\cite{3.6}，Xception\cite{3.7}，等模型的参数数量。可以看到，这些模型的参数数量都很大，可以较为准确地提取复杂图像的特征。
-
-\begin{table}[htbp]
-    \centering
-    \caption{Comparison of CNN Models}
-    \label{tab:model_comparison}
-    \begin{tabular}{ccccc}
-        \toprule
-        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3} & \textbf{Xception} \\
-        \midrule
-        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 & 22,910,480 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
 
 \FloatBarrier
 
