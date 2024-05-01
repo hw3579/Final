@@ -108,7 +108,26 @@ Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementat
 相关的对比和实验将在 Experimental work/analytical investigation/ design这一章节中进行。
 
 
-\FloatBarrier
+\subsection{迁移学习方法的模型选择}
+
+在迁移学习中，常用的预训练模型包括 VGG16, VGG19、Inception等。这些模型已经在像ImageNet这样的大型数据集上进行了大量训练，其中模型中各层的权重已经被优化，可以有效地用于迁移学习。\cite{4.30 7}
+
+\autoref{tab:model_comparison}显示了由牛津大学视觉几何组设计的VGG系列（VGG16，VGG19）模型\cite{DL.5}，以及由Google开发的模块化深度学习模型InceptionV3 \cite{DL.6}\cite{DL.7}的参数数量。这些模型拥有大量的参数，使它们能够从复杂的图像中准确地提取特征。利用这些训练有素的模型的能力使研究人员和实践者能够在特定任务上获得高性能，而无需从头开始训练整个网络，既节省了时间和资源，又保持了高准确性。\cite{4.30 8}
+
+\begin{table}[H]
+    \centering
+    \caption{Comparison of CNN Models}
+    \label{tab:model_comparison}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3}\\
+        \midrule
+        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+考虑到这些模型都是基于Imagenet数据集训练的，而生物组织切片数据集的特征与Imagenet数据集有很大的不同。对于如何确定最佳模型，则需要通过实验来验证。在Experimental work/analytical investigation/ design这一章节中，将会对这些模型进行实验和性能评估，对比其效果。
 
 
 

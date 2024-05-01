@@ -97,7 +97,7 @@ The \textbf{Laplacian operator} is a second-order differential operator that per
 
 As shown in the figure above, taking the derivative of the first-order derivative results in the second-order derivative $f''(x)$, as shown in \autoref{fig:second_derivative}. It can be seen that around x=2.2, the second-order derivative is 0, which indicates that when the value of the Laplacian operator $\nabla^2 f$ is 0, there is a sudden change in image intensity, indicating the presence of an edge.
 
-\textbf{Canny Operator}is a multi-stage differential operator that enhances the edge detection process by incorporating noise suppression, building on the initial computations similar to those used by the Sobel operator. Introduced by John F. Canny in 1986 \cite{3.2}, the Canny operator refines the results obtained from Sobel operator calculations through additional steps such as non-maximum suppression and hysteresis thresholding. These steps set thresholds to eliminate false edges from the image, resulting in more accurate edge detection.
+\textbf{Canny Operator} is a multi-stage differential operator that enhances the edge detection process by incorporating noise suppression, building on the initial computations similar to those used by the Sobel operator. Introduced by John F. Canny in 1986 \cite{3.2}, the Canny operator refines the results obtained from Sobel operator calculations through additional steps such as non-maximum suppression and hysteresis thresholding. These steps set thresholds to eliminate false edges from the image, resulting in more accurate edge detection.
 
 In the chapter on \textit{Experimental Work/Analytical Investigation/Design}, experiments will be conducted on the collected image data using these three edge detection algorithms—Sobel, Laplacian, and Canny—to compare their effectiveness. This comparative analysis will help in identifying the most suitable method for edge detection in the context of tissue sectioning, where the clarity and precision of edges are vital for quality assessment. The results will guide the selection of the optimal algorithm to be integrated into the image processing pipeline, enhancing the capability of the system to accurately segment and analyze biological tissue sections.
 
@@ -112,7 +112,25 @@ Additionally, there are more sophisticated methods of threshold segmentation, su
 Comparisons and experiments related to these segmentation techniques will be conducted in the \textit{Experimental Work/Analytical Investigation/Design} chapter.
 
 
+\subsection{Model Selection of Transfer Learning Methods}
+In transfer learning, commonly used pre-trained models include VGG16, VGG19, Inception, and others. These models have been extensively trained on large datasets like ImageNet, where the weights of various layers in the model have been optimized and can be effectively used for transfer learning\cite{4.30 7}.
 
+\autoref{tab:model_comparison} displays the number of parameters for models such as the VGG series (VGG16, VGG19) designed by the Visual Geometry Group at the University of Oxford \cite{DL.5}, as well as the modular deep learning models InceptionV3 \cite{DL.6}\cite{DL.7} developed by Google. These models possess a vast quantity of parameters, enabling them to accurately extract features from complex images. Utilizing the capabilities of these well-trained models allows researchers and practitioners to achieve high performance on specific tasks without the need to train the entire network from scratch, thereby saving time and resources while maintaining high accuracy\cite{4.30 8}.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparison of CNN Models}
+    \label{tab:model_comparison}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Model} & \textbf{VGG16} & \textbf{VGG19} & \textbf{InceptionV3}\\
+        \midrule
+        \textbf{Number of Parameters} & 138,357,544 & 143,667,240 & 23,851,784 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Considering that these models are all trained on the ImageNet dataset, and the features of the biological tissue slice dataset are quite different from the ImageNet dataset. As for how to determine the best model, it needs to be verified through experiments. In the chapter of \textit{Experimental Work/Analytical Investigation/Design}, these models will be experimented and performance evaluated, comparing their effects.
 
 
 
