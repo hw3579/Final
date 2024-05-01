@@ -2,38 +2,50 @@
 
 在这一部分，我们将讨论我们的模型的测试结果，并探索进一步改进的领域。
 
-\subsection{在测试集上验证模型的准确性}
+\subsection{在测试集上测试模型的准确性}
 
 训练后，我们在一个特别准备的测试集上评估了模型的准确性。准确性定义为模型预测与实际标签匹配的样本比例。
 
 下面的表格和图形展示了模型在不同类别中的准确性：
 
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \captionof{table}{Model accuracy on test set}
-        \begin{tabular}{cc}
-            \toprule
-            Category & Accuracy(\%) \\
-            \midrule
-            Normal & 98.4 \\
-            Horizontal Line & 95.6 \\
-            Vertical Line & 80.0 \\
-            Slope & 96.1 \\
-            Other & 95.2 \\
-            \bottomrule
-        \end{tabular}
-        \label{tab:model_accuracy}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
-        \captionof{figure}{Accuracy on Test Set}
-        \label{fig:accuracy_histogram}
-    \end{minipage}
-\end{figure}
+% \begin{figure}[htbp]
+%     \centering
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \captionof{table}{Model accuracy on test set}
+%         \begin{tabular}{cc}
+%             \toprule
+%             Category & Accuracy(\%) \\
+%             \midrule
+%             Normal & 98.4 \\
+%             Horizontal Line & 95.6 \\
+%             Vertical Line & 80.0 \\
+%             Slope & 96.1 \\
+%             Other & 95.2 \\
+%             \bottomrule
+%         \end{tabular}
+%         \label{tab:model_accuracy}
+%     \end{minipage}
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
+%         \captionof{figure}{Accuracy on Test Set}
+%         \label{fig:accuracy_histogram}
+%     \end{minipage}
+% \end{figure}
 
+\begin{table}[H]
+    \centering
+    \caption{Model Predict Accuracy on Test Set}
+    \begin{tabular}{c*{5}{c}}
+        \toprule
+        Category & Normal & Horizontal Line & Vertical Line & Slope & Other \\
+        \midrule
+        Accuracy(\%) & 98.4 & 95.6 & 80.0 & 96.1 & 95.2 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:model_accuracy}
+\end{table}
 
 \textbf{模型性能分析}
 
@@ -79,10 +91,10 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
 
 \begin{table}[H]
     \centering
-    \caption{model accuracy on test set}
+    \caption{Model 4 Predict Accuracy on Test Set}
     \begin{tabular}{cccccc}
         \toprule
-        & normal & horizental\_line & vertical\_line & slope & other \\
+        Category & Normal & Horizontal Line & Vertical Line & Slope & Other \\
         \midrule
         accuracy(\%) & 98.4 & 96.7 & 85.6 & 96.5 & 96.5 \\
         \bottomrule
@@ -94,7 +106,7 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
 
 结果证实了处理高分辨率图像的潜在好处，特别是在需要高保真和细节的设置中，如生物组织分析和研究。
 
-\subsection{研究机器的最佳切割角度}
+\subsection{确定机器的最佳切割角度}
 
 为了确定微切机的最佳切割角度，我们准备了在8到12度之间，以0.5度为增量的各种角度切割的组织切片图像。每个角度类别包含100个图像，总共有9个不同的数据组。然后使用模型4来评估每组的质量率，目标是找出获得高质量切片最多的角度。
 
@@ -104,7 +116,7 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
     \centering
     \begin{minipage}{0.4\textwidth}
         \centering
-        \captionof{table}{Normal accuracy on different angle}
+        \captionof{table}{"Normal" Accuracy on Different Angles}
         \begin{tabular}{cc}
             \toprule
             Angle & Accuracy(\%) \\
@@ -189,31 +201,44 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
 
 训练和验证的准确性迅速增加并保持在高水平，表明模型在两个数据集上的性能都很强。损失图显示训练损失迅速下降到零，验证损失在初期的激增后稳定下来，这表明模型的拟合和泛化性都很好。
 
-模型进一步在测试集上进行测试，结果显示在\autoref{fig:accuracy_histogram2}中。
+模型进一步在测试集上进行测试，结果显示在\autoref{tab:model_accuracy3}中。
 
-\begin{figure}[H]
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \captionof{table}{Model accuracy on test set}
-        \begin{tabular}{ccccc}
-            \toprule
-            label & accuracy(\%) \\
-            \midrule
-            bad & 94.1 \\
-            good & 98.2 \\
-            normal & 94.7 \\
-            other & 95.0 \\
-            \bottomrule
-        \end{tabular}
-        \label{tab:model_accuracy3}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy2.eps}
-        \caption{Accuracy on Test Set}
-        \label{fig:accuracy_histogram2}
-    \end{minipage}
-\end{figure}
+% \begin{figure}[H]
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \captionof{table}{Model accuracy on test set}
+%         \begin{tabular}{ccccc}
+%             \toprule
+%             label & accuracy(\%) \\
+%             \midrule
+%             bad & 94.1 \\
+%             good & 98.2 \\
+%             normal & 94.7 \\
+%             other & 95.0 \\
+%             \bottomrule
+%         \end{tabular}
+%         \label{tab:model_accuracy3}
+%     \end{minipage}
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy2.eps}
+%         \caption{Accuracy on Test Set}
+%         \label{fig:accuracy_histogram2}
+%     \end{minipage}
+% \end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Model Predict Accuracy on New Test Set}
+    \begin{tabular}{c*{4}{c}}
+        \toprule
+        Category & Bad & Good & Normal & Other \\
+        \midrule
+        Accuracy(\%) & 94.1 & 98.2 & 94.7 & 95.0 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:model_accuracy3}
+\end{table}
 
 该模型在所有标签上的准确率超过90\%，表明其强大的性能和显著的泛化能力。这表明该模型可以有效地分类不同类型的组织切片，可能使其成为各种生物医学成像应用的多功能工具。 模型在不同组织类型上的稳健性强调了其在组织质量评估和分类任务中的潜力。
 

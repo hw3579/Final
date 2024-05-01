@@ -4,7 +4,10 @@
 \subsection{采集数据}
 在本实验中，我们使用了预先从生物实验室制备并染色的石蜡包埋组织切片（\autoref{label:sample}）。使用HM355s自动切片机，按照操作手册，以不同切削角度进行切片，记录切削参数。切片后，组织样本放置于平面上并干燥（\autoref{fig:采集样本}），随后在VHX7000显微镜下进行成像，以捕获电子图像数据（\autoref{fig:显微镜}）。
 
-如\autoref{fig:machine}所示的切片机（以牙齿为例），如\autoref{fig:cutting_machine} \cite{4.1}所示，是为精确切割而设计的。在这个设置中，原始样本被安全地固定用于切割，由精确的刀片执行切割。切割后，切片在指定的表面上由水流展开和平坦，然后移动到存储区域。从存储区域取出并干燥后，切片被放置在显微镜舞台上，显微镜自动对焦并捕获图像数据。切割参数如下：模式设置为连续，进给速度为5.0，修整值为25，速度设定为32，水流速度为7.5，水温约为36摄氏度。切割角度在8到12度之间。显微镜的放大倍数是20x20，分辨率是2880x2160。
+切片机如\autoref{fig:machine}所示，其工作原理如\autoref{fig:cutting_machine} \cite{4.1}所示（以牙齿为例）。
+在切削过程中，原始样本被安全地固定用于切割，由精确的刀片执行切割。切割后，切片在指定的表面上由水流展开和平坦，然后移动到存储区域。从存储区域取出并干燥后，切片被放置在显微镜舞台上，显微镜自动对焦并捕获图像数据。
+
+切割参数如下：模式设置为连续，进给速度为5.0，修整值为25，速度设定为32，水流速度为7.5，水温约为36摄氏度。切割角度在8到12度之间。显微镜的放大倍数是20x20，分辨率是2880x2160。
 
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
 
@@ -20,7 +23,7 @@
     \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/10266_2018_353_Fig1_HTML.jpg}
-        \caption{切割过程}
+        \caption{切割原理}
         \label{fig:cutting_machine}
     \end{minipage}
 \end{figure}
@@ -90,13 +93,13 @@
     \centering
     \begin{minipage}{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/sample_1/slope.jpg}
+        \includegraphics[width=\textwidth]{./fig/sample_1/slope - 副本.jpg}
         \caption{slope}
         \label{fig:slope}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/sample_1/other.jpg}
+        \includegraphics[width=\textwidth]{./fig/sample_1/other - 副本.jpg}
         \caption{other}
         \label{fig:other}
     \end{minipage}
@@ -238,30 +241,32 @@
 
 选择的低阈值是2、4和6，对应的高阈值分别是5、10和15。Canny算法的结果如下所示：
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+2.jpg}
-        \caption{canny 2 5}
-        \label{fig:canny2_5}
+        \caption*{Low: 2, High: 5}
+        % \label{fig:canny2_5}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+4.jpg}
-        \caption{canny 4 10}
-        \label{fig:canny4_10}
+        \caption*{Low: 4, High: 10}
+        % \label{fig:canny4_10}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+6.jpg}
-        \caption{canny 6 15}
-        \label{fig:canny6_15}
+        \caption*{Low: 6, High: 15}
+        % \label{fig:canny6_15}
     \end{minipage}
+    \caption{Images post-Canny operator with different thresholds}
+    \label{fig:canny}
 \end{figure}
 
 
-在三个Canny结果中，\autoref{fig:canny4_10} 的表现最好，能够保留大部分边缘细节，同时有效地消除了大部分噪声。因此，选择了4和10作为Canny算法的阈值。
+在 Canny 边缘检测的三个结果中，当低阈值设置为 4、高阈值设置为 10 时，性能最佳。此设置成功地保留了大部分边缘细节，同时有效消除了大部分噪声。因此，选择4和10作为Canny算法的阈值。
 
 \textbf{总结}
 
@@ -426,14 +431,6 @@
 对 VGG16、VGG19 和 InceptionV3 模型的比较分析显示，InceptionV3 提供了最佳的训练结果，其训练和验证准确率分别收敛于 1 和 0.9 左右，损失收敛于 0.6。这表明 InceptionV3 模型不仅有效地进行训练，而且展示了优越的泛化能力。
 
 \subsection{模型选择总结}
-当在模型系列——模型 1、模型 2 和模型 3——之间进行比较时，显然模型 3 的表现最好，特别是模型 3c。其根本原因可能是由于模型 3 基于在大规模图像数据集上预训练的深度卷积网络，使得特征提取更有效，能够开发出强大的特征空间。
+在模型系列——模型1、模型2和模型3——之间进行比较，显然模型3的表现最好，特别是模型3c。其根本原因可能是模型3基于一个在大规模图像数据集上预训练的深度卷积网络，这有助于更有效地提取特征并开发出强大的特征空间。
 
-\textbf{模型 3c（InceptionV3）的显著特性：}
-
-\begin{itemize}
-    \item \textbf{架构设计：} InceptionV3 具有模块化设计，包含多个 "inception 模块"，这些模块包括在同一层内并行操作的多尺度卷积层。这种模块化方法使网络能够在各种尺度和深度上捕获广泛的特征。
-    \item \textbf{特征提取：} Inception 模块可以通过在同一层内处理不同尺度的特征来适应性地捕获适当的特征表示。这种适应性使其特别适合处理复杂的图像数据，如生物医学图像。
-    \item \textbf{深度网络处理：} InceptionV3 集成了批量归一化和残差连接，这些在训练深度网络中至关重要。这些技术有效地缓解了梯度消失的问题，从而有助于训练更深的模型而不降低性能。
-\end{itemize}
-
-考虑到这些优点，模型 3c（InceptionV3）被选为我们的最终模型，用于进一步的应用和测试。这个模型不仅因其先进的架构创新而突出，而且因其在泛化到新的、未见过的数据方面的证明效果而突出，使其非常适合复杂的任务，如医学图像分析，其中准确性和可靠性至关重要。
+因此，我们选择了模型3c（InceptionV3）作为我们的最终模型进行进一步的应用和测试。这个模型在泛化到新的、未见过的数据方面表现出色，使其非常适合复杂的任务，如医疗和组织图像分析，其中准确性和可靠性至关重要。

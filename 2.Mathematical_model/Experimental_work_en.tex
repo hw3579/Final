@@ -3,7 +3,9 @@
 \subsection{Data Collection}
 In this experiment, pre-prepared and stained paraffin-embedded tissue sections from a biological laboratory were utilized (\autoref{label:sample}). Slicing was performed using an HM355s automatic microtome, following the operating manual at various cutting angles, and cutting parameters were recorded. After slicing, the tissue samples were placed on a flat surface and dried (\autoref{fig:采集样本}), followed by imaging under a VHX7000 microscope to capture electronic image data (\autoref{fig:显微镜}).
 
-The microtome depicted in \autoref{fig:machine} (using a tooth as an example), as shown in \autoref{fig:cutting_machine} \cite{4.1}, is designed for precision slicing. In this setup, the original sample is securely mounted for slicing, executed by a precision blade. Following the cutting, the sections are extended and flattened by a water flow on a designated surface before moving into storage areas. After retrieval from the storage areas and drying, the sections are placed on the microscope stage where the microscope automatically focuses and captures the image data. The cutting parameters are as follows: the mode is set to continuous, the feed rate is 5.0, the trimming value is 25, the speed setting is 32, the water flow rate is 7.5, and the water temperature is approximately 36 degrees Celsius. The cutting angles range from 8 to 12 degrees. The microscope's magnification is 20x20, and the resolution is 2880x2160.
+The microtome is shown in \autoref{fig:machine}, and its working principle (using a tooth as an example) is illustrated in \autoref{fig:cutting_machine} \cite{4.1}. During the cutting process, the original sample is securely fixed for slicing, and precise cuts are made by a blade. After cutting, the sections are extended and flattened by a water flow on a designated surface, then moved to a storage area. After being retrieved and dried, the sections are placed on the microscope stage where the microscope automatically focuses and captures the image data. 
+
+The cutting parameters are as follows: the mode is set to continuous, the feed rate is 5.0, the trimming value is 25, the speed setting is 32, the water flow rate is 7.5, and the water temperature is approximately 36 degrees Celsius. The cutting angles range from 8 to 12 degrees. The magnification of the microscope is 20x20, and the resolution is 2880x2160.
 %在这不要提三个点的鱼的肺泡组织，在后面作为模型二次验证和增强使用。
 
 \begin{figure}[H]
@@ -17,7 +19,7 @@ The microtome depicted in \autoref{fig:machine} (using a tooth as an example), a
     \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/10266_2018_353_Fig1_HTML.jpg}
-        \caption{Cutting process}
+        \caption{Cutting Principles}
         \label{fig:cutting_machine}
     \end{minipage}
 \end{figure}
@@ -84,13 +86,13 @@ Additionally, some images were noted to have a significant rotational angle at t
     \centering
     \begin{minipage}{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/sample_1/slope.jpg}
+        \includegraphics[width=\textwidth]{./fig/sample_1/slope - 副本.jpg}
         \caption{slope}
         \label{fig:slope}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{./fig/sample_1/other.jpg}
+        \includegraphics[width=\textwidth]{./fig/sample_1/other - 副本.jpg}
         \caption{other}
         \label{fig:other}
     \end{minipage}
@@ -231,29 +233,31 @@ Typically, the ratio between the high and low thresholds is between 2:1 and 3:1.
 
 The chosen low thresholds are 2, 4, and 6, with corresponding high thresholds of 5, 10, and 15, respectively. The results of the Canny algorithm are shown below:
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+2.jpg}
-        \caption{canny 2 5}
-        \label{fig:canny2_5}
+        \caption*{Low: 2, High: 5}
+        % \label{fig:canny2_5}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+4.jpg}
-        \caption{canny 4 10}
-        \label{fig:canny4_10}
+        \caption*{Low: 4, High: 10}
+        % \label{fig:canny4_10}
     \end{minipage}
     \begin{minipage}{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/gausssian/canny61+6.jpg}
-        \caption{canny 6 15}
-        \label{fig:canny6_15}
+        \caption*{Low: 6, High: 15}
+        % \label{fig:canny6_15}
     \end{minipage}
+    \caption{Images post-Canny operator with different thresholds}
+    \label{fig:canny}
 \end{figure}
 
-Among the three Canny results, \autoref{fig:canny4_10} exhibits the best performance, managing to retain most of the edge details while effectively eliminating most of the noise. Consequently, the thresholds of 4 and 10 are chosen for the Canny algorithm.
+Among the three results from the Canny edge detection, the performance was best when the low threshold was set at 4 and the high threshold at 10. This setting managed to preserve most of the edge details while effectively eliminating most of the noise. Therefore, 4 and 10 were selected as the thresholds for the Canny algorithm.
 
 \textbf{Summary}
 
@@ -422,15 +426,7 @@ The training and validation performance of these models is depicted below:
 A comparative analysis of the VGG16, VGG19, and InceptionV3 models reveals that InceptionV3 yields the best training results, with both training and validation accuracies converging around 1 and 0.9 respectively, and losses converging around 0.6. This indicates that the InceptionV3 model not only trains effectively but also demonstrates superior generalization capabilities.
 
 \subsection{Model Selection Summary}
-When comparing across the model series—Model 1, Model 2, and Model 3—it is evident that Model 3 performs the best, particularly Model 3c. The underlying reason is likely due to Model 3's foundation on deep convolutional networks that are pre-trained on large-scale image datasets, enabling more effective feature extraction and development of a robust feature space.
 
-\textbf{Notable Attributes of Model 3c (InceptionV3):}
+When comparing among the model series—Model 1, Model 2, and Model 3—it is evident that Model 3 performs the best, particularly Model 3c. The underlying reason may be that Model 3 is based on a deep convolutional network pretrained on a large-scale image dataset, which facilitates more effective feature extraction and the development of a robust feature space.
 
-\begin{itemize}
-    \item \textbf{Architectural Design:} InceptionV3 features a modular design incorporating multiple "inception modules," which include multi-scale convolutional layers that operate in parallel within the same layer. This modular approach allows the network to capture a broad spectrum of features at various scales and depths.
-    \item \textbf{Feature Extraction:} Inception modules can adaptively capture appropriate feature representations by processing different scales of features within the same layer. This adaptability makes it exceptionally capable of handling complex image data like biomedical images.
-    \item \textbf{Deep Network Handling:} InceptionV3 integrates batch normalization and residual connections, which are critical in training deep networks. These techniques effectively mitigate issues related to vanishing gradients, thus facilitating the training of deeper models without performance degradation.
-\end{itemize}
-
-Given these advantages, Model 3c (InceptionV3) is selected as our final model for further applications and testing. This model stands out not only for its advanced architectural innovations but also for its proven effectiveness in generalizing well to new, unseen data, making it highly suitable for complex tasks such as medical image analysis where accuracy and reliability are paramount.
-
+Consequently, Model 3c (InceptionV3) has been chosen as our final model for further application and testing. This model excels in generalizing to new, unseen data, making it highly suitable for complex tasks such as medical and tissue image analysis, where accuracy and reliability are crucial.

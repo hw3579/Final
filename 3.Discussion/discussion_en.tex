@@ -2,40 +2,54 @@
 
 In this section, we discuss the testing outcomes of our models and explore areas for further improvement.
 
-\subsection{Validating Model Accuracy on a Test Set}
+\subsection{Testing Model Accuracy on a Test Set}
 
 After training, the models were evaluated on a specially prepared test set to measure their accuracy. The accuracy is defined as the proportion of samples for which the model's predictions match the actual labels.
 
 The table and figure below present the accuracy of the model across different categories:
 
-\begin{figure}[H]
+% \begin{figure}[H]
+%     \centering
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \captionof{table}{Model Accuracy on Test Set}
+%         \begin{tabular}{cc}
+%             \toprule
+%             Category & Accuracy(\%) \\
+%             \midrule
+%             Normal & 98.4 \\
+%             Horizontal Line & 95.6 \\
+%             Vertical Line & 80.0 \\
+%             Slope & 96.1 \\
+%             Other & 95.2 \\
+%             \bottomrule
+%         \end{tabular}
+%         \label{tab:model_accuracy}
+%     \end{minipage}
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
+%         \captionof{figure}{Accuracy on Test Set}
+%         \label{fig:accuracy_histogram}
+%     \end{minipage}
+% \end{figure}
+
+\begin{table}[H]
     \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \captionof{table}{Model Accuracy on Test Set}
-        \begin{tabular}{cc}
-            \toprule
-            Category & Accuracy(\%) \\
-            \midrule
-            Normal & 98.4 \\
-            Horizontal Line & 95.6 \\
-            Vertical Line & 80.0 \\
-            Slope & 96.1 \\
-            Other & 95.2 \\
-            \bottomrule
-        \end{tabular}
-        \label{tab:model_accuracy}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/accuracy.eps}
-        \captionof{figure}{Accuracy on Test Set}
-        \label{fig:accuracy_histogram}
-    \end{minipage}
-\end{figure}
+    \caption{Model Predict Accuracy on Test Set}
+    \begin{tabular}{c*{5}{c}}
+        \toprule
+        Category & Normal & Horizontal Line & Vertical Line & Slope & Other \\
+        \midrule
+        Accuracy(\%) & 98.4 & 95.6 & 80.0 & 96.1 & 95.2 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:model_accuracy}
+\end{table}
 
 \textbf{Analysis of Model Performance}
-The model performs exceptionally well for the 'Normal' category with an accuracy of 98.4\%, indicating its robust capability in identifying tissue sections without significant defects. Similarly, high accuracy scores are noted for 'Horizontal Line' and 'Other' categories, reflecting the model’s effectiveness in recognizing these specific types of imperfections.
+
+The model performs exceptionally well for the "Normal" category with an accuracy of 98.4\%, indicating its robust capability in identifying tissue sections without significant defects. Similarly, high accuracy scores are noted for "Horizontal Line" and "Other" categories, reflecting the model's effectiveness in recognizing these specific types of imperfections.
 
 However, the accuracy for the "Vertical Line" category is significantly lower, at 80.0\%. This indicates that the model's ability to recognize this type of defect needs to be strengthened. This could be due to insufficient training data, which limits the model's learning. It could also be because the features of vertical lines are relatively less obvious, making it difficult for the model to accurately extract features.
 
@@ -77,10 +91,10 @@ The updated model is then re-evaluated on the test set, with results as \autoref
 
 \begin{table}[H]
     \centering
-    \caption{Model 4 accuracy on the test set}
+    \caption{Model 4 Predict Accuracy on Test Set}
     \begin{tabular}{cccccc}
         \toprule
-        & normal & horizental\_line & vertical\_line & slope & other \\
+        Category & Normal & Horizontal Line & Vertical Line & Slope & Other \\
         \midrule
         accuracy(\%) & 98.4 & 96.7 & 85.6 & 96.5 & 96.5 \\
         \bottomrule
@@ -92,7 +106,7 @@ Comparing the accuracy before and after changing the resolution, there is a noti
 
 The results affirm the potential benefits of processing higher-resolution images, particularly in settings demanding high fidelity and detail, such as biological tissue analysis and research.
 
-\subsection{Investigating the Optimal Cutting Angle for the Machine}
+\subsection{Determining the Optimal Cutting Angle for the Machine}
 
 In order to determine the optimal cutting angle for the microtome, images of tissue sections cut at various angles ranging from 8 to 12 degrees, at 0.5-degree increments, were prepared. Each angle category consisted of 100 images, resulting in a total of 9 distinct groups of data. Model 4 was then utilized to assess the quality rate of each group, aiming to identify the angle at which the highest yield of quality sections was achieved.
 
@@ -102,7 +116,7 @@ The table and graph below present the accuracy, defined as the percentage of hig
     \centering
     \begin{minipage}{0.4\textwidth}
         \centering
-        \captionof{table}{Normal accuracy on different angles}
+        \captionof{table}{"Normal" Accuracy on Different Angles}
         \begin{tabular}{cc}
             \toprule
             Angle & Accuracy(\%) \\
@@ -191,31 +205,44 @@ The original model architecture (Model 4) is maintained but retrained with the f
 
 The training and validation accuracy rapidly increase and maintain high levels, indicating robust model performance on both datasets. The loss plot shows a rapid decline in training loss towards zero, with validation loss stabilizing after an initial spike—suggesting good fit and generalization.
 
-The model is further tested on a test set, and the results are shown in \autoref{fig:accuracy_histogram2}.
+The model is further tested on a test set, and the results are shown in \autoref{tab:model_accuracy3}.
 
-\begin{figure}[H]
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \captionof{table}{Model accuracy on the test set}
-        \begin{tabular}{ccccc}
-            \toprule
-            label & accuracy(\%) \\
-            \midrule
-            bad & 94.1 \\
-            good & 98.2 \\
-            normal & 94.7 \\
-            other & 95.0 \\
-            \bottomrule
-        \end{tabular}
-        \label{tab:model_accuracy3}
-    \end{minipage}
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy2.eps}
-        \caption{Accuracy on Test Set}
-        \label{fig:accuracy_histogram2}
-    \end{minipage}
-\end{figure}
+% \begin{figure}[H]
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \captionof{table}{Model accuracy on the test set}
+%         \begin{tabular}{ccccc}
+%             \toprule
+%             label & accuracy(\%) \\
+%             \midrule
+%             bad & 94.1 \\
+%             good & 98.2 \\
+%             normal & 94.7 \\
+%             other & 95.0 \\
+%             \bottomrule
+%         \end{tabular}
+%         \label{tab:model_accuracy3}
+%     \end{minipage}
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{./fig/assistplot/angle_accuracy2.eps}
+%         \caption{Accuracy on Test Set}
+%         \label{fig:accuracy_histogram2}
+%     \end{minipage}
+% \end{figure}
+
+\begin{table}[H]
+    \centering
+    \caption{Model Predict Accuracy on New Test Set}
+    \begin{tabular}{c*{4}{c}}
+        \toprule
+        Category & Bad & Good & Normal & Other \\
+        \midrule
+        Accuracy(\%) & 94.1 & 98.2 & 94.7 & 95.0 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:model_accuracy3}
+\end{table}
 
 The model demonstrates over 90\% accuracy across all labels, indicating its strong performance and substantial generalizability. This suggests that the model can effectively classify different types of tissue sections, potentially making it a versatile tool for various biomedical imaging applications.
 The robustness of the model across different tissue types underscores its potential in tissue quality assessment and classification tasks.
