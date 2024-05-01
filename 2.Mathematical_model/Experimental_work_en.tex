@@ -109,31 +109,7 @@ For each image, we need to label it as one of the above five categories. This wi
 
 \subsection{Model 1: Original Images with a Simple CNN Network}
 
-For a new dataset, where the appropriate complexity of the model for the given image complexity is uncertain, a basic CNN architecture is initially employed to gauge the characteristics of the dataset and the complexity of the images.
-
-\begin{table}[H]
-\centering
-\caption{Configuration of the simple CNN model}
-\begin{tabular}{ccccc}
-    \toprule
-    \textbf{Layer Type} & \textbf{Configuration 1a} & \textbf{Configuration 1b} & \textbf{Configuration 1c} \\
-    \midrule
-    Input Layer & - & - & - \\
-    Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 1 & MaxPooling & MaxPooling& MaxPooling \\
-    Conv Layer 2 & Conv3-32 (relu) & Conv3-32 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 2 & MaxPooling & MaxPooling& MaxPooling \\
-    Conv Layer 3 & Conv3-32 (relu) & Conv3-64 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 3 & MaxPooling & MaxPooling& MaxPooling \\
-    Flattening Layer & Flatten() & Flatten() & Flatten() \\
-    FC(Full connect) & Dense(128, relu) & Dense(128, relu) & Dense(256, relu) \\
-    Output Layer & - & - & - \\
-    \bottomrule
-\end{tabular}
-\label{tab:cnn_simple_configuration}
-\end{table}
-
-The configurations of the simple CNN models used are outlined in \autoref{tab:cnn_simple_configuration}. These initial models, labeled as Configuration 1a, 1b, and 1c, vary in terms of the number of neurons in the convolutional layers and the size of the neurons in the fully connected layers. Configuration 1a and 1b differ by the number of neurons in the convolutional layers, whereas Configuration 1c differs from Configuration 1a in the size of the neurons in the fully connected layer.
+For a new dataset, where the appropriate complexity of the model is uncertain given the complexity of the images, it's advisable to begin with basic CNN architectures to assess the characteristics of the dataset. To do this, the simple CNN models a, b, and c described in the "Methodology and Theory" section will be used for training.
 
 The preprocessing steps involve splitting the dataset into training (80\%) and testing (20\%) sets. In the input layer, the image dimensions are halved (from 2880x2160 to 1440x1080), and the data is normalized.
 
@@ -325,7 +301,8 @@ To refine the segmentation, further processing is required to eliminate black bl
 
 This approach demonstrates the utility of combining color enhancement and thresholding techniques to effectively segment biological tissue from paraffin in microscopic images. The challenge lies in accurately distinguishing tissue fragments from background noise and other non-tissue elements. This method can be particularly effective for automated image analysis in histopathology, where accurate tissue segmentation is crucial for research.
 
-\subsubsection{Another Threshold Segmentation Method: Fingerprint Algorithm}
+\subsubsection{Performing Threshold Segmentation Using Fingerprint Algorithm}
+
 During the literature review, an article was found that described an improved segmentation method based on the Otsu algorithm, specifically adapted for fingerprint segmentation. Considering that both tissue sections and fingerprints are biological tissues with complex patterns and textures, it was hypothesized that this algorithm might also be effective for segmenting tissue sections. The results of applying this method are illustrated in \autoref{fig:fingerprint}.
 
 The fingerprint algorithm, which is an adaptation of the Otsu method, is particularly effective in differentiating areas of high and low density, which is ideal for applications like fingerprint recognition where contrast between ridges and valleys is critical. The use of this algorithm in the context of biological tissue segmentation may offer a robust way to delineate regions of different cellular densities or structures within a sample.
@@ -357,7 +334,7 @@ In this section, we adapt Model 1c, the best-performing model from the previous 
 Each model follows the same architecture as Model 1c, which includes three convolutional layers each with 32 feature maps and 3x3 kernels, max pooling layers, and a fully connected layer with 256 neurons.
 
 Results are displayed in the graphs below(\autoref{fig:model22_acc} and \autoref{fig:model22_loss}), showcasing the training and validation accuracy and loss for Models 2a, 2b, and 2c.
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.49\textwidth}
         \centering
@@ -381,7 +358,7 @@ Model 2b, however, converges after about 10 training epochs, displaying the high
 
 However, there is a risk that important details could be lost in the preprocessing steps, particularly with Model 2b's threshold segmentation. This can negatively affect the model's performance on specific types of images. An example of this loss of key information is demonstrated below:
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -404,18 +381,7 @@ These findings highlight the challenges in image preprocessing. Aggressive prepr
 
 \subsection{Model 3: Original Images with Transfer Learning}
 
-\textbf{Transfer Learning with Pre-trained Models}
-
-We are incorporating three well-known models pre-trained on the ImageNet dataset: VGG16, VGG19, and InceptionV3. These models come with pre-trained weights that are highly optimized and are expected to improve feature extraction capabilities significantly when adapted to our specific dataset.
-
-\begin{itemize}
-    \item VGG16 (Model 3a) and VGG19 (Model 3b) are similar, with VGG19 having three additional convolutional layers that could potentially offer better feature extraction capabilities.
-    \item InceptionV3 (Model 3c) incorporates Inception modules that allow it to capture a broader range of features at multiple scales, providing a more complex and possibly more effective feature extraction mechanism.
-\end{itemize}
-
-\textbf{Adaptations for Transfer Learning}
-
-To prevent overfitting and optimize the transfer learning process:
+In this section, we will utilize pretrained models such as VGG16, VGG19, and InceptionV3, mentioned in previous sections, for transfer learning. To prevent overfitting and optimize the transfer learning process, specific fine-tuning strategies are implemented as follows:
 
 \begin{itemize}
     \item Early stopping is utilized.
@@ -424,8 +390,6 @@ To prevent overfitting and optimize the transfer learning process:
     \item A global average pooling layer is added to each model following the base model layers, followed by a fully connected layer that matches the number of output classes.
 \end{itemize}
 
-
-\textbf{Observations from Model Training}
 
 The training and validation performance of these models is depicted below:
 

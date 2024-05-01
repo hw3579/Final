@@ -57,7 +57,7 @@
 
 常见的图像分割算法包括边缘检测和阈值分割。
 
-\subsubsection{边缘检测}
+\subsubsection{适用于组织切片的边缘检测}
 对于生物组织切片，质量的关键指标是切片边缘的清晰度。切片边缘的完整性和连续性可以反映样本是否存在质量问题。
 
 有许多边缘检测的算法，如Sobel、Laplacian和Canny算子 \cite{3.1}。
@@ -96,7 +96,7 @@
 
 在Experimental work/analytical investigation/ design这一章节中 将会对采集到的图像数据进行三种边缘检测算法的实验，对比其效果。
 
-\subsubsection{阈值分割}
+\subsubsection{适用于组织切片的阈值分割}
 
 除了边缘检测，还有一种方法是阈值分割。阈值分割是将图像中的像素点分为两类，一类是大于阈值的像素点，另一类是小于阈值的像素点。这种方法适用于图像中的目标和背景的灰度差异较大的情况。
 
@@ -107,6 +107,35 @@ Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementat
 
 相关的对比和实验将在 Experimental work/analytical investigation/ design这一章节中进行。
 
+\subsection{简单卷积神经网络框架}
+
+根据文献综述中提到的卷积神经网络架构的设计，对于本项目的生物组织切片图像分类问题，可以采用简单的卷积神经网络架构。在这我们尝试搭建了三个简单的卷积神经网络模型，分别标记为配置a、b和c。
+
+\begin{table}[H]
+    \centering
+    \caption{Configuration of the simple CNN model}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Layer Type} & \textbf{Configuration a} & \textbf{Configuration b} & \textbf{Configuration c} \\
+        \midrule
+        Input Layer & - & - & - \\
+        Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 1 & MaxPooling & MaxPooling& MaxPooling \\
+        Conv Layer 2 & Conv3-32 (relu) & Conv3-32 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 2 & MaxPooling & MaxPooling& MaxPooling \\
+        Conv Layer 3 & Conv3-32 (relu) & Conv3-64 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 3 & MaxPooling & MaxPooling& MaxPooling \\
+        Flattening Layer & Flatten() & Flatten() & Flatten() \\
+        FC(Full connect) & Dense(128, relu) & Dense(128, relu) & Dense(256, relu) \\
+        Output Layer & - & - & - \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:cnn_simple_configuration}
+    \end{table}
+
+模型a拥有三个卷积层和一个全连接层，每个卷积层都有32个神经元，全连接层有128个神经元。模型b拥有三个卷积层和一个全连接层，卷积层神经元数量分别为16,32和64，全连接层有128个神经元。模型c拥有三个卷积层和一个全连接层，每个卷积层都有32个神经元，全连接层有256个神经元。
+
+这些模型的主要区别在于卷积层的神经元数量和全连接层的神经元数量。在Experimental work/analytical investigation/ design章节中，将会对这些模型进行实验和性能评估，对比其效果。
 
 \subsection{迁移学习方法的模型选择}
 
@@ -126,6 +155,13 @@ Yue Yaru和Zhu Jialin 在 《Algorithm of fingerprint extraction and implementat
         \bottomrule
     \end{tabular}
 \end{table}
+
+这些模型的主要区别如下：
+
+\begin{itemize}
+    \item VGG16（模型 3a）和 VGG19（模型 3b）相似，但 VGG19 有三个额外的卷积层，可能提供更好的特征提取能力。
+    \item InceptionV3（模型 3c）整合了 Inception 模块，使其能够在多个尺度上捕获更广泛的特征，提供更复杂且可能更有效的特征提取机制。
+\end{itemize}
 
 考虑到这些模型都是基于Imagenet数据集训练的，而生物组织切片数据集的特征与Imagenet数据集有很大的不同。对于如何确定最佳模型，则需要通过实验来验证。在Experimental work/analytical investigation/ design这一章节中，将会对这些模型进行实验和性能评估，对比其效果。
 

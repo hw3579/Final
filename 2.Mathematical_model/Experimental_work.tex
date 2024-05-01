@@ -114,30 +114,7 @@
 
 \subsection{模型1：简单CNN网络与原始图像}
 
-对于一个新的数据集，其中模型的适当复杂度与给定图像复杂度的不确定性，首先采用基本的CNN架构来评估数据集的特性和图像的复杂性。
-\begin{table}[H]
-\centering
-\caption{Configuration of the simple CNN model}
-\begin{tabular}{ccccc}
-    \toprule
-    \textbf{Layer Type} & \textbf{Configuration 1a} & \textbf{Configuration 1b} & \textbf{Configuration 1c} \\
-    \midrule
-    Input Layer & - & - & - \\
-    Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 1 & MaxPooling & MaxPooling& MaxPooling \\
-    Conv Layer 2 & Conv3-32 (relu) & Conv3-32 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 2 & MaxPooling & MaxPooling& MaxPooling \\
-    Conv Layer 3 & Conv3-32 (relu) & Conv3-64 (relu) & Conv3-32 (relu) \\
-    Pooling Layer 3 & MaxPooling & MaxPooling& MaxPooling \\
-    Flattening Layer & Flatten() & Flatten() & Flatten() \\
-    FC(Full connect) & Dense(128, relu) & Dense(128, relu) & Dense(256, relu) \\
-    Output Layer & - & - & - \\
-    \bottomrule
-\end{tabular}
-\label{tab:cnn_simple_configuration}
-\end{table}
-
-简单CNN模型的配置在\autoref{tab:cnn_simple_configuration}中概述。这些初始模型，标记为配置1a、1b和1c，根据卷积层中的神经元数量和全连接层中的神经元大小进行变化。配置1a和1b根据卷积层中的神经元数量有所不同，而配置1c则在全连接层中的神经元大小上与配置1a有所不同。
+对于新数据集，鉴于图像的复杂性，模型的适当复杂性不确定，建议从基本 CNN 架构开始评估数据集的特征。为此，将使用“方法和理论”部分中描述的简单 CNN 模型 a、b 和 c 进行训练。
 
 预处理步骤包括将数据集分为训练集（80％）和测试集（20％）。在输入层，图像尺寸减半（从2880x2160到1440x1080），并对数据进行归一化。
 
@@ -331,7 +308,7 @@
 
 这种方法展示了结合颜色增强和阈值分割技术有效地从显微图像中分割生物组织和石蜡的实用性。挑战在于准确地区分组织碎片与背景噪声和其他非组织元素。这种方法对于组织病理学中的自动图像分析特别有效，其中准确的组织分割对于研究至关重要。
 
-\subsubsection{另一种阈值分割方法：指纹算法}
+\subsubsection{使用指纹算法进行阈值分割}
 在文献回顾过程中，找到了一篇描述了基于 Otsu 算法的改进分割方法的文章，专门适用于指纹分割。考虑到组织切片和指纹都是具有复杂模式和纹理的生物组织，我们假设这种算法也可能对切片组织的分割有效。应用这种方法的结果在 \autoref{fig:fingerprint} 中进行了说明。
 
 指纹算法是 Otsu 方法的一种改编，特别有效于区分高密度和低密度区域，这对于需要区分脊和谷的对比度的应用，如指纹识别，是理想的。在生物组织分割的背景下使用这种算法可能提供一种强大的方式来划定样本内不同细胞密度或结构的区域。
@@ -363,7 +340,7 @@
 每个模型都遵循模型 1c 的架构，包括每个具有 32 个特征图和 3x3 内核的三个卷积层，最大池化层，以及一个具有 256 个神经元的全连接层。
 
 结果显示在下面的图中（\autoref{fig:model22_acc} 和 \autoref{fig:model22_loss}），展示了模型 2a、2b 和 2c 的训练和验证准确率以及损失。
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.49\textwidth}
         \centering
@@ -387,7 +364,7 @@
 
 然而，有一种风险是在预处理步骤中可能会丢失重要的细节，特别是在模型 2b 的阈值分割中。这可能会对模型在特定类型的图像上的性能产生负面影响。以下是这种关键信息丢失的一个例子：
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
@@ -409,18 +386,7 @@
 
 \subsection{模型 3：原始图像与迁移学习}
 
-\textbf{使用预训练模型的迁移学习}
-
-我们正在整合三个在 ImageNet 数据集上预训练的知名模型：VGG16、VGG19 和 InceptionV3。这些模型带有预训练的权重，这些权重经过高度优化，预计在适应我们特定的数据集时，将显著提高特征提取能力。
-
-\begin{itemize}
-    \item VGG16（模型 3a）和 VGG19（模型 3b）相似，但 VGG19 有三个额外的卷积层，可能提供更好的特征提取能力。
-    \item InceptionV3（模型 3c）整合了 Inception 模块，使其能够在多个尺度上捕获更广泛的特征，提供更复杂且可能更有效的特征提取机制。
-\end{itemize}
-
-\textbf{迁移学习的适应性}
-
-为了防止过拟合并优化迁移学习过程：
+在本节中，我们将使用在前面章节中提到的VGG16、VGG19和InceptionV3等预训练模型进行迁移学习。在这为了防止过拟合并优化迁移学习过程，具体微调如下：
 
 \begin{itemize}
     \item 使用了早停法。
@@ -429,7 +395,6 @@
     \item 在每个模型的基础模型层之后添加了一个全局平均池化层，然后是一个与输出类别数匹配的全连接层。
 \end{itemize}
 
-\textbf{模型训练的观察}
 
 以下是这些模型的训练和验证性能：
 

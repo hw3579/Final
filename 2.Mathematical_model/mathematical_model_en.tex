@@ -60,7 +60,7 @@ Image segmentation is a critical step in image processing, aiming to divide the 
 
 Common image segmentation algorithms include edge detection and threshold segmentation.
 
-\subsubsection{Edge Detection}
+\subsubsection{Edge Detection for Tissue Slices}
 For biological tissue sections, a crucial indicator of quality is the clarity of the section's edges. The integrity and continuity of the slice edges can reflect whether there are quality issues with the sample.
 
 There are numerous algorithms for edge detection, such as Sobel, Laplacian, and Canny operators \cite{3.1}.
@@ -99,9 +99,9 @@ As shown in the figure above, taking the derivative of the first-order derivativ
 
 \textbf{Canny Operator} is a multi-stage differential operator that enhances the edge detection process by incorporating noise suppression, building on the initial computations similar to those used by the Sobel operator. Introduced by John F. Canny in 1986 \cite{3.2}, the Canny operator refines the results obtained from Sobel operator calculations through additional steps such as non-maximum suppression and hysteresis thresholding. These steps set thresholds to eliminate false edges from the image, resulting in more accurate edge detection.
 
-In the chapter on \textit{Experimental Work/Analytical Investigation/Design}, experiments will be conducted on the collected image data using these three edge detection algorithms—Sobel, Laplacian, and Canny—to compare their effectiveness. This comparative analysis will help in identifying the most suitable method for edge detection in the context of tissue sectioning, where the clarity and precision of edges are vital for quality assessment. The results will guide the selection of the optimal algorithm to be integrated into the image processing pipeline, enhancing the capability of the system to accurately segment and analyze biological tissue sections.
+In the section on "Experimental Work/Analytical Investigation/Design", experiments will be conducted on the collected image data using these three edge detection algorithms—Sobel, Laplacian, and Canny—to compare their effectiveness. This comparative analysis will help in identifying the most suitable method for edge detection in the context of tissue sectioning, where the clarity and precision of edges are vital for quality assessment. The results will guide the selection of the optimal algorithm to be integrated into the image processing pipeline, enhancing the capability of the system to accurately segment and analyze biological tissue sections.
 
-\subsubsection{Theresold Segmentation}
+\subsubsection{Theresold Segmentation for Tissue Slices}
 
 Apart from edge detection, another method employed is threshold segmentation. This technique divides the image pixels into two categories: those above a certain threshold and those below it. It is particularly useful in situations where there is a significant grayscale difference between the target and the background in the image.
 
@@ -109,8 +109,39 @@ For specimens, a straightforward approach is to contrast the colors of the paraf
 
 Additionally, there are more sophisticated methods of threshold segmentation, such as the Otsu method used for fingerprint extraction. Implementing this method can significantly enhance the segmentation of biological tissues. Yue Yaru and Zhu Jialin in "Algorithm of fingerprint extraction and implementation based on OpenCV" have proposed an improved Otsu-based fingerprint extraction algorithm using OpenCV. This algorithm excels particularly under conditions of uneven illumination and blurred images, providing accurate, simple, and fast fingerprint extraction \cite{3.3}.
 
-Comparisons and experiments related to these segmentation techniques will be conducted in the \textit{Experimental Work/Analytical Investigation/Design} chapter.
+Comparisons and experiments related to these segmentation techniques will be conducted in the "Experimental Work/Analytical Investigation/Design" section.
 
+\subsection{Simple Convolutional Neural Network Framework}
+
+Based on the design of convolutional neural network architectures discussed in the literature review, a simple convolutional neural network framework is suitable for classifying images of biological tissue sections in this project. We have constructed three simple convolutional neural network models, labeled as configurations a, b, and c.
+
+Each of these models features a distinct combination of convolutional layers and neuron numbers in both the convolutional and fully connected layers, as summarized in the table below:
+
+\begin{table}[H]
+    \centering
+    \caption{Configuration of the simple CNN model}
+    \begin{tabular}{ccccc}
+        \toprule
+        \textbf{Layer Type} & \textbf{Configuration a} & \textbf{Configuration b} & \textbf{Configuration c} \\
+        \midrule
+        Input Layer & - & - & - \\
+        Conv Layer 1 & Conv3-32 (relu) & Conv3-16 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 1 & MaxPooling & MaxPooling& MaxPooling \\
+        Conv Layer 2 & Conv3-32 (relu) & Conv3-32 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 2 & MaxPooling & MaxPooling& MaxPooling \\
+        Conv Layer 3 & Conv3-32 (relu) & Conv3-64 (relu) & Conv3-32 (relu) \\
+        Pooling Layer 3 & MaxPooling & MaxPooling& MaxPooling \\
+        Flattening Layer & Flatten() & Flatten() & Flatten() \\
+        FC(Full connect) & Dense(128, relu) & Dense(128, relu) & Dense(256, relu) \\
+        Output Layer & - & - & - \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:cnn_simple_configuration}
+    \end{table}
+
+Model a consists of three convolutional layers with 32 neurons each and a fully connected layer with 128 neurons. Model b features three convolutional layers with a progressively increasing number of neurons (16, 32, and 64), and a fully connected layer with 128 neurons. Model c also includes three convolutional layers, each with 32 neurons, but differs in its fully connected layer, which contains 256 neurons.
+
+The primary differences among these models lie in the number of neurons in the convolutional and fully connected layers. In the "Experimental Work/Analytical Investigation/Design" section, these models will be subjected to experiments and performance evaluations to compare their effectiveness.
 
 \subsection{Model Selection of Transfer Learning Methods}
 In transfer learning, commonly used pre-trained models include VGG16, VGG19, Inception, and others. These models have been extensively trained on large datasets like ImageNet, where the weights of various layers in the model have been optimized and can be effectively used for transfer learning\cite{4.30 7}.
@@ -130,7 +161,14 @@ In transfer learning, commonly used pre-trained models include VGG16, VGG19, Inc
     \end{tabular}
 \end{table}
 
-Considering that these models are all trained on the ImageNet dataset, and the features of the biological tissue slice dataset are quite different from the ImageNet dataset. As for how to determine the best model, it needs to be verified through experiments. In the chapter of \textit{Experimental Work/Analytical Investigation/Design}, these models will be experimented and performance evaluated, comparing their effects.
+The primary differences between these models are as follows:
+
+\begin{itemize}
+\item VGG16 (Model 3a) and VGG19 (Model 3b) are similar, but VGG19 includes three additional convolutional layers, potentially offering better feature extraction capabilities.
+\item InceptionV3 (Model 3c) incorporates Inception modules, enabling it to capture a broader range of features across multiple scales, providing a more complex and possibly more effective feature extraction mechanism.
+\end{itemize}
+
+Considering that these models are all trained on the ImageNet dataset, and the features of the biological tissue slice dataset are quite different from the ImageNet dataset. As for how to determine the best model, it needs to be verified through experiments. In the section of "Experimental Work/Analytical Investigation/Design", these models will be experimented and performance evaluated, comparing their effects.
 
 
 
