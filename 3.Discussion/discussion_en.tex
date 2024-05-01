@@ -69,7 +69,7 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
     \end{minipage}
 \end{figure}
 
-Observations of training accuracy and loss over time indicate a significant improvement in model performance. Both training and validation accuracies approach 1, with validation losses dropping to around 15\%, suggesting strong generalization capabilities. This indicates that the model not only excels on training data but can also generalize effectively to new, unseen data.
+Observations of training accuracy and loss over time indicate a significant improvement in model performance. Both training and validation accuracies approach 1, with validation losses dropping to around 0.2, suggesting strong generalization capabilities. This indicates that the model not only excels on training data but can also generalize effectively to new, unseen data.
 
 \textbf{Re-Evaluating Accuracy on the Test Set}
 
@@ -138,7 +138,7 @@ Additionally, as illustrated in \autoref{fig:angle_accuracy_histogram}, to maint
 The experiments thus far have utilized ovarian tissue sections from fish. In practical applications, we may encounter diverse tissue samples, including other organs or specimens from different animals. Therefore, it's crucial to assess the generalizability of our model across various tissue types.
 
 A new dataset comprising fish lung tissue sections has been prepared, categorized into four classes: good, normal, bad, and other. These categories are demonstrated in the figures below:
-(From \autoref{fig:good_fish_lung} to\autoref{fig:other_fish_lung})
+(as shown in \autoref{fig:fish_lung})
 
 
 \begin{figure}[H]
@@ -146,27 +146,29 @@ A new dataset comprising fish lung tissue sections has been prepared, categorize
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/good20240313_144138.jpg}
-        \caption{Good fish lung}
-        \label{fig:good_fish_lung}
+        \caption*{Good}
+        % \label{fig:good_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/normal20240313_141726.jpg}
-        \caption{Normal fish lung}
-        \label{fig:noraml_fish_lung}
+        \caption*{Normal}
+        % \label{fig:noraml_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/bad20240313_140952.jpg}
-        \caption{Bad fish lung}
-        \label{fig:bad_fish_lung}
+        \caption*{Bad}
+        % \label{fig:bad_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/other20240313_141858.jpg}
-        \caption{Other fish lung}
-        \label{fig:other_fish_lung}
+        \caption*{Other}
+        % \label{fig:other_fish_lung}
     \end{minipage}
+    \caption{Four categories of fish lung tissue}
+    \label{fig:fish_lung}
 \end{figure}
 
 The original model architecture (Model 4) is maintained but retrained with the fish lung images at a resolution of 1152x864. The training accuracy and loss are presented in the \autoref{fig:model5_acc} and \autoref{fig:model5_loss}.

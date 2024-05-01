@@ -10,9 +10,10 @@ accuracy = {
 }
 
 # 创建直方图
-plt.bar(accuracy.keys(), accuracy.values())
+plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
 plt.xlabel('Category')
 plt.ylabel('Accuracy (%)')
+plt.ylim(0, 100)
 plt.title('Model Accuracy on Test Set')
 plt.savefig('./fig/assistplot/accuracy.eps')
 plt.show()
@@ -30,10 +31,11 @@ accuracy = {
     '12': 62.2
 }
 
-# 创建直方图
-plt.bar(accuracy.keys(), accuracy.values())
+# Create a line plot with markers at data points
+plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
 plt.xlabel('Angle')
 plt.ylabel('Accuracy (%)')
+plt.ylim(0, 100)
 plt.title('Normal Accuracy on Different Angles')
 plt.savefig('./fig/assistplot/angle_accuracy.eps')
 plt.show()
@@ -47,9 +49,11 @@ accuracy = {
 }
 
 # 创建直方图
-plt.bar(accuracy.keys(), accuracy.values())
+# Change the bar plot to a line plot with markers at data points
+plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
 plt.xlabel('Angle')
 plt.ylabel('Accuracy (%)')
+plt.ylim(0, 100)
 plt.title('Normal Accuracy on Different Angles')
 plt.savefig('./fig/assistplot/angle_accuracy2.eps')
 plt.show()

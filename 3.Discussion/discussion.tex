@@ -71,7 +71,7 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
     \end{minipage}
 \end{figure}
 
-通过观察训练准确性和损失随时间的变化，我们可以看到模型性能有了显著的提升。训练和验证的准确性都接近1，验证损失降低到大约15\%，这表明模型具有强大的泛化能力。这表明模型不仅在训练数据上表现优秀，而且能够有效地泛化到新的、未见过的数据。
+通过观察训练准确性和损失随时间的变化，我们可以看到模型性能有了显著的提升。训练和验证的准确性都接近1，验证损失降低到大约0.2，这表明模型具有强大的泛化能力。这表明模型不仅在训练数据上表现优秀，而且能够有效地泛化到新的、未见过的数据。
 
 \textbf{在测试集上重新评估准确性}
 
@@ -136,36 +136,38 @@ Model 4 is trained with these adjusted image sizes, and its training effectivene
 
 \subsection{模型的泛化性}
 
-到目前为止的实验都使用了鱼的卵巢组织切片。在实际应用中，我们可能会遇到各种组织样本，包括其他器官或来自不同动物的标本。因此，评估我们的模型在各种组织类型上的泛化性是至关重要的。
+到目前为止，实验已经使用了来自鱼类的卵巢组织切片。在实际应用中，我们可能会遇到各种各样的组织样本，包括其他器官或来自不同动物的标本。因此，评估我们的模型在各种组织类型上的泛化能力是至关重要的。
 
-我们准备了一个新的数据集，包括鱼肺组织切片，分为四类：好、正常、坏和其他。这些类别在下面的图中展示： (从\autoref{fig:good_fish_lung}到\autoref{fig:other_fish_lung})
+我们已经准备了一个新的数据集，包括鱼类肺部组织切片，分为四类：好、正常、差和其他。这些类别在下面的图中展示：(如\autoref{fig:fish_lung})
 
 \begin{figure}[H]
     \centering
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/good20240313_144138.jpg}
-        \caption{Good fish lung}
-        \label{fig:good_fish_lung}
+        \caption*{Good}
+        % \label{fig:good_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/normal20240313_141726.jpg}
-        \caption{Normal fish lung}
-        \label{fig:noraml_fish_lung}
+        \caption*{Normal}
+        % \label{fig:noraml_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/bad20240313_140952.jpg}
-        \caption{Bad fish lung}
-        \label{fig:bad_fish_lung}
+        \caption*{Bad}
+        % \label{fig:bad_fish_lung}
     \end{minipage}
     \begin{minipage}{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{./fig/fish_lung/other20240313_141858.jpg}
-        \caption{Other fish lung}
-        \label{fig:other_fish_lung}
+        \caption*{Other}
+        % \label{fig:other_fish_lung}
     \end{minipage}
+    \caption{Four categories of fish lung tissue}
+    \label{fig:fish_lung}
 \end{figure}
 
 保持原始的模型架构（模型4），但使用分辨率为1152x864的鱼肺图像重新训练。训练的准确性和损失在\autoref{fig:model5_acc}和\autoref{fig:model5_loss}中展示。
