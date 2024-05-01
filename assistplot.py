@@ -3,16 +3,17 @@ import matplotlib.pyplot as plt
 # 创建一个包含精度数据的字典
 accuracy = {
     'normal': 98.4,
-    'horizontal_line': 95.6,
-    'vertical_line': 80.0,
+    'horizontal line': 95.6,
+    'vertical line': 80.0,
     'slope': 96.1,
     'other': 95.2
 }
 
 # 创建直方图
 plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
-plt.xlabel('Category')
-plt.ylabel('Accuracy (%)')
+plt.xlabel('Category', fontsize=15)
+plt.tick_params(labelsize=12)
+plt.ylabel('Accuracy (%)', fontsize=15)
 plt.ylim(0, 100)
 plt.title('Model Accuracy on Test Set')
 plt.savefig('./fig/assistplot/accuracy.eps')
@@ -33,8 +34,9 @@ accuracy = {
 
 # Create a line plot with markers at data points
 plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
-plt.xlabel('Angle')
-plt.ylabel('Accuracy (%)')
+plt.xlabel('Angle', fontsize=15)
+plt.tick_params(labelsize=15)
+plt.ylabel('Accuracy (%)', fontsize=15)
 plt.ylim(0, 100)
 plt.title('Normal Accuracy on Different Angles')
 plt.savefig('./fig/assistplot/angle_accuracy.eps')
@@ -51,8 +53,9 @@ accuracy = {
 # 创建直方图
 # Change the bar plot to a line plot with markers at data points
 plt.plot(list(accuracy.keys()), list(accuracy.values()), marker='o')
-plt.xlabel('Angle')
-plt.ylabel('Accuracy (%)')
+plt.xlabel('Category', fontsize=15)
+plt.tick_params(labelsize=15)
+plt.ylabel('Accuracy (%)', fontsize=15)
 plt.ylim(0, 100)
 plt.title('Normal Accuracy on Different Angles')
 plt.savefig('./fig/assistplot/angle_accuracy2.eps')
